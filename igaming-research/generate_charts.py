@@ -439,6 +439,161 @@ def chart_blind_spots_summary():
     save(fig, "15_blind_spots_summary.png")
 
 
+def chart_top_operators_pragmatic():
+    """Top operators carrying Pragmatic Play content by estimated GGR."""
+    operators = [
+        "Flutter Ent.", "Bet365", "Entain", "DraftKings",
+        "BetMGM", "Caesars", "Kindred", "888/Evoke", "Betsson", "Rush Street"
+    ]
+    ggr = [12.8, 7.2, 6.4, 4.9, 4.3, 3.8, 2.6, 2.2, 1.4, 1.1]
+    pp_depth = [100, 95, 98, 75, 90, 80, 92, 88, 90, 70]  # integration depth score
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    y = np.arange(len(operators))
+    bars = ax.barh(y, ggr, color=PP_ORANGE, height=0.55, alpha=0.85)
+
+    for i, (bar, depth, g) in enumerate(zip(bars, pp_depth, ggr)):
+        depth_label = "Exclusive Live" if depth == 100 else ("Deep" if depth >= 90 else "Standard")
+        ax.text(bar.get_width() + 0.15, bar.get_y() + bar.get_height()/2,
+                f"${g}B  |  PP: {depth_label}", va="center", fontsize=9, color="#E2E8F0")
+
+    ax.set_yticks(y)
+    ax.set_yticklabels(operators)
+    ax.set_xlabel("Estimated GGR 2025 ($ Billions)")
+    ax.set_title("Top 10 Operators Carrying Pragmatic Play Content\nGGR + Integration Depth",
+                 fontsize=13, fontweight="bold", pad=15)
+    ax.set_xlim(0, 16)
+    ax.grid(axis="x", alpha=0.3)
+    ax.invert_yaxis()
+    save(fig, "16_top_operators_pragmatic.png")
+
+
+def chart_aggregator_landscape():
+    """Compare major iGaming aggregators."""
+    aggregators = ["EveryMatrix\nSlotMatrix", "SOFTSWISS", "Slotegrator\nAPIgrator",
+                   "Hub88", "SoftGamings", "Relax Gaming", "Pariplay\nFusion"]
+    games = [45000, 35000, 30000, 12000, 10000, 8000, 6000]
+    providers = [355, 300, 180, 120, 250, 80, 60]
+    has_pp = [1, 1, 1, 1, 1, 1, 1]
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    x = np.arange(len(aggregators))
+    w = 0.35
+    ax2 = ax.twinx()
+
+    bars1 = ax.bar(x - w/2, [g/1000 for g in games], w, label="Games (thousands)", color=ACCENT_BLUE, alpha=0.85)
+    bars2 = ax2.bar(x + w/2, providers, w, label="Providers", color=ACCENT_GREEN, alpha=0.85)
+
+    for i, (g, p) in enumerate(zip(games, providers)):
+        ax.text(i - w/2, g/1000 + 0.5, f"{g:,}", ha="center", fontsize=8, color=ACCENT_BLUE)
+        ax2.text(i + w/2, p + 5, f"{p}+", ha="center", fontsize=8, color=ACCENT_GREEN)
+        ax.text(i, -2.5, "✓ PP", ha="center", fontsize=9, color=PP_ORANGE, fontweight="bold")
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(aggregators, fontsize=9)
+    ax.set_ylabel("Game Titles (thousands)", color=ACCENT_BLUE)
+    ax2.set_ylabel("Studio Partners", color=ACCENT_GREEN)
+    ax.set_title("iGaming Aggregator Landscape 2026 — All Distribute Pragmatic Play",
+                 fontsize=13, fontweight="bold", pad=15)
+    ax.set_ylim(0, 55)
+    ax2.set_ylim(0, 420)
+
+    lines1, labels1 = ax.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax.legend(lines1 + lines2, labels1 + labels2, loc="upper right")
+    ax.grid(axis="y", alpha=0.3)
+    save(fig, "17_aggregator_landscape.png")
+
+
+def chart_platform_providers():
+    """B2B platform providers that integrate Pragmatic Play."""
+    platforms = ["Playtech", "EveryMatrix", "SOFTSWISS", "OpenBet",
+                 "BetConstruct", "SoftGamings", "Pragmatic\nSolutions", "IGT"]
+    market_share = [28, 18, 15, 12, 10, 8, 5, 4]
+    pp_integration = [100, 100, 100, 85, 95, 100, 100, 70]
+
+    fig, ax = plt.subplots(figsize=(11, 6))
+    x = np.arange(len(platforms))
+    scatter = ax.scatter(market_share, pp_integration, s=[m*25 for m in market_share],
+                         c=pp_integration, cmap="YlOrRd", alpha=0.85,
+                         edgecolors="white", linewidth=1.5, vmin=60, vmax=100)
+
+    for i, p in enumerate(platforms):
+        ax.annotate(p.replace("\n", " "), (market_share[i], pp_integration[i]),
+                    textcoords="offset points", xytext=(8, 5), fontsize=9)
+
+    ax.set_xlabel("Estimated B2B Platform Market Share (%)")
+    ax.set_ylabel("Pragmatic Play Integration Depth (%)")
+    ax.set_title("B2B Platform Providers & Pragmatic Play Integration\nBubble Size = Platform Market Share",
+                 fontsize=13, fontweight="bold", pad=15)
+    ax.set_xlim(0, 35)
+    ax.set_ylim(60, 105)
+    ax.grid(alpha=0.3)
+    save(fig, "18_platform_providers.png")
+
+
+def chart_distribution_flow():
+    """Distribution ecosystem: Studio -> Aggregator/Platform -> Operator."""
+    categories = ["Direct API\n(300+ ops)", "Via Aggregators\n(500+ ops)", "Via Platforms\n(200+ ops)",
+                  "White Label\n(150+ ops)", "Retail/Omni\n(50+ ops)"]
+    operator_reach = [300, 500, 200, 150, 50]
+    pp_penetration = [100, 98, 95, 90, 85]
+
+    fig, ax = plt.subplots(figsize=(11, 6))
+    x = np.arange(len(categories))
+    w = 0.35
+    ax.bar(x - w/2, operator_reach, w, label="Operator Reach", color=ACCENT_BLUE, alpha=0.85)
+    ax.bar(x + w/2, pp_penetration, w, label="PP Content Available (%)", color=PP_ORANGE, alpha=0.85)
+
+    for i, (reach, pen) in enumerate(zip(operator_reach, pp_penetration)):
+        ax.text(i - w/2, reach + 8, f"{reach}+", ha="center", fontsize=9, color=ACCENT_BLUE)
+        ax.text(i + w/2, pen + 2, f"{pen}%", ha="center", fontsize=9, color=PP_ORANGE)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(categories)
+    ax.set_ylabel("Count / Penetration %")
+    ax.set_title("Pragmatic Play Distribution Channels to Market",
+                 fontsize=13, fontweight="bold", pad=15)
+    ax.legend()
+    ax.set_ylim(0, 580)
+    ax.grid(axis="y", alpha=0.3)
+    save(fig, "19_distribution_channels.png")
+
+
+def chart_operator_brands_map():
+    """Major operator brand portfolios with PP presence."""
+    groups = ["Flutter", "Entain", "Bet365", "888/Evoke", "Kindred", "Betsson", "MGM/Caesars"]
+    brand_count = [12, 10, 1, 6, 8, 12, 4]
+    pp_products = [4, 4, 3, 3, 3, 3, 2]  # slots, live, bingo, virtual sports
+
+    fig, ax = plt.subplots(figsize=(11, 6))
+    x = np.arange(len(groups))
+    ax.bar(x, brand_count, color=ACCENT_BLUE, alpha=0.6, label="Brands in Group", width=0.5)
+    ax.bar(x, pp_products, color=PP_ORANGE, alpha=0.9, label="PP Verticals Supplied", width=0.3)
+
+    brands_detail = [
+        "FanDuel, Paddy Power,\nBetfair, Sky Vegas...",
+        "Ladbrokes, Coral,\nbwin, BetMGM JV...",
+        "bet365 Casino",
+        "William Hill,\n888 Casino, Mr Green",
+        "Unibet, 32Red,\nMaria Casino",
+        "Betsson, Betsafe,\nNordicBet",
+        "BetMGM, Caesars\nPalace Online"
+    ]
+    for i, detail in enumerate(brands_detail):
+        ax.text(i, brand_count[i] + 0.3, detail, ha="center", fontsize=7, color="#CBD5E1")
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(groups, rotation=15, ha="right")
+    ax.set_ylabel("Count")
+    ax.set_title("Operator Groups × Pragmatic Play — Brand Portfolios & Vertical Coverage",
+                 fontsize=13, fontweight="bold", pad=15)
+    ax.legend()
+    ax.set_ylim(0, 16)
+    ax.grid(axis="y", alpha=0.3)
+    save(fig, "20_operator_brand_map.png")
+
+
 if __name__ == "__main__":
     print("Generating iGaming research charts...")
     chart_global_market_by_region()
@@ -456,4 +611,9 @@ if __name__ == "__main__":
     chart_regulated_vs_grey()
     chart_market_growth_timeline()
     chart_blind_spots_summary()
+    chart_top_operators_pragmatic()
+    chart_aggregator_landscape()
+    chart_platform_providers()
+    chart_distribution_flow()
+    chart_operator_brands_map()
     print(f"\nAll charts saved to {OUT}/")
