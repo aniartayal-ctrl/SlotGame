@@ -1,979 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Global iGaming & Pragmatic Play Research Report 2026</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --paper: #F4EFE6;
-      --paper-dark: #E8E0D4;
-      --cream: #FAF7F2;
-      --white: #FFFFFF;
-      --wood: #8B6914;
-      --wood-dark: #5C4610;
-      --leather: #6B4E3D;
-      --text: #3D3429;
-      --text-muted: #7A6F63;
-      --accent: #D4621A;
-      --accent-light: #E8954A;
-      --accent-dark: #A84D12;
-      --blue: #2B6CB0;
-      --green: #2F855A;
-      --purple: #6B46C1;
-      --red: #C53030;
-      --shadow-out: 0 4px 14px rgba(61,52,41,0.18), 0 1px 3px rgba(61,52,41,0.12);
-      --shadow-in: inset 0 2px 6px rgba(61,52,41,0.12), inset 0 -1px 0 rgba(255,255,255,0.8);
-      --shadow-raised: 0 1px 0 #fff inset, 0 -1px 0 rgba(61,52,41,0.08) inset, 0 6px 16px rgba(61,52,41,0.15);
-      --border-light: #FFFFFF;
-      --border-dark: #C4B8A8;
-      --radius: 14px;
-      --radius-sm: 8px;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Global iGaming &amp; Pragmatic Play — Competitive Intelligence, July 2026</title>
+<script src="vendor/chart.umd.min.js"></script>
+<style>
+:root{
+  --ink:#0d1117; --panel:#141a22; --panel2:#171e28; --grid:#242c38; --line:#2a3441;
+  --text:#e6edf3; --muted:#8b98a9; --dim:#6b7787;
+  --pp:#ff7a1a; --rival:#4c9aff; --good:#3fb950; --bad:#f85149; --warn:#e3b341;
+  --purple:#a371f7; --teal:#2dd4bf; --pink:#f778ba;
+  --maxw:1220px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:74px}
+body{
+  margin:0; background:var(--ink); color:var(--text);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--rival); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── nav ─────────────────────────────────────────────── */
+nav{
+  position:sticky; top:0; z-index:60; background:rgba(13,17,23,.9);
+  backdrop-filter:blur(14px); border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex; align-items:center; gap:8px; height:56px; overflow-x:auto; scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav .brand{font-weight:800; letter-spacing:-.02em; margin-right:14px; white-space:nowrap; font-size:15px}
+nav .brand span{color:var(--pp)}
+nav a.nl{
+  font-size:13.5px; color:var(--muted); padding:6px 11px; border-radius:7px;
+  white-space:nowrap; transition:.15s;
+}
+nav a.nl:hover{color:var(--text); background:var(--panel2); text-decoration:none}
+nav a.nl.on{color:var(--pp); background:rgba(255,122,26,.1)}
 
-    body {
-      font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
-      background: var(--paper);
-      background-image:
-        radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.6) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 100%, rgba(212,98,26,0.06) 0%, transparent 40%),
-        linear-gradient(180deg, #F8F4ED 0%, #EDE8DF 100%);
-      color: var(--text);
-      line-height: 1.75;
-      min-height: 100vh;
-    }
+/* ── hero ────────────────────────────────────────────── */
+header{
+  padding:82px 0 60px;
+  background:
+    radial-gradient(1100px 480px at 12% -8%, rgba(255,122,26,.16), transparent 62%),
+    radial-gradient(900px 420px at 88% 4%, rgba(76,154,255,.13), transparent 62%);
+  border-bottom:1px solid var(--line);
+}
+.eyebrow{
+  font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--pp);
+  font-weight:700; margin-bottom:18px;
+}
+h1{
+  font-size:clamp(34px,5.4vw,60px); line-height:1.04; letter-spacing:-.03em;
+  margin:0 0 22px; font-weight:800; max-width:19ch;
+}
+h1 em{font-style:normal; color:var(--pp)}
+.lede{font-size:clamp(17px,2vw,20px); color:var(--muted); max-width:70ch; margin:0 0 30px}
+.meta-row{display:flex; flex-wrap:wrap; gap:10px 22px; font-size:13px; color:var(--dim)}
+.meta-row b{color:var(--text); font-weight:600}
 
-    /* ── Hero: leather-bound report cover ── */
-    .hero {
-      background:
-        linear-gradient(145deg, #7A5C48 0%, #5C4033 40%, #4A3228 100%);
-      padding: 3.5rem 2rem 3rem;
-      text-align: center;
-      border-bottom: 4px solid var(--wood-dark);
-      box-shadow: 0 8px 24px rgba(61,52,41,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        90deg, transparent, transparent 2px,
-        rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
-      );
-      pointer-events: none;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 12px; left: 12px; right: 12px; bottom: 12px;
-      border: 2px solid rgba(212,175,120,0.35);
-      border-radius: 6px;
-      pointer-events: none;
-    }
-    .hero h1 {
-      font-family: 'Merriweather', Georgia, serif;
-      font-size: 2.4rem;
-      font-weight: 900;
-      color: #F5E6D0;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 40px rgba(212,98,26,0.2);
-      margin-bottom: 0.6rem;
-      position: relative;
-      letter-spacing: -0.02em;
-    }
-    .hero .subtitle {
-      color: #D4C4B0;
-      font-size: 1.05rem;
-      max-width: 720px;
-      margin: 0 auto;
-      position: relative;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    }
-    .badge {
-      display: inline-block;
-      position: relative;
-      margin-top: 1.2rem;
-      padding: 0.55rem 1.4rem;
-      font-weight: 700;
-      font-size: 0.82rem;
-      color: #FFF8F0;
-      background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent) 45%, var(--accent-dark) 100%);
-      border-radius: 24px;
-      border: 1px solid var(--accent-dark);
-      box-shadow: 0 4px 10px rgba(168,77,18,0.4), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -2px 0 rgba(0,0,0,0.15);
-      text-shadow: 0 1px 1px rgba(0,0,0,0.25);
-    }
+/* ── kpis ────────────────────────────────────────────── */
+.kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:14px; margin-top:44px}
+.kpi{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid var(--line); border-radius:13px; padding:20px 18px; position:relative; overflow:hidden;
+}
+.kpi::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--pp)}
+.kpi .v{font-size:31px; font-weight:800; letter-spacing:-.03em; line-height:1.1}
+.kpi .l{font-size:13.5px; color:var(--text); margin-top:8px; font-weight:600}
+.kpi .s{font-size:12.5px; color:var(--muted); margin-top:6px; line-height:1.45}
+.kpi .c{font-size:10.5px; color:var(--dim); margin-top:11px; letter-spacing:.05em; text-transform:uppercase}
 
-    .container { max-width: 1120px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+/* ── sections ────────────────────────────────────────── */
+section{padding:72px 0; border-bottom:1px solid var(--line)}
+.sec-num{font-size:12px; letter-spacing:.16em; color:var(--pp); font-weight:700; text-transform:uppercase}
+h2{font-size:clamp(26px,3.4vw,38px); letter-spacing:-.025em; margin:12px 0 16px; font-weight:800; line-height:1.12}
+h3{font-size:20px; margin:44px 0 12px; letter-spacing:-.015em; font-weight:700}
+h4{font-size:16px; margin:26px 0 8px; font-weight:700; color:var(--text)}
+p{margin:0 0 16px; max-width:78ch; color:#c9d4e0}
+p.intro{font-size:17.5px; color:var(--muted); max-width:74ch}
+ul,ol{max-width:78ch; color:#c9d4e0; padding-left:22px}
+li{margin-bottom:9px}
+strong{color:var(--text); font-weight:650}
 
-    /* ── Stat cards: embossed metal plaques ── */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-    .stat-card {
-      background: linear-gradient(180deg, #FFFFFF 0%, #F0EBE3 100%);
-      border-radius: var(--radius);
-      padding: 1.4rem 1rem;
-      text-align: center;
-      border: 1px solid var(--border-dark);
-      box-shadow: var(--shadow-raised);
-      transition: transform 0.15s ease;
-    }
-    .stat-card:hover { transform: translateY(-2px); }
-    .stat-card .num {
-      font-family: 'Merriweather', serif;
-      font-size: 1.85rem;
-      font-weight: 900;
-      color: var(--accent);
-      text-shadow: 0 1px 0 #fff;
-    }
-    .stat-card .label {
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      margin-top: 0.35rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
+/* ── figures ─────────────────────────────────────────── */
+figure{margin:30px 0; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+figure img{width:100%; display:block; cursor:zoom-in}
+figcaption{padding:14px 18px; font-size:13.5px; color:var(--muted); border-top:1px solid var(--line); background:var(--panel2)}
+figcaption b{color:var(--text)}
+.chartbox{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px 20px 16px; margin:30px 0}
+.chartbox .ct{font-size:19px; font-weight:750; letter-spacing:-.015em; margin-bottom:4px}
+.chartbox .cs{font-size:13.5px; color:var(--muted); margin-bottom:18px}
+.chartbox .cv{position:relative; height:400px}
+.chartbox .cf{margin-top:14px; padding-top:12px; border-top:1px solid var(--line); font-size:12.5px; color:var(--dim)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
 
-    /* ── Sections: raised paper panels ── */
-    section {
-      margin: 2.5rem 0;
-      background: var(--cream);
-      border-radius: var(--radius);
-      padding: 2rem 2rem 2.2rem;
-      border: 1px solid var(--border-dark);
-      box-shadow: var(--shadow-out);
-    }
-    h2 {
-      font-family: 'Merriweather', Georgia, serif;
-      font-size: 1.55rem;
-      font-weight: 700;
-      color: var(--wood-dark);
-      margin-bottom: 1.4rem;
-      padding: 0.75rem 1.2rem;
-      background: linear-gradient(180deg, #EDE4D4 0%, #DDD2C0 50%, #D4C8B4 100%);
-      border-radius: var(--radius-sm);
-      border: 1px solid #B8A990;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 4px rgba(61,52,41,0.1);
-      text-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    }
-    h3 {
-      font-family: 'Merriweather', serif;
-      font-size: 1.15rem;
-      color: var(--blue);
-      margin: 1.5rem 0 0.8rem;
-      padding-left: 0.5rem;
-      border-left: 4px solid var(--accent);
-    }
-    p { margin-bottom: 1rem; color: var(--text); }
-    strong { color: var(--wood-dark); }
+/* ── tier badges ─────────────────────────────────────── */
+.tier{
+  display:inline-block; font-size:10px; font-weight:800; letter-spacing:.08em; padding:2px 7px;
+  border-radius:5px; vertical-align:middle; margin-left:8px; text-transform:uppercase;
+}
+.t-A{background:rgba(63,185,80,.16); color:var(--good)}
+.t-B{background:rgba(76,154,255,.16); color:var(--rival)}
+.t-C{background:rgba(227,179,65,.16); color:var(--warn)}
+.t-D{background:rgba(248,81,73,.16); color:var(--bad)}
 
-    /* ── Charts: framed photographs ── */
-    .chart {
-      background: linear-gradient(180deg, #E8E0D4 0%, #DDD5C8 100%);
-      border-radius: var(--radius);
-      padding: 1.2rem;
-      margin: 1.5rem 0;
-      text-align: center;
-      border: 3px solid #B8A990;
-      box-shadow: var(--shadow-in), 0 4px 12px rgba(61,52,41,0.12);
-    }
-    .chart img {
-      max-width: 100%;
-      border-radius: 6px;
-      border: 1px solid #C4B8A8;
-      box-shadow: 0 2px 8px rgba(61,52,41,0.15);
-      background: #FAF7F2;
-    }
-    .chart-caption {
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      margin-top: 0.7rem;
-      font-style: italic;
-    }
+/* ── callouts ────────────────────────────────────────── */
+.call{
+  border-left:3px solid var(--pp); background:rgba(255,122,26,.06);
+  padding:18px 22px; border-radius:0 11px 11px 0; margin:26px 0;
+}
+.call.warn{border-color:var(--warn); background:rgba(227,179,65,.06)}
+.call.bad{border-color:var(--bad); background:rgba(248,81,73,.06)}
+.call.info{border-color:var(--rival); background:rgba(76,154,255,.06)}
+.call p:last-child{margin-bottom:0}
+.call .ch{font-weight:750; margin-bottom:7px; font-size:15px}
 
-    /* ── Tables: inset ledger style ── */
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      margin: 1rem 0;
-      font-size: 0.88rem;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      border: 1px solid var(--border-dark);
-      box-shadow: var(--shadow-in);
-      background: var(--white);
-    }
-    th {
-      background: linear-gradient(180deg, #6B5B4F 0%, #5C4F44 100%);
-      color: #F5EDE4;
-      padding: 0.75rem 0.85rem;
-      text-align: left;
-      font-weight: 700;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.3);
-      border-bottom: 2px solid #4A3F36;
-    }
-    td {
-      padding: 0.7rem 0.85rem;
-      border-bottom: 1px solid #E8E0D4;
-      color: var(--text);
-      background: var(--white);
-    }
-    tr:nth-child(even) td { background: #FAF7F2; }
-    tr:hover td { background: #FFF5EB; }
-    tr:last-child td { border-bottom: none; }
+/* ── tables ──────────────────────────────────────────── */
+.tw{overflow-x:auto; margin:26px 0; border:1px solid var(--line); border-radius:12px}
+table{border-collapse:collapse; width:100%; font-size:14px; min-width:560px}
+th{
+  text-align:left; padding:12px 15px; background:var(--panel2); color:var(--muted);
+  font-weight:650; font-size:12px; letter-spacing:.05em; text-transform:uppercase;
+  border-bottom:1px solid var(--line); white-space:nowrap; position:sticky; top:0;
+}
+td{padding:11px 15px; border-bottom:1px solid var(--grid); color:#c9d4e0; vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.022)}
+td.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.pp-row td{background:rgba(255,122,26,.055)}
+.pp-row td:first-child{box-shadow:inset 3px 0 0 var(--pp)}
+.pos{color:var(--good)} .neg{color:var(--bad)}
 
-    /* ── Tags: glossy pills ── */
-    .tag {
-      display: inline-block;
-      padding: 0.2rem 0.65rem;
-      border-radius: 12px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      border: 1px solid rgba(0,0,0,0.1);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.08);
-    }
-    .tag-pp { background: linear-gradient(180deg, #FDE8D8, #F5C9A8); color: var(--accent-dark); }
-    .tag-win { background: linear-gradient(180deg, #D4EDDA, #A8D5BA); color: #1E5631; }
-    .tag-lose { background: linear-gradient(180deg, #F8D7DA, #E8A8AD); color: #8B1A1A; }
-    .tag-neutral { background: linear-gradient(180deg, #D6EAF8, #A8CCE8); color: #1A4A7A; }
+/* ── blind spot cards ────────────────────────────────── */
+.bs{display:grid; gap:16px; margin-top:26px}
+.bsc{
+  background:var(--panel); border:1px solid var(--line); border-radius:13px;
+  padding:22px 24px; position:relative;
+}
+.bsc .hd{display:flex; align-items:baseline; gap:13px; flex-wrap:wrap; margin-bottom:12px}
+.bsc .rk{
+  font-size:12px; font-weight:800; width:26px; height:26px; border-radius:7px;
+  display:grid; place-items:center; flex:none; background:var(--pp); color:#1b1105;
+}
+.bsc h4{margin:0; font-size:19px; letter-spacing:-.015em}
+.bsc .sev{margin-left:auto; font-size:12px; color:var(--muted); white-space:nowrap}
+.bsc .bar{height:4px; border-radius:3px; background:var(--grid); overflow:hidden; margin-bottom:16px}
+.bsc .bar i{display:block; height:100%; background:linear-gradient(90deg,var(--warn),var(--bad))}
+.bsc dl{display:grid; grid-template-columns:118px 1fr; gap:8px 16px; margin:0; font-size:14px}
+.bsc dt{color:var(--dim); font-size:12px; text-transform:uppercase; letter-spacing:.05em; padding-top:2px}
+.bsc dd{margin:0; color:#c9d4e0}
 
-    /* ── Callouts: sticky note / parchment ── */
-    .callout {
-      background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D0 100%);
-      border: 1px solid #E8D5A0;
-      border-radius: var(--radius-sm);
-      padding: 1.4rem 1.5rem;
-      margin: 1.5rem 0;
-      box-shadow: 2px 3px 8px rgba(61,52,41,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
-      border-left: 5px solid var(--accent);
-    }
-    .callout strong { color: var(--accent-dark); }
+/* ── timeline ────────────────────────────────────────── */
+.tl{position:relative; padding-left:26px; margin-top:26px}
+.tl::before{content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:var(--grid)}
+.tl-i{position:relative; margin-bottom:24px}
+.tl-i::before{
+  content:""; position:absolute; left:-24px; top:7px; width:11px; height:11px;
+  border-radius:50%; background:var(--bad); border:2px solid var(--ink);
+}
+.tl-i .d{font-size:12px; color:var(--dim); letter-spacing:.05em}
+.tl-i .t{font-weight:700; margin:3px 0 5px; font-size:15.5px}
+.tl-i .t em{font-style:normal; color:var(--pp)}
+.tl-i .x{font-size:14px; color:#c9d4e0; max-width:78ch}
 
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+/* ── gallery / lightbox ──────────────────────────────── */
+.gal{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-top:26px}
+.gal a{display:block; border:1px solid var(--line); border-radius:11px; overflow:hidden; background:var(--panel)}
+.gal img{width:100%; display:block}
+.gal span{display:block; padding:10px 13px; font-size:12.5px; color:var(--muted)}
+#lb{
+  position:fixed; inset:0; background:rgba(3,6,10,.94); z-index:200; display:none;
+  place-items:center; padding:34px; cursor:zoom-out; backdrop-filter:blur(4px);
+}
+#lb.on{display:grid}
+#lb img{max-width:100%; max-height:92vh; border-radius:11px; box-shadow:0 30px 90px rgba(0,0,0,.7)}
 
-    /* ── TOC nav: wooden sidebar strip ── */
-    .toc-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-      margin: 1.5rem 0 0.5rem;
-      padding: 1rem;
-      background: linear-gradient(180deg, #EDE4D4, #E0D6C6);
-      border-radius: var(--radius);
-      border: 1px solid var(--border-dark);
-      box-shadow: var(--shadow-in);
-    }
-    .toc-bar a {
-      display: inline-block;
-      padding: 0.4rem 0.85rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--wood-dark);
-      text-decoration: none;
-      background: linear-gradient(180deg, #FFF 0%, #F0EBE3 100%);
-      border: 1px solid #C4B8A8;
-      border-radius: 20px;
-      box-shadow: 0 2px 4px rgba(61,52,41,0.1), inset 0 1px 0 #fff;
-      transition: all 0.15s ease;
-    }
-    .toc-bar a:hover {
-      background: linear-gradient(180deg, var(--accent-light), var(--accent));
-      color: #fff;
-      border-color: var(--accent-dark);
-      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-    }
-
-    .sources {
-      background: linear-gradient(180deg, #F0EBE3, #E8E0D4);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-top: 2rem;
-      font-size: 0.84rem;
-      color: var(--text-muted);
-      border: 1px solid var(--border-dark);
-      box-shadow: var(--shadow-in);
-    }
-    .sources h3 { color: var(--text); border-left: none; padding-left: 0; }
-    .sources a { color: var(--blue); font-weight: 600; }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      background: linear-gradient(180deg, #E8E0D4, #DDD5C8);
-      border-top: 2px solid var(--border-dark);
-      box-shadow: inset 0 2px 4px rgba(61,52,41,0.06);
-    }
-
-    ul { color: var(--text); }
-    ul li { margin-bottom: 0.35rem; }
-
-    @media (max-width: 768px) {
-      .two-col { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 1.75rem; }
-      section { padding: 1.25rem; }
-      .toc-bar a { font-size: 0.7rem; padding: 0.35rem 0.6rem; }
-    }
-  </style>
+/* ── misc ────────────────────────────────────────────── */
+.legend{display:flex; flex-wrap:wrap; gap:10px; margin:22px 0}
+.legend div{
+  font-size:12.5px; background:var(--panel2); border:1px solid var(--line);
+  padding:8px 13px; border-radius:8px; color:var(--muted);
+}
+.legend b{color:var(--text)}
+.pill{
+  display:inline-block; font-size:11.5px; padding:3px 9px; border-radius:20px;
+  border:1px solid var(--line); color:var(--muted); margin:0 5px 5px 0; white-space:nowrap;
+}
+.pill.on{border-color:var(--pp); color:var(--pp); background:rgba(255,122,26,.08)}
+.pill.no{border-color:var(--bad); color:var(--bad); background:rgba(248,81,73,.07)}
+footer{padding:56px 0 80px; color:var(--dim); font-size:13.5px}
+footer .wrap>p{max-width:82ch}
+.srcs{columns:2; column-gap:34px; font-size:13px; margin-top:18px}
+.srcs a{display:block; margin-bottom:7px; break-inside:avoid; color:var(--muted)}
+.srcs a:hover{color:var(--rival)}
+@media(max-width:760px){.srcs{columns:1} .bsc dl{grid-template-columns:1fr} .chartbox .cv{height:330px}}
+</style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>🌍 Global iGaming Research Report</h1>
-  <p class="subtitle">Comprehensive analysis of the worldwide online gambling market with deep focus on Pragmatic Play's dominance, blind spots, and competitive landscape — July 2026</p>
-  <span class="badge">$121B Global Market · 300+ Operators · 8 Aggregators · PP Everywhere</span>
-</div>
+<nav><div class="wrap">
+  <div class="brand">SLOT<span>GAME</span> INTEL</div>
+  <a class="nl" href="#read">Executive read</a>
+  <a class="nl" href="#market">Global market</a>
+  <a class="nl" href="#where">Where Pragmatic plays</a>
+  <a class="nl" href="#studios">Studio league table</a>
+  <a class="nl" href="#games">Games</a>
+  <a class="nl" href="#mechanics">Mechanics &amp; math</a>
+  <a class="nl" href="#blind">Blind spots</a>
+  <a class="nl" href="#risk">Regulatory risk</a>
+  <a class="nl" href="#method">Method &amp; gaps</a>
+</div></nav>
 
-<div class="container">
+<header><div class="wrap">
+  <div class="eyebrow">Competitive intelligence · compiled 29 July 2026</div>
+  <h1>The biggest slot studio on earth is <em>invisible</em> in its biggest growth market.</h1>
+  <p class="lede">
+    A source-tagged read of the global online casino market and of Pragmatic Play's position
+    inside it: what players actually play, which mechanics actually earn, where the money is
+    moving, and the eight places where Pragmatic Play is exposed.
+  </p>
+  <div class="meta-row">
+    <span><b>30</b> charts</span>
+    <span><b>1</b> machine-readable dataset</span>
+    <span><b>4</b> confidence tiers</span>
+    <span><b>~140</b> cited sources</span>
+    <span>Latest actuals: <b>FY2025 / Q2 2026</b></span>
+  </div>
+  <div class="kpis" id="kpis"></div>
+</div></header>
 
-  <nav class="toc-bar" aria-label="Report sections">
-    <a href="#global-market">Market</a>
-    <a href="#verticals">Verticals</a>
-    <a href="#pragmatic">Pragmatic</a>
-    <a href="#games">Games</a>
-    <a href="#features">Features</a>
-    <a href="#competitors">Competitors</a>
-    <a href="#blindspots">Blind Spots</a>
-    <a href="#growth">Growth</a>
-    <a href="#operators">Operators</a>
-    <a href="#aggregators">Aggregators</a>
-    <a href="#platforms">Platforms</a>
-    <a href="#swot">SWOT</a>
-  </nav>
+<!-- ══════════════════════════════════════ 1 EXECUTIVE READ -->
+<section id="read"><div class="wrap">
+  <div class="sec-num">01 — Executive read</div>
+  <h2>Eight things that are true right now</h2>
+  <p class="intro">
+    Each of these is load-bearing for the rest of the report, and each is traceable to a named
+    source. Where the evidence is weak, it says so.
+  </p>
 
-  <div class="stat-grid">
-    <div class="stat-card"><div class="num">$121B</div><div class="label">Global Online GGR (2026)</div></div>
-    <div class="stat-card"><div class="num">+12%</div><div class="label">YoY Market Growth</div></div>
-    <div class="stat-card"><div class="num">#1</div><div class="label">Pragmatic Play — Global Slots</div></div>
-    <div class="stat-card"><div class="num">300+</div><div class="label">Operator Partners (Direct)</div></div>
-    <div class="stat-card"><div class="num">1,000+</div><div class="label">Brands via Aggregators</div></div>
-    <div class="stat-card"><div class="num">8/10</div><div class="label">PP Games in Global Top 10</div></div>
+  <ol>
+    <li><strong>Online is about to become the majority of global gambling.</strong> H2 Gambling Capital
+      puts global GGR at $712bn in 2024 rising past $1,031bn in 2030. The online channel grew from
+      $89bn (20% of the total) in 2015 to $293bn (41%) in 2024 and passes 50% for the first time in
+      2029.<span class="tier t-A">A</span></li>
+
+    <li><strong>Pragmatic Play is the world's #1 slot supplier by actual revenue share — in Europe.</strong>
+      Eilers &amp; Krejcik's Eilers-Fantini panel, in which participating casinos submit real GGR,
+      puts Pragmatic at 17.8% of European online casino GGR in June 2026 against Evolution's 12.5%.
+      It is also #1 on every distribution measure that exists: 514 operator sites, 45 countries,
+      3,291 lobby pages.<span class="tier t-B">B</span></li>
+
+    <li><strong>And it is entirely absent from the United States.</strong> Pragmatic Play does not appear
+      on Pennsylvania's iGaming Manufacturers Eligibility List dated 28 July 2026, nor anywhere in
+      iGamingCompass's June 2026 scan of the US top 100. US iGaming grew 27.6% to a record $10.74bn
+      in 2025. This is the largest single addressable-market gap held by any tier-one slot studio.<span class="tier t-A">A</span></li>
+
+    <li><strong>Pragmatic wins on volume, not on craft.</strong> On the Slots Launch new-release
+      leaderboard for 2026 to date it ranks fourth with roughly 31 releases, zero gold ratings and
+      an average of 25.1 points per game. ELK Studios averages 206.4, Peter &amp; Sons 195.0,
+      Nolimit City 179.0, Hacksaw 90.4. Volume and per-release quality are separate axes and
+      Pragmatic dominates exactly one of them.<span class="tier t-B">B</span></li>
+
+    <li><strong>There is no global #1 slot, and the affiliate-web narrative is wrong.</strong> bet365
+      began publishing its own monthly game rankings in February 2026 across 7,500+ games in 20
+      markets. In June 2026 the #1 slot was different in all ten published markets — and Gates of
+      Olympus topped only Brazil.<span class="tier t-B">B</span></li>
+
+    <li><strong>Hold-and-collect, not Megaways, is what earns.</strong> Eilers &amp; Krejcik's analysis of
+      80+ attributes against top US releases identifies Cash on Reels, Hold &amp; Spin, multipliers
+      and "perceived persistence" as the performance drivers, with nested hold-and-spin the
+      fastest-rising class. Megaways is roughly 2% of titles: mature infrastructure, not a growth
+      story. Light &amp; Wonder paid Aristocrat $127.5m in January 2026 to settle trade-secret
+      litigation over hold-and-spin math — a court-tested price on one mechanic.<span class="tier t-B">B</span></li>
+
+    <li><strong>Tax has become the primary variable in market attractiveness, and the Netherlands is
+      the cautionary tale.</strong> Dutch gambling tax went 30.5% → 34.2% → 37.8% in two years. Legal
+      GGR fell 18%, channelisation dropped to 53% — more money is now wagered offshore than onshore —
+      and 2025 tax receipts came in below 2024. The UK raised Remote Gaming Duty from 21% to 40% on
+      1 April 2026 and operators are paying for it out of player return.<span class="tier t-A">A</span></li>
+
+    <li><strong>Regulators have started fining studios, not just operators.</strong> The AGCO fined
+      Arrise Solutions (Pragmatic Play) CAD $40,000 in May 2026 for games reachable on unregulated
+      sites from Ontario. In July 2026 the UK Gambling Commission took £4.75m from Evolution for the
+      same conduct and said it had considered suspending the licence outright. Romania and Finland
+      have legislated B2B licensing. Pragmatic's content is more widely distributed on offshore sites
+      than Evolution's, and as a private company it discloses nothing about its compliance posture.<span class="tier t-A">A</span></li>
+  </ol>
+
+  <div class="call bad">
+    <div class="ch">The one number that does not exist</div>
+    <p>Pragmatic Play files no audited accounts in any public registry. There is no revenue figure,
+    no EBITDA, no valuation and no shareholder register. The widely quoted "$1bn+ net revenue"
+    traces to an AI-generated aggregator page with no stated methodology; a well-known business-data
+    site lists $25m, which is obviously wrong by two orders of magnitude. <strong>Every chart in this
+    report leaves that cell blank rather than laundering an estimate into the record.</strong></p>
+  </div>
+</div></section>
+
+<!-- ══════════════════════════════════════ 2 GLOBAL MARKET -->
+<section id="market"><div class="wrap">
+  <div class="sec-num">02 — The pool everyone is competing for</div>
+  <h2>Global market structure</h2>
+  <p class="intro">
+    Estimates of the 2026 global online GGR pool span $97bn to $143bn depending on whether iLottery,
+    Asian grey-market volume and crypto casinos are counted. The framing below uses H2 Gambling
+    Capital for the long series and Track360 for the 2026 regional cut, and never mixes the two on
+    one axis.
+  </p>
+
+  <div class="chartbox">
+    <div class="ct">Online overtakes land-based gambling in 2029<span class="tier t-A">A</span></div>
+    <div class="cs">Global GGR, all channels, US$bn — hover any bar for the split</div>
+    <div class="cv"><canvas id="ch_traj"></canvas></div>
+    <div class="cf">Source: H2 Gambling Capital, April 2026 update. The 2029 online figure is derived from H2's stated 50.3% share of a $979bn total.</div>
   </div>
 
-  <!-- SECTION 1: GLOBAL MARKET -->
-  <section id="global-market">
-    <h2>1. Global iGaming Market Overview</h2>
-    <p>The global online gambling industry reached approximately <strong>$121 billion in GGR</strong> in 2026, growing 12% year-on-year from $108B in 2025. The market has effectively doubled since 2020 ($61B), driven by three structural engines: US state-by-state legalization, Brazil's regulated market launch, and steady European maturation.</p>
-
-    <div class="chart">
-      <img src="charts/01_global_market_by_region.png" alt="Global market by region">
-      <p class="chart-caption">Source: Track360, EGBA, AGA, H2 Gambling Capital — 2026 estimates</p>
-    </div>
-
-    <h3>Regional Breakdown</h3>
-    <table>
-      <tr><th>Region</th><th>2026 GGR</th><th>Share</th><th>YoY Growth</th><th>Regulated %</th><th>Pragmatic Position</th></tr>
-      <tr><td>🇪🇺 Europe</td><td>$43.5B</td><td>36%</td><td>+7%</td><td>82%</td><td><span class="tag tag-win">#1 Leader</span></td></tr>
-      <tr><td>🇺🇸 North America</td><td>$29.0B</td><td>24%</td><td>+21%</td><td>95%</td><td><span class="tag tag-lose">Behind RTG/IGT</span></td></tr>
-      <tr><td>🌏 Asia-Pacific</td><td>$28.5B</td><td>24%</td><td>+9%</td><td>41%</td><td><span class="tag tag-neutral">Mixed</span></td></tr>
-      <tr><td>🌎 Latin America</td><td>$11.0B</td><td>9%</td><td>+30%</td><td>55%</td><td><span class="tag tag-win">#1 Leader</span></td></tr>
-      <tr><td>🌍 Middle East</td><td>$6.8B</td><td>6%</td><td>+5%</td><td>15%</td><td><span class="tag tag-win">Strong</span></td></tr>
-      <tr><td>🌍 Africa</td><td>$2.2B</td><td>2%</td><td>+24%</td><td>30%</td><td><span class="tag tag-win">#1 Leader</span></td></tr>
-    </table>
-
-    <div class="chart">
-      <img src="charts/14_market_growth_timeline.png" alt="Market growth timeline">
-      <p class="chart-caption">Global GGR trajectory 2020–2026 with rising regulated market share</p>
-    </div>
-
-    <div class="chart">
-      <img src="charts/13_regulated_vs_grey.png" alt="Regulated vs grey market">
-      <p class="chart-caption">Pragmatic Play performs strongest in highly regulated markets (Europe 82%, North America 95%)</p>
-    </div>
-  </section>
-
-  <!-- SECTION 2: VERTICALS -->
-  <section id="verticals">
-    <h2>2. Product Verticals & Casino Sub-Segments</h2>
-    <div class="two-col">
-      <div class="chart"><img src="charts/02_vertical_breakdown.png" alt="Vertical breakdown"></div>
-      <div class="chart"><img src="charts/03_casino_subsegment.png" alt="Casino subsegment"></div>
-    </div>
-    <p>Online casino dominates at <strong>52% ($63B)</strong> of global GGR, with sportsbook at 35% ($42.5B). Within casino, RNG slots generate 61% of revenue while <strong>live dealer is the fastest-growing sub-segment at +19% YoY</strong> — a critical area where Pragmatic trails Evolution.</p>
-  </section>
-
-  <!-- SECTION 3: PRAGMATIC PLAY -->
-  <section id="pragmatic">
-    <h2>3. Pragmatic Play — Global Market Position</h2>
-
-    <div class="callout">
-      <strong>Key Finding:</strong> Pragmatic Play is the undisputed #1 slot provider globally by lobby content share, game tile presence, and spin volume. Per Blask data (May 2026), PP leads in the UK (13.99%), Germany (14.40%), Mexico (~14%), Brazil, South Africa (19.6%), and Nigeria (~19%). However, its share is <em>declining</em> in mature European markets as competitors diversify.
-    </div>
-
-    <div class="chart">
-      <img src="charts/04_pragmatic_regional_share.png" alt="Pragmatic regional share">
-      <p class="chart-caption">Pragmatic Play content share vs top competitor across key markets (Blask, CasinoRank, EGR data)</p>
-    </div>
-
-    <h3>Where Pragmatic Play Dominates</h3>
-    <table>
-      <tr><th>Market</th><th>PP Share</th><th>Nearest Rival</th><th>Rival Share</th><th>Status</th></tr>
-      <tr><td>United Kingdom</td><td>13.99%</td><td>Blueprint Gaming</td><td>~7%</td><td><span class="tag tag-win">Dominant (declining -1.5pp)</span></td></tr>
-      <tr><td>Germany</td><td>14.40%</td><td>Hacksaw Gaming</td><td>~8.5%</td><td><span class="tag tag-win">Strong (Hacksaw surging)</span></td></tr>
-      <tr><td>Brazil</td><td>~18-19%</td><td>PG Soft</td><td>~9%</td><td><span class="tag tag-win">Dominant</span></td></tr>
-      <tr><td>Mexico</td><td>13-15%</td><td>Playtech</td><td>7-9%</td><td><span class="tag tag-win">Dominant</span></td></tr>
-      <tr><td>South Africa</td><td>19.6%</td><td>BGaming</td><td>10.7%</td><td><span class="tag tag-win">Dominant</span></td></tr>
-      <tr><td>Nigeria</td><td>~19%</td><td>Hacksaw/Endorphina</td><td>~10%</td><td><span class="tag tag-win">Dominant</span></td></tr>
-      <tr><td>France</td><td>~11.5%</td><td>Play'n GO</td><td>~10.5%</td><td><span class="tag tag-neutral">Narrow lead</span></td></tr>
-    </table>
-
-    <h3>Where Pragmatic Play Loses</h3>
-    <div class="chart">
-      <img src="charts/05_pragmatic_blind_spots_markets.png" alt="Pragmatic blind spot markets">
-      <p class="chart-caption">Critical geographic blind spots where regional providers dominate</p>
-    </div>
-  </section>
-
-  <!-- SECTION 4: POPULAR GAMES -->
-  <section id="games">
-    <h2>4. Popular Games & Game Data</h2>
-
-    <div class="chart">
-      <img src="charts/06_top_games_ranking.png" alt="Top games ranking">
-      <p class="chart-caption">EGR Global Slots Tracker, April 2026 — based on game tile presence across 2,000+ licensed sites</p>
-    </div>
-
-    <div class="chart">
-      <img src="charts/12_pragmatic_game_families.png" alt="Pragmatic game families">
-      <p class="chart-caption">Estimated spin volume distribution across Pragmatic Play game families</p>
-    </div>
-
-    <h3>Top Pragmatic Play Games — Key Data</h3>
-    <table>
-      <tr><th>Game</th><th>RTP</th><th>Volatility</th><th>Max Win</th><th>Mechanic</th><th>Key Feature</th></tr>
-      <tr><td>Gates of Olympus 1000</td><td>96.5%</td><td>High (5/5)</td><td>15,000x</td><td>Scatter Pays + Tumble</td><td>Zeus multipliers stack in free spins</td></tr>
-      <tr><td>Sweet Bonanza</td><td>96.51%</td><td>High (4/5)</td><td>21,100x</td><td>Scatter Pays + Tumble</td><td>Bomb multipliers, bonus buy</td></tr>
-      <tr><td>Big Bass Bonanza</td><td>96.71%</td><td>High</td><td>2,100x</td><td>Paylines + Collection</td><td>Fisherman collects fish values</td></tr>
-      <tr><td>Sugar Rush 1000</td><td>96.5%</td><td>High</td><td>25,000x</td><td>Cluster Pays</td><td>Marked positions grow multipliers</td></tr>
-      <tr><td>Starlight Princess</td><td>96.5%</td><td>High</td><td>5,000x</td><td>Scatter Pays + Tumble</td><td>Anime theme, multiplier orbs</td></tr>
-      <tr><td>Wolf Gold</td><td>96.01%</td><td>Medium</td><td>2,500x</td><td>25 Paylines</td><td>Money respin + 3 jackpots</td></tr>
-      <tr><td>The Dog House</td><td>96.51%</td><td>High</td><td>6,750x</td><td>20 Paylines</td><td>Sticky wilds with multipliers</td></tr>
-    </table>
-
-    <div class="callout">
-      <strong>Game Family Strategy:</strong> Pragmatic Play operates a "franchise model" — building recognizable IP families (Gates, Sweet Bonanza, Big Bass, Sugar Rush) and extending them with "1000" editions, Super Scatter variants, and seasonal releases. This drives ~70% of their spin volume from just 7 families.
-    </div>
-  </section>
-
-  <!-- SECTION 5: FEATURES -->
-  <section id="features">
-    <h2>5. Popular Slot Features & Industry Trends</h2>
-
-    <div class="chart">
-      <img src="charts/09_feature_trends.png" alt="Feature trends">
-      <p class="chart-caption">Feature adoption rates 2023→2026 and Pragmatic Play's relative strength per mechanic</p>
-    </div>
-
-    <h3>Feature Landscape 2026</h3>
-    <table>
-      <tr><th>Feature</th><th>Industry Adoption</th><th>PP Strength</th><th>Trend</th></tr>
-      <tr><td>Tumble/Cascade Reels</td><td>72% of new releases</td><td>95% — PP pioneered mass adoption</td><td><span class="tag tag-pp">PP Core</span></td></tr>
-      <tr><td>Multiplier Symbols</td><td>65%</td><td>90% — Gates/Sweet Bonanza formula</td><td><span class="tag tag-pp">PP Core</span></td></tr>
-      <tr><td>Bonus Buy</td><td>42% of new releases</td><td>85% — flat-rate pricing</td><td><span class="tag tag-neutral">Regulated restrictions growing</span></td></tr>
-      <tr><td>Hold & Spin</td><td>48%</td><td>75% — Big Bass, Wolf Gold</td><td><span class="tag tag-neutral">Stable</span></td></tr>
-      <tr><td>Megaways</td><td>31%</td><td>60% — licensed, not owned</td><td><span class="tag tag-lose">BTG owns IP</span></td></tr>
-      <tr><td>Cluster Pays</td><td>38%</td><td>80% — Sugar Rush family</td><td><span class="tag tag-pp">PP Strong</span></td></tr>
-      <tr><td>Simple (0-1 bonus)</td><td>64% of top performers</td><td>40% — PP over-engineers</td><td><span class="tag tag-lose">Industry shift away</span></td></tr>
-    </table>
-
-    <p><strong>2026 Trend:</strong> "Feature fatigue" is real — 64% of top-performing slots use just one or no bonus features. Players and streamers increasingly favor <em>mechanical distinctiveness</em> over visual overload. Pragmatic's high-volume release strategy (7-8 titles/month) risks catalog saturation.</p>
-  </section>
-
-  <!-- SECTION 6: COMPETITORS -->
-  <section id="competitors">
-    <h2>6. Competitive Landscape</h2>
-
-    <div class="chart">
-      <img src="charts/07_provider_radar_comparison.png" alt="Provider radar comparison">
-      <p class="chart-caption">Multi-dimensional competitive scoring — Pragmatic leads on catalog & promos, trails on innovation & max win</p>
-    </div>
-
-    <div class="chart">
-      <img src="charts/08_competitor_max_win.png" alt="Max win comparison">
-      <p class="chart-caption">Pragmatic's max win ceiling (~21,175x) significantly trails extreme-volatility specialists</p>
-    </div>
-
-    <h3>Head-to-Head Provider Comparison</h3>
-    <table>
-      <tr><th>Provider</th><th>Founded</th><th>Slots</th><th>Avg RTP</th><th>Max Win</th><th>Signature</th><th>vs Pragmatic</th></tr>
-      <tr><td><strong>Pragmatic Play</strong></td><td>2015</td><td>500+</td><td>96.5%</td><td>21,175x</td><td>Tumble + Multipliers, Drops & Wins</td><td>—</td></tr>
-      <tr><td>Evolution</td><td>2006</td><td>1,000+ (incl. NetEnt/RT)</td><td>96.5%</td><td>50,000x</td><td>Live Casino, Crazy Time</td><td><span class="tag tag-win">Beats PP in Live (65-70% share)</span></td></tr>
-      <tr><td>Play'n GO</td><td>2005</td><td>400+</td><td>96.0%</td><td>60,000x</td><td>Book of Dead, narrative series</td><td><span class="tag tag-neutral">Better narratives, EGR Supplier of Year</span></td></tr>
-      <tr><td>Hacksaw Gaming</td><td>2018</td><td>120+</td><td>96.3%</td><td>50,000x</td><td>Extreme volatility, DuelReels™</td><td><span class="tag tag-win">Beats PP on innovation & streaming</span></td></tr>
-      <tr><td>Nolimit City</td><td>2013</td><td>60+</td><td>96.0%</td><td>150,000x</td><td>xNudge®, xWays®, tiered xBuy</td><td><span class="tag tag-win">Beats PP on max win & volatility</span></td></tr>
-      <tr><td>NetEnt</td><td>1996</td><td>200+</td><td>96.7%</td><td>200,000x</td><td>Starburst, Gonzo's Quest</td><td><span class="tag tag-neutral">Higher RTP, legacy brand</span></td></tr>
-      <tr><td>Playtech</td><td>1999</td><td>700+</td><td>95.5%</td><td>5,000x</td><td>IMS platform, live + slots</td><td><span class="tag tag-neutral">Broader platform play</span></td></tr>
-      <tr><td>RTG</td><td>1998</td><td>300+</td><td>95.5%</td><td>50,000x</td><td>US-focused, classic slots</td><td><span class="tag tag-win">Dominates US (18% share)</span></td></tr>
-      <tr><td>3 Oaks Gaming</td><td>2021</td><td>50+</td><td>96.0%</td><td>15,000x</td><td>Hold & Win mechanics</td><td><span class="tag tag-win">#1 in Australia</span></td></tr>
-    </table>
-
-    <div class="chart">
-      <img src="charts/10_live_casino_share.png" alt="Live casino market share">
-      <p class="chart-caption">Live casino B2B market — PP is fastest-growing challenger but Evolution maintains 2x lead</p>
-    </div>
-  </section>
-
-  <!-- SECTION 7: BLIND SPOTS -->
-  <section id="blindspots">
-    <h2>7. Pragmatic Play Blind Spots & Strategic Gaps</h2>
-
-    <div class="chart">
-      <img src="charts/15_blind_spots_summary.png" alt="Blind spots summary">
-      <p class="chart-caption">Competitive scoring across key dimensions where Pragmatic trails best-in-class rivals</p>
-    </div>
-
-    <h3>Critical Blind Spots</h3>
-
-    <div class="callout">
-      <strong>1. "Tumble Fatigue" — Formulaic Releases</strong><br>
-      ~70% of Pragmatic's 2025-2026 releases reuse the tumble + rising multiplier formula from Gates of Olympus / Sweet Bonanza. Industry critics note "catalog saturation" — 7-8 releases/month with diminishing mechanical novelty. Hacksaw and Nolimit City release fewer titles but with genuinely new mechanics.
-    </div>
-
-    <div class="callout">
-      <strong>2. Extreme Volatility Gap</strong><br>
-      Pragmatic's top max win (~21,175x on Sweet Bonanza 1000) trails Nolimit City (150,000x), Relax Gaming (150,000x), and Hacksaw (50,000x). High-stakes streamers and crypto casino players increasingly migrate to these providers for "lottery-ticket" volatility profiles.
-    </div>
-
-    <div class="callout">
-      <strong>3. US Market Absence</strong><br>
-      RTG holds 18.05% US lobby share vs Pragmatic's ~5.5%. IGT dominates Canada/Ontario. Pragmatic's NJ/PA certifications exist but regional providers have entrenched land-based brand recognition (Cash Eruption, etc.).
-    </div>
-
-    <div class="callout">
-      <strong>4. Live Casino — Distant #2</strong><br>
-      Evolution holds 65-70% of live casino B2B vs Pragmatic's ~25%. Crazy Time alone outranks all Pragmatic live titles combined. PP is growing (+10pp since 2023) but lacks game-show IP and scale.
-    </div>
-
-    <div class="callout">
-      <strong>5. Bonus Buy Inflexibility</strong><br>
-      Pragmatic uses flat-rate bonus buys (typically 100x stake). Nolimit City's tiered xBuy system (100x / 400x / 2,000x) and Hacksaw's variance controls offer superior player agency. UK and Belgium bonus buy bans limit PP's advantage here.
-    </div>
-
-    <div class="callout">
-      <strong>6. Declining European Share</strong><br>
-      UK: 15.53% → 13.99% (-1.5pp). Germany: 17.39% → 14.40% (-3pp). Italy moving to supplier parity. Evolution's live casino surge in Spain (+5.25pp) and Hacksaw's Germany doubling threaten PP's European moat.
-    </div>
-
-    <div class="callout">
-      <strong>7. RTP Configuration Risk</strong><br>
-      Like Play'n GO, Pragmatic offers multiple RTP tiers (94%-96.5%). Operators can deploy lower-RTP versions without player awareness, creating reputational risk when players compare experiences across casinos.
-    </div>
-  </section>
-
-  <!-- SECTION 8: GROWTH MARKETS -->
-  <section id="growth">
-    <h2>8. Growth Markets & Pragmatic Opportunity Map</h2>
-
-    <div class="chart">
-      <img src="charts/11_growth_markets.png" alt="Growth markets bubble chart">
-      <p class="chart-caption">Fastest-growing markets sized by GGR, positioned by growth rate, colored by Pragmatic dominance</p>
-    </div>
-
-    <h3>Strategic Opportunities for Pragmatic Play</h3>
-    <table>
-      <tr><th>Market</th><th>2026 GGR</th><th>Growth</th><th>PP Position</th><th>Opportunity</th></tr>
-      <tr><td>🇧🇷 Brazil</td><td>$4.5-5.5B</td><td>+2,150%</td><td>Dominant (~19%)</td><td>Defend vs PG Soft; localize Portuguese content</td></tr>
-      <tr><td>🇩🇪 Germany</td><td>$3.8B</td><td>+36%</td><td>Strong but declining</td><td>Fight Hacksaw surge; comply with GGL spin intervals</td></tr>
-      <tr><td>🇺🇸 (iCasino)</td><td>$10.4B</td><td>+24%</td><td>Weak (~5.5%)</td><td>Massive untapped upside if PP invests in US-specific titles</td></tr>
-      <tr><td>🇳🇬 Nigeria</td><td>$0.7B</td><td>+40%</td><td>Dominant (~19%)</td><td>Mobile-first, low-data games; M-Pesa integration</td></tr>
-      <tr><td>🇨🇴 Colombia</td><td>$0.9B</td><td>+50%</td><td>Strong (~16%)</td><td>Early mover advantage in regulated LatAm</td></tr>
-      <tr><td>🇮🇳 India</td><td>Grey market</td><td>High</td><td>Growing</td><td>4 live titles in top 10 lobbies; huge upside</td></tr>
-    </table>
-  </section>
-
-  <!-- SECTION 10: OPERATORS -->
-  <section id="operators">
-    <h2>10. Platform Operators Carrying Pragmatic Play</h2>
-    <p>Pragmatic Play content is available on <strong>300+ operator brands globally</strong> via direct API integration, platform partnerships, and aggregator distribution. The company partners with virtually every tier-1 operator in regulated markets.</p>
-
-    <div class="chart">
-      <img src="charts/16_top_operators_pragmatic.png" alt="Top operators with Pragmatic Play">
-      <p class="chart-caption">Top 10 operators by GGR with Pragmatic Play integration depth — Track360, Flutter 10-K, industry estimates</p>
-    </div>
-
-    <div class="chart">
-      <img src="charts/20_operator_brand_map.png" alt="Operator brand portfolios">
-      <p class="chart-caption">Major operator groups, their brand portfolios, and Pragmatic Play vertical coverage</p>
-    </div>
-
-    <h3>Tier-1 Operator Partnerships</h3>
-    <table>
-      <tr><th>Operator Group</th><th>Key Brands</th><th>Est. GGR</th><th>PP Products</th><th>Partnership Depth</th><th>Notable Deal</th></tr>
-      <tr>
-        <td><strong>Flutter Entertainment</strong></td>
-        <td>FanDuel, Paddy Power, Betfair, Sky Vegas, PokerStars, Sportsbet</td>
-        <td>$12.8B</td>
-        <td>Slots, Live, Bingo</td>
-        <td><span class="tag tag-win">Exclusive Live Tables UK&I</span></td>
-        <td>Jan 2025: PP = exclusive dedicated live casino tables provider for UK & Ireland brands. Smart Studio customization.</td>
-      </tr>
-      <tr>
-        <td><strong>Bet365</strong></td>
-        <td>bet365 Casino, bet365 Games</td>
-        <td>$7.2B</td>
-        <td>Slots, Live, Virtual Sports</td>
-        <td><span class="tag tag-win">Deep Integration</span></td>
-        <td>Long-standing partnership. Gates of Olympus & Sweet Bonanza prominently featured in casino lobby.</td>
-      </tr>
-      <tr>
-        <td><strong>Entain</strong></td>
-        <td>Ladbrokes, Coral, bwin, partypoker, Sportingbet, BetMGM (JV)</td>
-        <td>$6.4B</td>
-        <td>Slots, Live, Retail</td>
-        <td><span class="tag tag-win">Omnichannel</span></td>
-        <td>Big Bass series in 2,700+ Ladbrokes/Coral retail shops. Exclusive bookmaker retail rights.</td>
-      </tr>
-      <tr>
-        <td><strong>DraftKings</strong></td>
-        <td>DraftKings Casino, DraftKings Sportsbook</td>
-        <td>$4.9B</td>
-        <td>Slots, Live</td>
-        <td><span class="tag tag-neutral">Standard</span></td>
-        <td>PP slots in US iCasino lobby. Competes with IGT land-based titles.</td>
-      </tr>
-      <tr>
-        <td><strong>BetMGM</strong> (Entain × MGM JV)</td>
-        <td>BetMGM Casino, BetMGM Sports</td>
-        <td>$4.3B</td>
-        <td>Slots, Live</td>
-        <td><span class="tag tag-win">Live Casino Deal</span></td>
-        <td>Custom Auto Roulette, Boom City, Sweet Bonanza Candyland live games.</td>
-      </tr>
-      <tr>
-        <td><strong>Caesars Digital</strong></td>
-        <td>Caesars Sportsbook, Caesars Palace Online</td>
-        <td>$3.8B</td>
-        <td>Slots</td>
-        <td><span class="tag tag-neutral">Standard</span></td>
-        <td>PP slots alongside IGT and proprietary content in US markets.</td>
-      </tr>
-      <tr>
-        <td><strong>Kindred Group</strong></td>
-        <td>Unibet, 32Red, Maria Casino, Otto Casino</td>
-        <td>$2.6B</td>
-        <td>Slots, Live</td>
-        <td><span class="tag tag-win">Deep Integration</span></td>
-        <td>Listed as tier-1 partner on Pragmatic Play website. Multi-market EU supply.</td>
-      </tr>
-      <tr>
-        <td><strong>888 Holdings / Evoke</strong></td>
-        <td>William Hill, 888 Casino, Mr Green, SI Sportsbook</td>
-        <td>$2.2B</td>
-        <td>Slots, Live</td>
-        <td><span class="tag tag-win">6+ Year Partnership</span></td>
-        <td>Slots since 2017; live casino expanded 2023. Sweet Bonanza CandyLand on WH.</td>
-      </tr>
-      <tr>
-        <td><strong>Betsson Group</strong></td>
-        <td>Betsson, Betsafe, NordicBet, StarCasino</td>
-        <td>$1.4B</td>
-        <td>Slots, Live, Bingo</td>
-        <td><span class="tag tag-win">Multi-vertical</span></td>
-        <td>Strong LatAm and Nordic presence. Drops & Wins participant.</td>
-      </tr>
-      <tr>
-        <td><strong>LeoVegas Group</strong></td>
-        <td>LeoVegas, BetUK, Expekt, GoGoCasino</td>
-        <td>~$1.0B</td>
-        <td>Slots, Live</td>
-        <td><span class="tag tag-win">Live Casino</span></td>
-        <td>Custom Auto Roulette, full live portfolio including game shows.</td>
-      </tr>
-    </table>
-
-    <h3>Additional Notable Operators</h3>
-    <table>
-      <tr><th>Operator</th><th>Markets</th><th>PP Status</th></tr>
-      <tr><td>1xBet</td><td>Global (100+ countries)</td><td><span class="tag tag-pp">Full Portfolio</span></td></tr>
-      <tr><td>DAZN Bet</td><td>UK, Ireland, Italy, Germany, Spain</td><td><span class="tag tag-pp">Casino Partner</span> (sportsbook transitioning)</td></tr>
-      <tr><td>RETAbet</td><td>Peru, Spain</td><td><span class="tag tag-pp">Slots + Live + Drops & Wins</span></td></tr>
-      <tr><td>Rush Street Interactive</td><td>US (BetRivers), LatAm</td><td><span class="tag tag-neutral">Standard Slots</span></td></tr>
-      <tr><td>Penn Entertainment</td><td>US (ESPN BET)</td><td><span class="tag tag-neutral">Growing</span></td></tr>
-      <tr><td>Super Group</td><td>US (Betway), Canada, EU</td><td><span class="tag tag-pp">Full Portfolio</span></td></tr>
-      <tr><td>Stake / Easygo</td><td>Crypto-native, global</td><td><span class="tag tag-pp">Core Provider</span></td></tr>
-      <tr><td>BC.Game / BitStarz</td><td>Crypto casinos</td><td><span class="tag tag-pp">Featured Provider</span></td></tr>
-    </table>
-
-    <div class="callout">
-      <strong>Distribution Insight:</strong> Pragmatic Play's single-API model means operators integrate once and access slots, live casino, bingo, and virtual sports. The 300+ operator count includes direct integrations; total reach via aggregators exceeds <strong>1,000+ casino brands</strong> globally.
-    </div>
-  </section>
-
-  <!-- SECTION 11: AGGREGATORS -->
-  <section id="aggregators">
-    <h2>11. Game Aggregators Distributing Pragmatic Play</h2>
-    <p>Aggregators are the middleware layer connecting game studios to operators. <strong>Every major aggregator distributes Pragmatic Play content</strong> — it is considered a must-have studio in any aggregator catalog. Operators use aggregators to access 100+ studios through a single API instead of negotiating individual integrations.</p>
-
-    <div class="chart">
-      <img src="charts/17_aggregator_landscape.png" alt="Aggregator landscape">
-      <p class="chart-caption">Major iGaming aggregators — game catalog size, studio count, and Pragmatic Play availability</p>
-    </div>
-
-    <div class="chart">
-      <img src="charts/19_distribution_channels.png" alt="Distribution channels">
-      <p class="chart-caption">How Pragmatic Play content reaches operators — direct API, aggregators, platforms, white labels, and retail</p>
-    </div>
-
-    <h3>Major Aggregator Comparison</h3>
-    <table>
-      <tr><th>Aggregator</th><th>HQ</th><th>Games</th><th>Studios</th><th>PP Integration</th><th>Key Differentiator</th><th>Best For</th></tr>
-      <tr>
-        <td><strong>EveryMatrix SlotMatrix</strong></td>
-        <td>🇬🇧 London</td>
-        <td>45,000+</td>
-        <td>355+</td>
-        <td><span class="tag tag-pp">✓ Full</span></td>
-        <td>Zero platform fees; EGR Aggregator of the Year 2025</td>
-        <td>Large operators, regulated EU/US markets</td>
-      </tr>
-      <tr>
-        <td><strong>SOFTSWISS</strong></td>
-        <td>🇲🇹 Malta</td>
-        <td>35,000+</td>
-        <td>300+</td>
-        <td><span class="tag tag-pp">✓ Full (#1 ranked)</span></td>
-        <td>99.999% uptime; crypto-native; Fortune Rabbit + PP top providers</td>
-        <td>Crypto casinos, multi-brand networks</td>
-      </tr>
-      <tr>
-        <td><strong>Slotegrator (APIgrator)</strong></td>
-        <td>🇨🇿 Prague</td>
-        <td>30,000+</td>
-        <td>180+</td>
-        <td><span class="tag tag-pp">✓ Full</span></td>
-        <td>81% YoY GGR growth; CIS/Africa/Asia strength; licensing support</td>
-        <td>Emerging markets, fast deployment</td>
-      </tr>
-      <tr>
-        <td><strong>Hub88</strong></td>
-        <td>🇪🇪 Tallinn</td>
-        <td>12,000+</td>
-        <td>120+</td>
-        <td><span class="tag tag-pp">✓ Exclusive launches</span></td>
-        <td>HubConnect analytics; Promotions Marketplace; PP early-access partner</td>
-        <td>Data-driven operators, LatAm expansion</td>
-      </tr>
-      <tr>
-        <td><strong>SoftGamings</strong></td>
-        <td>🇲🇹 Malta</td>
-        <td>10,000+</td>
-        <td>250+</td>
-        <td><span class="tag tag-pp">✓ Full</span></td>
-        <td>Turnkey + white label + aggregator; 150+ payment providers</td>
-        <td>New market entrants, white labels</td>
-      </tr>
-      <tr>
-        <td><strong>Relax Gaming (Powered By)</strong></td>
-        <td>🇲🇹 Malta</td>
-        <td>8,000+</td>
-        <td>80+</td>
-        <td><span class="tag tag-pp">✓ Full</span></td>
-        <td>Dream Drop jackpots; Silver Bullet partner program</td>
-        <td>Mid-tier operators, jackpot networks</td>
-      </tr>
-      <tr>
-        <td><strong>Pariplay Fusion (Aristocrat)</strong></td>
-        <td>🇬🇮 Gibraltar</td>
-        <td>6,000+</td>
-        <td>60+</td>
-        <td><span class="tag tag-pp">✓ Full</span></td>
-        <td>Aristocrat land-based IP bridge; retail-to-digital</td>
-        <td>US-facing, land-based crossover</td>
-      </tr>
-      <tr>
-        <td><strong>Bragg Gaming (ORYX)</strong></td>
-        <td>🇨🇦 Toronto</td>
-        <td>5,000+</td>
-        <td>50+</td>
-        <td><span class="tag tag-pp">✓ Full</span></td>
-        <td>Own studios + aggregation; US/Canada focus</td>
-        <td>North American operators</td>
-      </tr>
-    </table>
-
-    <h3>How Aggregation Works</h3>
-    <div class="callout">
-      <strong>The Aggregator Value Chain:</strong><br>
-      1. <strong>Game Studio</strong> (Pragmatic Play) creates content and certifies for jurisdictions<br>
-      2. <strong>Aggregator</strong> (SOFTSWISS, Hub88, etc.) integrates studio via API, handles compliance routing<br>
-      3. <strong>Platform Provider</strong> (EveryMatrix, Playtech) or <strong>Operator</strong> (Bet365, Flutter) connects to aggregator's single API<br>
-      4. <strong>Player</strong> accesses PP games through operator's branded frontend<br><br>
-      <strong>Why operators use aggregators:</strong> Reduces integration time from months to days. One contract = 300+ studios. Aggregators handle jurisdiction-specific content certification, RTP configuration, and compliance reporting.
-    </div>
-
-    <h3>Pragmatic Play × Aggregator Highlights</h3>
-    <table>
-      <tr><th>Partnership</th><th>Detail</th></tr>
-      <tr><td>Hub88 × PP Medusa's Stone</td><td>Hub88 chosen for exclusive 2-week early launch before network release (May 2024)</td></tr>
-      <tr><td>SOFTSWISS × PP</td><td>Pragmatic Play ranked #1 external provider in SOFTSWISS aggregator; Fortune Rabbit + PP lead demand</td></tr>
-      <tr><td>EveryMatrix × Betsson</td><td>EveryMatrix extended Betsson partnership with Fantasma Games — same platform hosts PP content</td></tr>
-      <tr><td>Slotegrator × PP</td><td>PP content available across 650+ Slotegrator active projects in 40+ jurisdictions</td></tr>
-    </table>
-  </section>
-
-  <!-- SECTION 12: PLATFORM PROVIDERS -->
-  <section id="platforms">
-    <h2>12. B2B Platform Providers & Pragmatic Play</h2>
-    <p>Beyond aggregators, <strong>B2B platform providers</strong> supply the full technology stack (player account management, payments, CRM, sportsbook, casino) that operators run on. Pragmatic Play integrates natively with all major platforms.</p>
-
-    <div class="chart">
-      <img src="charts/18_platform_providers.png" alt="Platform providers">
-      <p class="chart-caption">B2B platform providers by market share and Pragmatic Play integration depth</p>
-    </div>
-
-    <h3>Platform Provider Comparison</h3>
-    <table>
-      <tr><th>Platform</th><th>Model</th><th>Key Clients</th><th>PP Integration</th><th>Strengths</th></tr>
-      <tr>
-        <td><strong>Playtech</strong></td>
-        <td>Enterprise full-stack</td>
-        <td>Entain, bet365, Flutter (partial), William Hill</td>
-        <td><span class="tag tag-pp">Native IMS</span></td>
-        <td>Vertically integrated; €1.7B revenue; owns studios + platform</td>
-      </tr>
-      <tr>
-        <td><strong>EveryMatrix</strong></td>
-        <td>Modular API-first</td>
-        <td>Betsson, Betcenter, tier-1 EU operators</td>
-        <td><span class="tag tag-pp">GamMatrix + SlotMatrix</span></td>
-        <td>Zero-fee aggregation; compliance-focused; US expansion</td>
-      </tr>
-      <tr>
-        <td><strong>SOFTSWISS</strong></td>
-        <td>Full-stack + aggregator</td>
-        <td>500+ crypto & fiat operators</td>
-        <td><span class="tag tag-pp">Native platform</span></td>
-        <td>Bitcoin-first pioneer; 35K game aggregator built-in</td>
-      </tr>
-      <tr>
-        <td><strong>OpenBet</strong></td>
-        <td>Sportsbook-centric</td>
-        <td>Flutter, Entain, tier-1 sportsbooks</td>
-        <td><span class="tag tag-neutral">Casino module</span></td>
-        <td>High-volume betting infrastructure; odds & risk</td>
-      </tr>
-      <tr>
-        <td><strong>BetConstruct</strong></td>
-        <td>All-in-one ecosystem</td>
-        <td>1,000+ operators (emerging markets)</td>
-        <td><span class="tag tag-pp">Spring Platform</span></td>
-        <td>Armenia HQ; strong CIS, LatAm, Africa presence</td>
-      </tr>
-      <tr>
-        <td><strong>SoftGamings</strong></td>
-        <td>Turnkey + white label</td>
-        <td>300+ operators globally</td>
-        <td><span class="tag tag-pp">Single API</span></td>
-        <td>Fast launch (2-6 weeks); 200+ provider partnerships</td>
-      </tr>
-      <tr>
-        <td><strong>IGT (PlayDigital)</strong></td>
-        <td>Land-based + digital bridge</td>
-        <td>Caesars, BetMGM, US operators</td>
-        <td><span class="tag tag-neutral">Selective</span></td>
-        <td>US market leader; land-based slot IP crossover</td>
-      </tr>
-      <tr>
-        <td><strong>Pragmatic Solutions</strong></td>
-        <td>PAM for licensed operators</td>
-        <td>Mid-tier EU operators</td>
-        <td><span class="tag tag-pp">Own platform</span></td>
-        <td>PP's own platform arm (separate from content studio)</td>
-      </tr>
-    </table>
-
-    <h3>Ecosystem Architecture</h3>
-    <div class="callout">
-      <strong>How the iGaming B2B stack layers together:</strong><br><br>
-      <strong>Layer 1 — Content Studios:</strong> Pragmatic Play, Evolution, Play'n GO, Hacksaw, etc.<br>
-      <strong>Layer 2 — Aggregators:</strong> SOFTSWISS, EveryMatrix SlotMatrix, Hub88, Slotegrator<br>
-      <strong>Layer 3 — Platform Providers:</strong> Playtech, EveryMatrix, SOFTSWISS, OpenBet, BetConstruct<br>
-      <strong>Layer 4 — Operators:</strong> Flutter, Bet365, Entain, DraftKings, etc.<br>
-      <strong>Layer 5 — Players:</strong> End users on branded casino/sportsbook frontends<br><br>
-      Pragmatic Play operates at <strong>Layer 1</strong> (content) but also has a toehold at Layer 3 (Pragmatic Solutions PAM). Their content reaches operators through every possible channel — making PP one of the most distributed game providers in the industry.
-    </div>
-  </section>
-
-  <!-- SECTION 9: SWOT -->
-  <section id="swot">
-    <h2>9. Pragmatic Play SWOT Summary</h2>
-    <div class="two-col">
-      <div>
-        <h3 style="color: var(--green);">Strengths</h3>
-        <ul style="padding-left: 1.5rem;">
-          <li>#1 global slot provider by every major metric</li>
-          <li>8 of top 10 games in EGR Global Tracker</li>
-          <li>Drops & Wins — industry's largest promo network ($30M+ monthly)</li>
-          <li>7-8 releases/month = unmatched catalog freshness</li>
-          <li>Licensed in 40+ regulated jurisdictions</li>
-          <li>Full vertical stack: slots + live + bingo + virtual sports</li>
-          <li>Mobile-optimized HTML5 across all titles</li>
-          <li>Dominant in LatAm, Africa, and most of Europe</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="color: var(--red);">Weaknesses</h3>
-        <ul style="padding-left: 1.5rem;">
-          <li>Formulaic tumble-multiplier releases ("tumble fatigue")</li>
-          <li>Max win ceiling trails extreme-volatility rivals</li>
-          <li>Weak US/Australia market position</li>
-          <li>Live casino distant #2 to Evolution</li>
-          <li>Declining share in UK, Germany, Italy</li>
-          <li>Variable RTP tiers create player trust issues</li>
-          <li>500+ catalog = inconsistent quality</li>
-        </ul>
-      </div>
-    </div>
-    <div class="two-col" style="margin-top: 1.5rem;">
-      <div>
-        <h3 style="color: var(--blue);">Opportunities</h3>
-        <ul style="padding-left: 1.5rem;">
-          <li>Brazil $5.5B regulated market (year 2)</li>
-          <li>US iCasino expansion (only 6 states live)</li>
-          <li>Live casino growth (+19% industry, PP at 25%)</li>
-          <li>India's exploding live casino demand</li>
-          <li>AI-driven personalization partnerships</li>
-          <li>Crypto casino distribution growth</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="color: var(--purple);">Threats</h3>
-        <ul style="padding-left: 1.5rem;">
-          <li>Hacksaw Gaming doubling share in Germany</li>
-          <li>Evolution expanding slots via NetEnt/Red Tiger</li>
-          <li>Regulatory bonus buy bans (UK, Belgium, Germany)</li>
-          <li>Streamer culture shifting to Nolimit/Hacksaw</li>
-          <li>Market fragmentation reducing dominant shares</li>
-          <li>Feature fatigue pushing players to simpler games</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <div class="sources">
-    <h3 style="color: var(--text); margin-bottom: 1rem;">Sources & Methodology</h3>
-    <p>Data compiled from: EGR Global Slots Tracker (eGaming Monitor), Blask Provider Content Share, Track360 iGaming Statistics, CasinoRank Supplier Analysis, EGBA Annual Report, UKGC Statistics, AGA Commercial Gaming Revenue Report, H2 Gambling Capital, MatrixBCG, SlotBest Provider Reviews, Yogonet Live Games Report, Pragmatic Play press releases, Hub88, SOFTSWISS, EveryMatrix, and Slotegrator public disclosures.</p>
-    <p>Charts represent 2025-2026 estimates where noted. Competitive scores in radar/blind-spot charts are composite indices derived from publicly available provider data, not proprietary financials. Pragmatic Play does not disclose standalone revenue; $1B+ estimate from industry analysts. Operator GGR figures are estimates from Track360 and public filings.</p>
-    <p>Key references: <a href="https://track360.io/blog/online-gambling-statistics-2026-global-market-data">Track360 2026</a> · <a href="https://blask.com/blog/provider-content-share/">Blask Provider Share</a> · <a href="https://www.egr.global/intel/insight/global-slots-tracker-pragmatic-play-keeps-firm-grip-on-the-ranking/">EGR Global Slots Tracker</a> · <a href="https://eegaming.org/latest-news/2026/05/28/139927/pragmatic-play-leads-across-europe-while-rtg-and-3-oaks-gaming-dominate-us-and-australia-new-blask-data-shows/">EE Gaming Blask Analysis</a> · <a href="https://www.pragmaticplay.com/en/news/">Pragmatic Play News</a> · <a href="https://hub88.io/">Hub88</a> · <a href="https://everymatrix.com/">EveryMatrix</a></p>
+  <div class="chartbox">
+    <div class="ct">Growth is inversely correlated with market size<span class="tier t-B">B</span></div>
+    <div class="cs">2026E online GGR by region — bubble area is market size, position is growth against regulatory maturity</div>
+    <div class="cv"><canvas id="ch_region"></canvas></div>
+    <div class="cf">Source: Track360 analysis of EGBA, AGA and national regulator data, 2026. Global total $121bn.</div>
   </div>
 
-</div>
+  <p>
+    The regional picture matters to a content supplier differently than it does to an operator.
+    Europe is the biggest pool and the one where Pragmatic Play leads outright. North America is the
+    fastest-growing large pool and the one it cannot sell into. Asia-Pacific is nominally the same
+    size as North America but only 41% regulated, and the two largest demand centres inside it —
+    India and China — are closed by statute. Latin America is growing at 30% and is where Pragmatic
+    Play is strongest outside Europe.
+  </p>
 
-<footer>
-  Global iGaming & Pragmatic Play Research Report · Generated July 2026 · For informational purposes only
-</footer>
+  <figure>
+    <img src="charts/03_slot_intensity.png" alt="Slots as a share of online casino GGR by market">
+    <figcaption><b>Slots are the online casino market.</b> In Germany the licensed online casino market is
+    slots and nothing else, because live casino is not federally licensed. Denmark, the UK and
+    Portugal all run above 80%. Sources: UKGC FY2024/25, Spillemyndigheden 2025, SRIJ Q4 2025, PGCB, GGL 2025.<span class="tier t-A">A</span></figcaption>
+  </figure>
 
+  <div class="grid2">
+    <figure>
+      <img src="charts/04_us_states.png" alt="US iGaming revenue by state 2025">
+      <figcaption><b>Record revenue, frozen footprint.</b> $10.74bn across seven states, +27.6%, with the
+      first $1bn month in December 2025 — and only one new legalisation in two years.<span class="tier t-A">A</span></figcaption>
+    </figure>
+    <figure>
+      <img src="charts/07_market_growth.png" alt="Market growth and contraction by market">
+      <figcaption><b>Two markets deleted themselves.</b> India banned real-money gaming outright with no
+      licensing pathway; the Philippines shrank 22% after the central bank ordered banks and e-wallets
+      to de-link gambling platforms.<span class="tier t-A">A</span></figcaption>
+    </figure>
+  </div>
+
+  <h3>Tax is now the first-order variable</h3>
+  <p>
+    Two of these rates are levied on turnover rather than gross gaming revenue, which changes their
+    meaning completely. Germany's 5.3% of stakes works out at roughly 40–55% of GGR depending on RTP,
+    which is why 84 million Germans generate only €543m of licensed slot revenue. Mexico's 50% IEPS
+    on wagers is arithmetically impossible to absorb at a 96% RTP, and should be expected to produce
+    restructuring, non-compliance or offshore migration rather than revenue.
+  </p>
+
+  <figure>
+    <img src="charts/05_tax_rates.png" alt="Online casino tax rates by market">
+    <figcaption><b>Headline tax on online casino, latest enacted rate.</b> Sources: HMRC, Kansspelautoriteit,
+    ONJN, Bulgarian NRA, Spelinspektionen, Coljuegos, SPA Brazil, GGL, SEGOB.<span class="tier t-A">A</span></figcaption>
+  </figure>
+
+  <figure>
+    <img src="charts/06_channelisation.png" alt="Channelisation versus tax rate">
+    <figcaption><b>The Dutch experiment.</b> Raising tax from 30.5% to 39.75% in two years cut legal GGR by
+    18% and pushed channelisation to 53% — the first year since the 2021 market opening in which the
+    illegal market was larger than the legal one. The projected €200m of extra revenue never appeared;
+    2025 receipts came in below 2024.<span class="tier t-A">A</span></figcaption>
+  </figure>
+
+  <div class="chartbox">
+    <div class="ct">Monetising harder per spin, not winning more spins<span class="tier t-A">A</span></div>
+    <div class="cs">UK online slots, largest operators (~70% of the market) — the best behavioural dataset in the industry</div>
+    <div class="cv"><canvas id="ch_uk"></canvas></div>
+    <div class="cf">Source: UK Gambling Commission operator data to March 2026. This was the final edition — the Commission discontinued the dataset in May 2026.</div>
+  </div>
+
+  <p>
+    That chart is the whole industry in miniature. Slot GGY rose 12% year on year while spins per
+    session, revenue per session and session length all fell. Growth came from a 6% larger active
+    base, not from deeper engagement. With Remote Gaming Duty now at 40%, the lever operators are
+    reaching for next is not engagement — it is RTP, which the mechanics section quantifies.
+  </p>
+</div></section>
+
+<!-- ══════════════════════════════════════ 3 WHERE PRAGMATIC PLAYS -->
+<section id="where"><div class="wrap">
+  <div class="sec-num">03 — Geography</div>
+  <h2>Where Pragmatic Play plays, and where it does not</h2>
+  <p class="intro">
+    Pragmatic Play is the #1 supplier in Europe, South America and Africa, #2 in the Philippines,
+    #3 in Canada and absent in the United States. That shape — dominant everywhere except the one
+    market growing at 27.6% — is the strategic fact this report is built around.
+  </p>
+
+  <figure>
+    <img src="charts/30_pragmatic_regional_rank.png" alt="Pragmatic Play supplier share by region">
+    <figcaption>The Europe figure is the reliable one: Eilers-Fantini collects submitted GGR from a panel of
+    69–89 casinos across 15–18 countries. The African and South American shares come from a single
+    commercial press release using lobby presence rather than GGR, and are marked accordingly.<span class="tier t-B">B</span></figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="chartbox">
+      <div class="ct">Europe: #1 and extending<span class="tier t-B">B</span></div>
+      <div class="cs">Supplier share of European online casino GGR</div>
+      <div class="cv"><canvas id="ch_eu"></canvas></div>
+      <div class="cf">Source: Eilers-Fantini Europe Online Game Performance Report, Oct 2025 and Jun 2026.</div>
+    </div>
+    <figure style="margin:30px 0">
+      <img src="charts/10_na_supplier_share.png" alt="North America supplier share">
+      <figcaption><b>North America: not on the board.</b> Evolution, IGT and Light &amp; Wonder hold roughly
+      48% between them. Pragmatic holds nothing, because it is not licensed.<span class="tier t-B">B</span></figcaption>
+    </figure>
+  </div>
+
+  <figure>
+    <img src="charts/21_shelf_share.png" alt="Top-100 shelf share, US versus Germany">
+    <figcaption><b>Two markets, two completely different shelves.</b> Pragmatic Play plus Reel Kingdom hold 29
+    of Germany's top 100 titles and zero of America's. iGamingCompass scans every licensed lobby in a
+    market rather than sampling.<span class="tier t-B">B</span></figcaption>
+  </figure>
+
+  <div class="call info">
+    <div class="ch">Why the US gap is not simply "they haven't got round to it"</div>
+    <p>US licensing is slow and expensive by design — a Michigan supplier licence alone takes seven to
+    nine months — but the more revealing signal is behavioural. In September 2025 Pragmatic Play became
+    the <strong>first major supplier to quit the US sweepstakes vertical</strong>, days after the Los Angeles
+    City Attorney named it alongside Evolution, Hacksaw, Nolimit City, Red Tiger, BTG and NetEnt in an
+    action against Stake.us, and as California's AB 831 — which criminalises suppliers who knowingly
+    support sweepstakes operators — headed for a Senate vote. In 2026 it began geo-blocking Dutch IPs on
+    unlicensed casinos, removing roughly 29% of the top offshore slot inventory in that market overnight.
+    Both moves point the same way: cleaning up distribution in order to buy a US licence. Whether that
+    succeeds is the single most consequential open question in the slot supply market.</p>
+  </div>
+
+  <h3>The markets that are closed to everybody</h3>
+  <p>
+    Roughly a third of world population lives where online casino cannot legally be supplied at all.
+    France prohibits online casino outright and has no live legislative vehicle to change it, despite
+    the ANJ estimating the illegal market at €800m–€1.5bn and growing, "mainly driven by illegal online
+    casinos". Australia bans online slots under the Interactive Gambling Act. India's Promotion and
+    Regulation of Online Gaming Act came into force on 1 May 2026 with no licensing pathway and no
+    grandfathering, shrinking the domestic industry from roughly $6bn to $1bn. Japan, South Korea,
+    China, Thailand, Indonesia and Vietnam all prohibit it. Norway and Poland run state monopolies.
+  </p>
+  <p>
+    Against that, three markets opened or are opening: <strong>Brazil</strong> produced BRL 37bn (~$7bn) of
+    GGR in its first regulated year from 79 licensees, the best first year of any newly regulated market;
+    <strong>Alberta</strong> went live on 13 July 2026 with 22 operators on day one and Pragmatic Play certified
+    from the start; and <strong>Finland</strong> opens on 1 July 2027 with a 22% GGR tax and — importantly for
+    suppliers — a rule that from 2028 licensed operators may only use software from Finnish-licensed
+    suppliers.
+  </p>
+</div></section>
+
+<!-- ══════════════════════════════════════ 4 STUDIOS -->
+<section id="studios"><div class="wrap">
+  <div class="sec-num">04 — The competitive set</div>
+  <h2>The studio league table</h2>
+  <p class="intro">
+    There is no single authoritative GGR-share table for slot studios. What follows is four
+    independent proxies — submitted GGR, lobby footprint, new-release quality scoring and demo-play
+    demand. They disagree, because they measure different things. Read them together.
+  </p>
+
+  <h3>Distribution scale</h3>
+  <figure>
+    <img src="charts/11_lobby_footprint.png" alt="Provider lobby footprint Q1 2026">
+    <figcaption>Q1 2026 scan of 3,844 games across roughly 13,000 pages. Pragmatic leads on games, sites and
+    pages simultaneously. Note the caveat: a second SlotsRank dataset using different counting rules gives
+    Games Global 1,730 games and Evolution 1,450 — treat every catalogue count as ±40%.<span class="tier t-B">B</span></figcaption>
+  </figure>
+
+  <h3>Per-release quality — the axis Pragmatic loses</h3>
+  <div class="chartbox">
+    <div class="ct">Output versus craft<span class="tier t-B">B</span></div>
+    <div class="cs">Slots Launch new-release scoring, 2026 year to date — bubble size is gold-rated releases</div>
+    <div class="cv"><canvas id="ch_quality"></canvas></div>
+    <div class="cf">Source: Slots Launch Leaderboard via Business of iGaming. Full-year 2025 totals: Pragmatic 4,694, Hacksaw 4,380, ELK 3,511 with 12 golds.</div>
+  </div>
+  <p>
+    Pragmatic Play ships more new slots than anyone and has not produced a single gold-rated release
+    in 2026. That is a deliberate and, so far, correct strategic choice — it holds 17.8% European GGR
+    share while ELK Studios holds a fraction of that. The risk is structural rather than immediate:
+    volume strategies decay when operators start curating lobbies instead of filling them, and UK tax
+    pressure, Dutch lobby contraction and German product limits are all pushing exactly that way.
+  </p>
+
+  <h3>Financial shape</h3>
+  <figure>
+    <img src="charts/14_supplier_financials.png" alt="FY2025 supplier revenue">
+    <figcaption><b>The largest supplier by European GGR share has no public financials at all</b>, and with
+    Games Global's IPO withdrawn, Kindred delisted and five suppliers taken private in twelve months,
+    there is no listed peer of comparable shape to triangulate from. Evolution and Hacksaw are the only
+    pure-play listed comparables left.<span class="tier t-A">A</span></figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="chartbox">
+      <div class="ct">Live has stopped growing; RNG restarted<span class="tier t-A">A</span></div>
+      <div class="cs">Evolution AB net revenue by quarter, €m</div>
+      <div class="cv"><canvas id="ch_evo"></canvas></div>
+      <div class="cf">Source: Evolution AB quarterly reports. RNG grew 14.0% in Q2 2026, its first double-digit quarter in about three years.</div>
+    </div>
+    <figure style="margin:30px 0">
+      <img src="charts/16_hacksaw_growth.png" alt="Hacksaw Gaming quarterly revenue">
+      <figcaption><b>The growth story.</b> €197.5m in FY2025, up 44%, at an 82% adjusted EBIT margin — the
+      highest of any company in this report. Revenue comes from its own games <em>and</em> from licensing its
+      OpenRGS platform to third-party studios.<span class="tier t-A">A</span></figcaption>
+    </figure>
+  </div>
+
+  <figure>
+    <img src="charts/17_margins.png" alt="FY2025 margins by company">
+    <figcaption>The spread from 82% to 20.5% is not about operational quality — it is about where the cost of
+    distribution sits. Hacksaw and Nolimit build a game once and push it through existing integrations at
+    zero marginal cost. <b>When benchmarking Pragmatic Play, note that it runs live studios in five countries
+    expanding to nine: structurally a Playtech- or Evolution-shaped cost base, not a Hacksaw-shaped one.</b><span class="tier t-A">A</span></figcaption>
+  </figure>
+
+  <h3>Who the competitors actually are</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Studio</th><th>Ownership</th><th class="num">Portfolio</th><th class="num">Cadence</th><th>Mechanical identity</th><th>Where it wins</th></tr></thead>
+    <tbody>
+      <tr class="pp-row"><td><b>Pragmatic Play</b><br><span style="color:var(--dim);font-size:12.5px">+ Reel Kingdom</span></td><td>Private; Veridian (Gibraltar) led; serviced by ARRISE</td><td class="num">~800 slots<br>1,219 titles</td><td class="num">8/month</td><td>Tumble + multiplier, Hold &amp; Spin, Super Scatter, franchise sequels</td><td>Europe, LatAm, Africa — distribution and promo tooling</td></tr>
+      <tr><td><b>Evolution Group</b><br><span style="color:var(--dim);font-size:12.5px">NetEnt, Red Tiger, BTG, Nolimit</span></td><td>Nasdaq Stockholm: EVO</td><td class="num">467 titles</td><td class="num">113 in 2025</td><td>Megaways, Book-of legacy, daily jackpots, xMechanics</td><td>Live casino incumbency, US licensing, brand pull</td></tr>
+      <tr><td><b>Playtech</b></td><td>LSE: PTEC</td><td class="num">985 titles</td><td class="num">Continuous</td><td>Fire Blaze jackpots, branded IP (Age of the Gods)</td><td>Tier-one operator placement — 503 sites</td></tr>
+      <tr><td><b>Light &amp; Wonder</b><br><span style="color:var(--dim);font-size:12.5px">incl. ELK Studios</span></td><td>ASX/NASDAQ: LNW</td><td class="num">687 titles</td><td class="num">Continuous</td><td>Land-based IP ported online, Hold &amp; Spin, jackpot links</td><td>North America — 12 of the US top 100</td></tr>
+      <tr><td><b>Games Global</b></td><td>Private; IPO withdrawn 2024</td><td class="num">1,300+ exclusive</td><td class="num">~60 variants/mo</td><td>Progressive jackpot networks, Area/Amazing Link</td><td>Canada and Ontario — the #1 title in both</td></tr>
+      <tr><td><b>Hacksaw Gaming</b></td><td>Nasdaq Stockholm: HACK</td><td class="num">293 titles</td><td class="num">4–5/month</td><td>Scratchcards, instant-win, high-volatility bonus buy</td><td>Streamers, crypto casinos, 82% margins</td></tr>
+      <tr><td><b>Nolimit City</b></td><td>Evolution (2022, up to €340m)</td><td class="num">~65 core</td><td class="num">12–15/year</td><td>xWays, xNudge, xSplit, xBomb — extreme volatility</td><td>Hardcore volatility segment; 179 avg release score</td></tr>
+      <tr><td><b>Play'n GO</b></td><td>Private, Swedish</td><td class="num">~400 titles</td><td class="num">56 in 2024</td><td>Book-of mechanic, grid/cluster; <b>no bonus buy, ever</b></td><td>Germany and the Netherlands — #1 title in both</td></tr>
+      <tr><td><b>PG Soft</b></td><td>Private</td><td class="num">200+ titles</td><td class="num">Regular</td><td>Mobile-first HTML5, portrait play, ways + multiplier trails</td><td>Asia — beats Pragmatic in the Philippines</td></tr>
+      <tr><td><b>ELK Studios</b></td><td>Light &amp; Wonder (2021)</td><td class="num">~60 titles</td><td class="num">Low</td><td>X-iter bonus entry, CollectR meta-games (Pirots)</td><td>Highest per-release quality in the industry</td></tr>
+      <tr><td><b>Relax Gaming</b></td><td>Kindred → FDJ United (2024)</td><td class="num">~100–350 own<br>~4,000 aggregated</td><td class="num">Moderate</td><td>Money Train persistence, Dream Drop jackpot</td><td>Dual model: own content plus a studio-incubation layer</td></tr>
+      <tr><td><b>Spribe</b></td><td>Private (Georgia)</td><td class="num">Aviator + Turbo</td><td class="num">Very low</td><td>Crash / social multiplayer with live cash-out feed</td><td>Owns a whole category Pragmatic does not compete in</td></tr>
+      <tr><td><b>Greentube / Novomatic</b></td><td>Novomatic AG</td><td class="num">~470 titles</td><td class="num">30+/year</td><td>Book of Ra expanding symbol, Cash Connection links</td><td>DACH and CEE land-to-online conversion</td></tr>
+      <tr><td><b>Jili / TaDa</b></td><td>IGS (Taiwan OTC: 3293)</td><td class="num">150–230+ each</td><td class="num">3–4/month</td><td>Fish-shooting, arcade slots, glocalised themes</td><td>Philippines, SE Asia, Brazil</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:13px;color:var(--dim)">
+    Portfolio counts are lobby-scan and company figures and vary by ±40% between sources.
+    Ownership, cadence and mechanics are company-published <span class="tier t-C">C</span>.
+  </p>
+</div></section>
+
+<!-- ══════════════════════════════════════ 5 GAMES -->
+<section id="games"><div class="wrap">
+  <div class="sec-num">05 — Game data</div>
+  <h2>What people actually play</h2>
+  <p class="intro">
+    Distribution breadth and revenue performance are different measurements and they produce
+    different league tables. Pragmatic Play wins the first outright. The second is genuinely
+    contested, and in the United States it does not appear at all.
+  </p>
+
+  <figure>
+    <img src="charts/18_title_reach.png" alt="Most widely distributed slot titles">
+    <figcaption><b>The three most widely distributed slots on earth are all Pragmatic.</b> Gates of Olympus
+    reaches 62 countries; Big Bass Splash 463 operator sites. Two of the three are Reel Kingdom content.<span class="tier t-B">B</span></figcaption>
+  </figure>
+
+  <figure>
+    <img src="charts/19_gates_depth.png" alt="Gates of Olympus distribution depth by market">
+    <figcaption>Gates of Olympus is carried by 172 operator brands in Brazil and placed on 96 front lobbies
+    there. Depth of merchandising, not just presence, is what the Blask index measures.<span class="tier t-B">B</span></figcaption>
+  </figure>
+
+  <div class="call warn">
+    <div class="ch">The most important corrective in this report</div>
+    <p>The affiliate web treats "top slots" as a global league table headed by Gates of Olympus and
+    Sweet Bonanza. Operator revenue data says otherwise. bet365's own monthly rankings — the first time
+    an operator has voluntarily published game performance at this granularity — show a
+    <strong>different #1 slot in all ten published markets</strong> in June 2026. Gates of Olympus tops Brazil
+    and nowhere else. Sweet Bonanza appears only at #5 in Canada and #5 in Brazil. In the UK, Germany,
+    Spain, Michigan, New Jersey and Pennsylvania, no Pragmatic title reaches the top five at all.</p>
+  </div>
+
+  <figure>
+    <img src="charts/20_no_global_number_one.png" alt="Number one slot by market, June 2026">
+    <figcaption>bet365 ranks 7,500+ games across 20 markets on a composite of revenue, stakes, sessions and
+    engagement, published monthly since February 2026. It is one operator's book, not the market — but it
+    is real internal data, and nothing else in the category is comparable.<span class="tier t-B">B</span></figcaption>
+  </figure>
+
+  <h3>Three findings that fall out of the game-level data</h3>
+  <ul>
+    <li><strong>Old games win.</strong> Triple Diamond (a three-reel IGT classic), Scruffy Duck (NetEnt, 2017),
+      Book of Ra, Legacy of Dead, Eye of Horus and Sizzling Hot Deluxe all took top-five positions in 2026.
+      Age of catalogue is close to irrelevant; familiarity and lobby placement are what matter — which is
+      an argument <em>for</em> Pragmatic's distribution strategy, not against it.</li>
+    <li><strong>Preference is path-dependent on land-based heritage.</strong> Six of Germany's top 19 are
+      Egyptian "book" slots. Hold-and-collect "Link" titles own North America and Canada. Fishing
+      hold-and-win owns the UK. A studio that ships one global product ships the wrong product in most
+      markets.</li>
+    <li><strong>Nothing is concentrated at the title level.</strong> The single highest-grossing slot in Europe,
+      Gates of Olympus 1000, commands 1.35% of European slot GGR. The concentration in this industry sits
+      at the <em>supplier</em> level, not the title level — which is precisely why supplier share is the metric
+      worth defending.</li>
+  </ul>
+
+  <figure>
+    <img src="charts/13_demo_demand.png" alt="Demo play volume by provider">
+    <figcaption>Discovery demand across 29,643 demo games and 2.16m monthly plays. Pragmatic leads by 57%
+    over the next studio — its franchise gravity is real, even where its revenue performance is not
+    market-leading.<span class="tier t-B">B</span></figcaption>
+  </figure>
+</div></section>
+
+<!-- ══════════════════════════════════════ 6 MECHANICS -->
+<section id="mechanics"><div class="wrap">
+  <div class="sec-num">06 — Features, math and product regulation</div>
+  <h2>Mechanics that earn, and the math behind them</h2>
+  <p class="intro">
+    The innovation frontier moved. It is no longer new payline geometry — Megaways settled into
+    infrastructure years ago. It is layering: persistence, collection and nested bonus states, plus a
+    parallel land-grab in crash and instant formats that slots convert badly.
+  </p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Mechanic</th><th>Status</th><th>Owner / originator</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cash on Reels / money collect</b></td><td><span class="pill on">Dominant</span></td><td>Generic; Big Bass popularised online</td><td>Named by Eilers &amp; Krejcik as a top performance driver</td></tr>
+      <tr><td><b>Hold &amp; Spin / Hold &amp; Win</b></td><td><span class="pill on">Dominant</span></td><td>Aristocrat (Lightning Link, 2014–15)</td><td>L&amp;W paid Aristocrat $127.5m in Jan 2026 over hold-and-spin math</td></tr>
+      <tr><td><b>Perceived persistence</b></td><td><span class="pill on">Dominant</span></td><td>Design principle, not owned</td><td>Sticky wilds, collection meters, upgrade ladders</td></tr>
+      <tr><td><b>Nested Hold &amp; Spin</b></td><td><span class="pill on">Fastest rising</span></td><td>—</td><td>A hold-and-spin inside a hold-and-spin</td></tr>
+      <tr><td><b>Multi-trigger jackpots / features</b></td><td><span class="pill on">Fastest rising</span></td><td>—</td><td>Layered bonus complexity is the frontier</td></tr>
+      <tr><td><b>Megaways</b></td><td><span class="pill">Mature</span></td><td>Big Time Gaming (Evolution)</td><td>~2% of titles, 100+ licensees, peak release year 2023</td></tr>
+      <tr><td><b>xWays / xNudge / xBomb / xSplit</b></td><td><span class="pill">Niche, high value</span></td><td>Nolimit City (Evolution)</td><td>The only proprietary mechanic family with genuine brand equity</td></tr>
+      <tr><td><b>CollectR</b></td><td><span class="pill">Rising</span></td><td>ELK Studios</td><td>Pirots 1–5; payouts driven by collector behaviour, not paylines</td></tr>
+      <tr><td><b>Infinity Reels</b></td><td><span class="pill">Licensed out</span></td><td>ReelPlay</td><td>Winning combos append reels indefinitely</td></tr>
+      <tr><td><b>Crash</b></td><td><span class="pill on">Category of its own</span></td><td>Spribe (Aviator)</td><td>#1 game outright in South Africa and Ghana; ~18% of Colombian online casino bets</td></tr>
+      <tr><td><b>Reel Overlay (slot × crash)</b></td><td><span class="pill">Experimental</span></td><td>Ready Play Gaming, 2026</td><td>A crash cash-out layer running on top of a live video slot</td></tr>
+    </tbody>
+  </table></div>
+
+  <figure>
+    <img src="charts/25_mechanic_prevalence.png" alt="Mechanic prevalence across the catalogue">
+    <figcaption>These are SlotCatalog title tags — they measure <b>supply, not revenue</b>, and the index is
+    incomplete because the page is Cloudflare-protected past the first render. Prevalence and performance
+    are different things: cluster pays appears in 1,302 titles but does not feature in the Eilers
+    performance drivers at all.<span class="tier t-B">B</span></figcaption>
+  </figure>
+
+  <h3>Volatility and the max-win ceiling</h3>
+  <div class="chartbox">
+    <div class="ct">The max-win arms race peaked and plateaued<span class="tier t-C">C</span></div>
+    <div class="cs">Published maximum win multiplier by title, log scale — orange is Pragmatic Play</div>
+    <div class="cv"><canvas id="ch_maxwin"></canvas></div>
+    <div class="cf">Sources: provider game pages, VegasSlotsOnline max-win analysis April 2026. Affiliate sources conflict badly on Nolimit City figures; verify against the provider info panel before quoting.</div>
+  </div>
+  <p>
+    Pragmatic's ceiling sits an order of magnitude below Nolimit City's and Relax Gaming's. That is a
+    deliberate mass-market choice rather than an oversight — extreme volatility is a small, loud
+    segment — but it cedes the entire streamer economy, which is the highest-intent discovery channel
+    in the category and which grew 39.5% in watch hours last year on 13% fewer streamers.
+  </p>
+
+  <div class="grid2">
+    <figure>
+      <img src="charts/23_money_train_paradox.png" alt="Money Train max win paradox">
+      <figcaption><b>The max-win illusion.</b> Across four Money Train releases the headline multiplier grew
+      7.5× while the actual maximum a player can win fell, because Relax cut the max bet each time to cap
+      its own liability.<span class="tier t-B">B</span></figcaption>
+    </figure>
+    <figure>
+      <img src="charts/27_streaming.png" alt="Twitch slots category year on year">
+      <figcaption><b>Slot streaming is consolidating.</b> Audience up 40% on 11.5% fewer streamed hours and 13%
+      fewer unique streamers — fewer, bigger channels with more concentrated influence over which titles
+      get discovered.<span class="tier t-B">B</span></figcaption>
+    </figure>
+  </div>
+
+  <h3>RTP is now a pricing lever, and players are paying for the UK tax rise</h3>
+  <div class="chartbox">
+    <div class="ct">Provider maximum RTP versus RTP actually deployed on UK sites<span class="tier t-B">B</span></div>
+    <div class="cs">Moving a game from 96% to 94% raises the operator's take from £4 to £6 per £100 wagered — a 50% increase in gross margin per spin</div>
+    <div class="cv"><canvas id="ch_rtp"></canvas></div>
+    <div class="cf">Sources: SlotCatalog UK deployment data, RTPTrack. Six of the eight most-compressed titles are Pragmatic or Reel Kingdom, because configurable RTP tiers are a core part of the Pragmatic commercial offer.</div>
+  </div>
+  <p>
+    This is the most commercially significant product change of 2026 and it is a double-edged one for
+    Pragmatic Play. Configurable RTP tiers (96.71 / 95.67 / 94.62 on Reel Kingdom titles, with 92%
+    variants now deployed) are exactly what a UK operator absorbing a 19-point duty rise wants to buy.
+    They are also what makes the flagship Big Bass franchise the most visibly degraded product on the
+    UK shelf, in a market where RTP disclosure is mandatory and comparison sites publish deployment
+    trackers.
+  </p>
+
+  <h3>Bonus buy</h3>
+  <figure>
+    <img src="charts/26_bonus_buy.png" alt="Bonus buy regulatory status by market">
+    <figcaption>Banned in the UK, Germany, the Netherlands and Belgium; constrained in Spain; patchy in Italy;
+    genuinely contested in Sweden. Two corrections to the received wisdom: <b>Slovakia does not ban it</b>
+    (CT Interactive shipped five explicit "Buy Bonus" titles onto Slovak-licensed sites in 2025 and 2026),
+    and <b>no ADM prohibition exists in Italy</b>.<span class="tier t-A">A</span></figcaption>
+  </figure>
+  <div class="call">
+    <div class="ch">The bonus-buy revenue figure everyone quotes does not exist</div>
+    <p>The circulating "bonus buy is 15–25% of slot revenue" has no named firm, no survey and no
+    methodology behind it. It should not be published. What is verifiable: the first bonus-buy slot was
+    Big Time Gaming's <em>White Rabbit</em> in 2017; typical buy cost is 50–200× stake with Pragmatic's
+    "Super Buy" tier at 500×; buy-mode RTP is usually within ±2pp of base, so the difference is variance
+    compression rather than expected value. And 55% of Swedish monthly slot players think it should be
+    banned outright, with 63% believing they lose more than they win using it.</p>
+    <p>Play'n GO committed in 2021 never to build a bonus-buy game — "a decision that has cost us hundreds
+    of millions of Swedish kronor" — and Book of Dead is still the #1 slot in Germany and the Netherlands
+    without one.</p>
+  </div>
+</div></section>
+
+<!-- ══════════════════════════════════════ 7 BLIND SPOTS -->
+<section id="blind"><div class="wrap">
+  <div class="sec-num">07 — Blind spots</div>
+  <h2>Where Pragmatic Play is exposed</h2>
+  <p class="intro">
+    Eight gaps, ranked by the size of the addressable opportunity being ceded. Severity is an analyst
+    score — the evidence behind each row is cited, the 0–100 conversion is judgement.
+  </p>
+
+  <div class="chartbox">
+    <div class="ct">Blind spots by severity<span class="tier t-D">D</span></div>
+    <div class="cs">Click any bar to jump to the detail</div>
+    <div class="cv"><canvas id="ch_blind"></canvas></div>
+    <div class="cf">Severity is an analyst score. Underlying evidence for every row is in data/dataset.json and in the cards below.</div>
+  </div>
+
+  <div class="bs" id="bscards"></div>
+
+  <h3>How that looks against the field</h3>
+  <figure>
+    <img src="charts/28_scorecard_radar.png" alt="Pragmatic Play competitive radar">
+    <figcaption>Analyst scoring across eight axes, each anchored to a cited measurement. The shape is the
+    argument: Pragmatic owns the right-hand side of the chart — distribution, GGR share, multi-vertical
+    depth and promo tooling — and gives away the left, which is craft, volatility, originality and US
+    access.<span class="tier t-D">D</span></figcaption>
+  </figure>
+
+  <div class="call">
+    <div class="ch">The counter-argument, stated fairly</div>
+    <p>Every weakness listed here is the direct cost of a strategy that is currently winning. Eight
+    releases a month is why Pragmatic occupies 3,291 lobby pages. Mass-market volatility is why it holds
+    17.8% of European GGR while Nolimit City — which makes objectively more interesting games — holds a
+    rounding error. A €30m annual Drops &amp; Wins prize pool across 60+ slots is a distribution weapon no
+    boutique studio can answer. Franchise sequels are why three of the most widely distributed slots on
+    earth are its own.</p>
+    <p>The question is not whether the strategy works. It plainly does. The question is whether it
+    survives three simultaneous shifts: operators curating lobbies instead of filling them, regulators
+    pricing supply-chain exposure directly, and the fastest-growing regulated market on earth being one
+    it cannot currently sell into.</p>
+  </div>
+</div></section>
+
+<!-- ══════════════════════════════════════ 8 RISK -->
+<section id="risk"><div class="wrap">
+  <div class="sec-num">08 — Regulatory risk</div>
+  <h2>Supply-chain enforcement has arrived</h2>
+  <p class="intro">
+    Until 2024 a content studio's regulatory exposure was essentially its operator customers' problem.
+    That is no longer true in Ontario, Great Britain, Romania, Finland, California or the Netherlands.
+    The model that made Pragmatic Play the most widely distributed studio on earth — maximum reach
+    through aggregators and offshore operators — is precisely the model regulators have moved to make
+    expensive.
+  </p>
+  <div class="tl" id="timeline"></div>
+
+  <div class="call bad">
+    <div class="ch">The Evolution precedent is the one to watch</div>
+    <p>The UK Gambling Commission opened a licence review of Evolution in December 2024 after finding
+    five Evolution games on six unlicensed websites with large volumes of UK traffic. It concluded in
+    July 2026 with a £4.75m settlement, a new licence condition mandating an independent audit within
+    twelve months, and an explicit statement that the Commission had <strong>considered suspending the
+    licence</strong>. Its Director of Enforcement framed the case as illustrative rather than isolated:
+    the Commission "will continue to proactively monitor and test the market to identify licensed
+    products being made available through illegal operators."</p>
+    <p>Pragmatic Play holds a UK licence and its content is far more widely distributed on offshore and
+    crypto sites than Evolution's — it is the headline slot supplier to Stake.com, whose 2024 GGR is
+    estimated at $4.7bn. No UKGC action against Pragmatic Play was found in this research. The Evolution
+    settlement is the clearest available read on what that risk is worth.</p>
+  </div>
+
+  <h3>The offshore question</h3>
+  <p>
+    Crypto casinos are the largest unmeasured pool in the industry and the estimates are not reliable:
+    the widely cited $81.4bn category figure would make crypto casinos larger than the entire regulated
+    global online casino market, while a conservative methodology gives $9–14bn for the same period.
+    Neither has been audited. What is not in dispute is the supplier roster. Stake.com carries Pragmatic
+    Play, Evolution, Hacksaw, Nolimit City, NetEnt, Play'n GO, Big Time Gaming, Push, Relax, Red Tiger
+    and Thunderkick — the same studios that supply regulated Europe. Curaçao's LOK reform abolished the
+    master/sub-licence system on 1 January 2025 and now publishes a register of 623 direct licences,
+    which makes that exposure visible to regulators in a way it previously was not.
+  </p>
+</div></section>
+
+<!-- ══════════════════════════════════════ 9 METHOD -->
+<section id="method"><div class="wrap">
+  <div class="sec-num">09 — Method</div>
+  <h2>Confidence tiers, and what we could not verify</h2>
+  <p class="intro">
+    Every figure in this report carries a tier. Tier D figures are analyst judgement and are labelled as
+    such wherever they appear. Nothing here is invented to fill a gap.
+  </p>
+  <div class="legend" id="legend"></div>
+
+  <h3>Known gaps — read before quoting anything</h3>
+  <ul id="gaps"></ul>
+
+  <h3>Conflicts between sources</h3>
+  <ul>
+    <li><strong>Catalogue counts swing ±40%.</strong> Two SlotsRank datasets give Games Global 486 and 1,730
+      games. Variation depends on whether regional RTP variants, re-skins and partner content are counted.</li>
+    <li><strong>Market sizing has two incompatible bases.</strong> H2GC puts slots at ~$20bn and 49% of iGaming
+      excluding Asia; Hacksaw's own presentation says $40bn and 75% of iCasino spend. Different
+      denominators. Never plot them on one axis.</li>
+    <li><strong>Evolution reports geography two ways.</strong> Asia is ~38% of revenue by player IP and ~3% by
+      customer location, because Asian-facing operators are licensed in Curaçao and Malta. Use player IP
+      for demand analysis.</li>
+    <li><strong>The US Eilers series is older than the European one.</strong> The most recent US supplier-share
+      figures date from 2024; the European series runs to June 2026.</li>
+    <li><strong>Prediction-market volume is not comparable to sportsbook handle.</strong> Notional volume counts
+      both sides of a contract and all resales. On revenue — the metric that measures a business — regulated
+      sportsbooks are an order of magnitude ahead.</li>
+  </ul>
+
+  <h3>What would materially improve this report</h3>
+  <ol>
+    <li><strong>bet365's monthly reports in primary form.</strong> They are free and public but JavaScript-rendered,
+      so everything here is second-hand via trade press. Opening them in a browser back-fills complete
+      top-tens for all 20 markets from February 2026 onward, and continues monthly.</li>
+    <li><strong>The Eilers &amp; Krejcik OGPD and Eilers-Fantini reports</strong> ($500 each, paywalled) contain the
+      game-by-game GGR rankings by region and the full 80-attribute performance analysis. This is the
+      highest-value purchase available.</li>
+    <li><strong>Direct confirmation from NJ DGE and the Michigan Gaming Control Board</strong> on Pragmatic Play's
+      supplier status. The Pennsylvania finding is primary-source solid; NJ and MI are corroborated only by
+      trade reporting because both regulator registers refused automated retrieval.</li>
+    <li><strong>SlotCatalog API access</strong> for a definitive supply-side mechanic prevalence table — the public
+      index is Cloudflare-protected past the first render.</li>
+  </ol>
+</div></section>
+
+<!-- ══════════════════════════════════════ 10 GALLERY -->
+<section id="gallery"><div class="wrap">
+  <div class="sec-num">10 — Chart library</div>
+  <h2>All 30 charts</h2>
+  <p class="intro">Click any chart to enlarge. Every one is regenerated from
+    <code style="color:var(--teal)">data/dataset.json</code> by
+    <code style="color:var(--teal)">generate_charts.py</code>.</p>
+  <div class="gal" id="gallery"></div>
+</div></section>
+
+<footer><div class="wrap">
+  <p><strong>Scope and independence.</strong> This is a desk-research report compiled from public sources on
+  29 July 2026. It has no relationship with Pragmatic Play, ARRISE or any operator or supplier named in it,
+  and nothing here is investment advice or a recommendation to gamble.</p>
+  <p>Latest actuals are FY2025 or Q2 2026 unless stated. All URLs were live at time of compilation.
+  The full written research underlying this dashboard is in the repository as
+  <code>slot-studio-competitive-landscape-2026.md</code>,
+  <code>slot-mechanics-and-player-preferences-2026.md</code> and
+  <code>regional-markets-and-regulation-2026.md</code>.</p>
+  <h4 style="margin-top:34px">Principal sources</h4>
+  <div class="srcs" id="srcs"></div>
+</div></footer>
+
+<div id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+const DATA = {"meta":{"title":"Global iGaming & Pragmatic Play Competitive Intelligence","compiled":"2026-07-29","confidence_scale":{"A":"Regulator-published, audited, or statutory primary source","B":"Named commercial dataset with a stated methodology (Eilers & Krejcik, Blask, SlotsRank, bet365, SlotCatalog, iGamingCompass)","C":"Company-reported or single-source trade press, unaudited","D":"Analyst judgement by this report — a scored opinion, not a measurement"},"hard_gaps":["Pragmatic Play files no audited accounts anywhere. Revenue, EBITDA and valuation are unknown. Every figure circulating online traces to unattributed or AI-generated sources.","No authoritative global slot-studio GGR-share table exists. Section 'Supplier share' assembles four independent proxies that disagree because they measure different things.","Catalogue counts vary by roughly plus or minus 40% between sources depending on whether RTP variants, re-skins and partner content are counted.","No credible public figure exists for bonus buy's share of slot GGR. The widely circulated '15-25%' has no named source.","Play'n GO, PG Soft, Relax, Push, Jili, TaDa, Thunderkick and Greentube disclose no standalone revenue."]},"kpis":[{"value":"$293bn","label":"Global online gambling GGR, 2024","sub":"41% of all gambling; passes 50% in 2029","conf":"A","src":"H2 Gambling Capital"},{"value":"17.8%","label":"Pragmatic Play share of European online casino GGR","sub":"#1 supplier, 5.3pts clear of Evolution","conf":"B","src":"Eilers-Fantini, Jun 2026"},{"value":"0","label":"Pragmatic titles in the US top-100 supplier table","sub":"Absent from the PA manufacturer eligibility list","conf":"A","src":"PGCB / iGamingCompass"},{"value":"25.1","label":"Pragmatic average quality score per new release","sub":"ELK scores 206.4; Nolimit City 179.0","conf":"B","src":"Slots Launch Leaderboard 2026 YTD"},{"value":"1.35%","label":"European slot GGR held by the world's #1 slot","sub":"Gates of Olympus 1000 — there is no title monopoly","conf":"B","src":"Eilers-Fantini OGPD 1Q25"},{"value":"40%","label":"UK Remote Gaming Duty from 1 Apr 2026","sub":"Was 21%. Deployed RTP moving 96% to 94%, 92% requested","conf":"A","src":"HMRC"}],"global_trajectory":{"title":"Online overtakes land-based gambling in 2029","subtitle":"Global GGR, all channels, US$bn","conf":"A","source":{"name":"H2 Gambling Capital, April 2026 update","url":"https://h2gc.com/news/general/global-gambling-market-to-exceed-1-trillion-ggr-by-2030-driven-by-online-channel-growth"},"years":[2015,2024,2029,2030,2031],"total_ggr":[438,712,979,1031,1088],"online_ggr":[89,293,493,530,568],"online_share_pct":[20,41,50.3,51,52],"note":"2029 online figure is derived from H2's stated 50.3% share of a $979bn total."},"region_ggr_2026":{"title":"Where the money is: online GGR by region","subtitle":"2026 estimate, US$bn, with YoY growth and regulated share","conf":"B","source":{"name":"Track360 analysis of EGBA, AGA and national regulator data, 2026","url":"https://track360.io/blog/online-gambling-statistics-2026-global-market-data"},"rows":[{"region":"Europe","ggr":43.5,"growth":7,"regulated":82},{"region":"North America","ggr":29.0,"growth":21,"regulated":95},{"region":"Asia-Pacific","ggr":28.5,"growth":9,"regulated":41},{"region":"Latin America","ggr":11.0,"growth":30,"regulated":55},{"region":"Middle East & other","ggr":6.8,"growth":5,"regulated":15},{"region":"Africa","ggr":2.2,"growth":24,"regulated":30}],"note":"Global total $121bn. Independent estimates for 2026 span $97bn to $143bn depending on whether iLottery and grey-market pools are counted."},"slot_intensity":{"title":"Slots are the online casino market","subtitle":"Online slots as a share of online casino GGR, latest published year","conf":"A","source":{"name":"UKGC FY2024/25; Spillemyndigheden 2025; SRIJ Q4 2025; PGCB monthly; MGCB 2025; GGL 2025","url":"https://www.gamblingcommission.gov.uk/statistics-and-research/publication/industry-statistics-annual-report-financial-year-april-2024-to-march-2025"},"rows":[{"market":"Germany","pct":100,"note":"Live casino is not federally licensed — the licensed online casino market is slots only"},{"market":"United Kingdom","pct":84,"note":"£4.2bn slots of £5.0bn online casino GGY"},{"market":"Denmark","pct":82,"note":"DKK 3.54bn of DKK 4.31bn"},{"market":"Pennsylvania","pct":81.6,"note":"July 2025"},{"market":"Portugal","pct":80.4,"note":"Share of online casino wagering, Q4 2025"},{"market":"Michigan","pct":73,"note":"Estimated"}]},"us_states_2025":{"title":"US iGaming: record revenue, frozen footprint","subtitle":"2025 iGaming revenue by state, US$m, and YoY growth","conf":"A","source":{"name":"American Gaming Association Commercial Gaming Revenue Tracker; NJ DGE; MGCB; PGCB","url":"https://www.americangaming.org/resources/state-of-the-states-2026/"},"rows":[{"state":"Pennsylvania","rev":3460,"growth":28},{"state":"Michigan","rev":3100,"growth":26.5},{"state":"New Jersey","rev":2910,"growth":22.0},{"state":"Connecticut","rev":707.5,"growth":null},{"state":"West Virginia","rev":373.3,"growth":52.6},{"state":"Delaware","rev":132.5,"growth":81.8}],"note":"US total $10.74bn, +27.6%. Seven live states plus Maine legalised but not launched. In NJ, PA and MI, iGaming revenue now exceeds commercial land-based casino revenue for the first time."},"tax_rates":{"title":"Tax is now the biggest variable in market attractiveness","subtitle":"Headline tax on online casino, latest enacted rate","conf":"A","source":{"name":"HMRC; Kansspelautoriteit; ONJN; NRA Bulgaria; Spelinspektionen; Coljuegos; SPA Brazil; GGL; SEGOB","url":"https://www.gov.uk/government/publications/changes-to-gambling-duties/gambling-duty-changes"},"rows":[{"market":"Mexico","rate":50,"base":"Turnover","flag":"turnover","note":"IEPS raised 30% to 50% on 1 Jan 2026, levied on wagers not GGR — economically impossible at 96% RTP"},{"market":"United Kingdom","rate":40,"base":"GGR","flag":"hike","note":"Remote Gaming Duty 21% to 40% on 1 Apr 2026"},{"market":"Netherlands","rate":39.75,"base":"GGR","flag":"hike","note":"37.8% plus a 1.95% levy; was 30.5% in 2024"},{"market":"Czechia","rate":35,"base":"GGR","flag":"","note":"Technical games including online slots"},{"market":"Colombia","rate":34,"base":"GGR","flag":"fix","note":"19% VAT moved off deposits onto GGR from 2026, plus 15% concession"},{"market":"Romania","rate":30,"base":"GGR","flag":"hike","note":"From 21%, minimum EUR 480k, effective 1 Aug 2025"},{"market":"Denmark","rate":28,"base":"GGR","flag":"","note":""},{"market":"Bulgaria","rate":25,"base":"GGR","flag":"hike","note":"From 20% on 1 Jan 2026"},{"market":"Sweden","rate":22,"base":"GGR","flag":"","note":""},{"market":"Finland","rate":22,"base":"GGR","flag":"new","note":"Market opens 1 Jul 2027; B2B software licence required from 2028"},{"market":"Spain","rate":20,"base":"GGR","flag":"","note":""},{"market":"Brazil","rate":12,"base":"GGR","flag":"new","note":"Escalator to 13% (2026), 14% (2027), 15% (2028)"},{"market":"Belgium","rate":11,"base":"GGR","flag":"","note":"Lowest in Western Europe, but bonuses banned outright and advertising near-prohibited"},{"market":"Germany","rate":5.3,"base":"Turnover","flag":"turnover","note":"5.3% of stakes — roughly 40-55% effective on GGR, which is why 84m Germans produce only EUR 543m of slot GGR"}]},"channelisation":{"title":"Tax elasticity: the Netherlands is the cautionary tale","subtitle":"Share of online GGR captured by licensed operators","conf":"A","source":{"name":"Kansspelautoriteit; Spelinspektionen; GGL / Blockchain Research Lab; EY via Warsaw Enterprise Institute","url":"https://kansspelautoriteit.nl/monitoringsrapportage-voorjaar-2026-marktontwikkeling-blijft-gelijk"},"rows":[{"market":"United Kingdom","pct":92,"tax":40},{"market":"Italy","pct":90,"tax":null},{"market":"Sweden","pct":84,"tax":22},{"market":"Czechia","pct":82,"tax":35},{"market":"Germany","pct":77,"tax":5.3},{"market":"Poland","pct":60,"tax":null},{"market":"Netherlands","pct":53,"tax":39.75}],"note":"Dutch gambling tax went 30.5% to 34.2% to 37.8% in two years. Legal GGR fell 18%, channelisation dropped to 53% — more money is now wagered offshore than onshore — and 2025 tax receipts came in BELOW 2024. Poland's figure is the online casino segment specifically."},"market_growth":{"title":"Growth and contraction, latest full year","subtitle":"YoY change in online casino / iGaming revenue","conf":"A","source":{"name":"AGA; iGaming Ontario; DGOJ; Spillemyndigheden; UKGC; EEEP; GGL; ADM; SRIJ; Ksa; PAGCOR; ICICI Securities","url":"https://www.americangaming.org/resources/state-of-the-states-2026/"},"rows":[{"market":"India (real-money gaming)","growth":-80,"note":"Online Gaming Act 2025 took effect 1 May 2026 — outright ban, no licensing pathway. Market shrank from ~$6bn to ~$1bn."},{"market":"Philippines e-games (Q1'26)","growth":-22.4,"note":"Central bank ordered banks and e-wallets to de-link gambling platforms"},{"market":"Netherlands","growth":-18,"note":"Tax-driven"},{"market":"Germany (online total)","growth":2,"note":""},{"market":"Portugal","growth":8.5,"note":""},{"market":"Italy (online turnover)","growth":9.5,"note":""},{"market":"Germany (virtual slots)","growth":11,"note":""},{"market":"Greece","growth":11.7,"note":""},{"market":"UK online slots","growth":12,"note":"Q4 FY25/26, despite £5/£2 stake caps"},{"market":"Denmark online casino","growth":12.1,"note":""},{"market":"Spain","growth":17,"note":"Slot machines specifically +30.8%"},{"market":"New Jersey","growth":22,"note":""},{"market":"Michigan","growth":26.5,"note":""},{"market":"US iGaming","growth":27.6,"note":"First $1bn month in Dec 2025"},{"market":"Ontario","growth":34,"note":"CAD 4.0bn GGR, 77% online casino"},{"market":"West Virginia","growth":52.6,"note":""},{"market":"Delaware","growth":81.8,"note":""}]},"uk_slots_quarterly":{"title":"Monetising harder per spin, not winning more spins","subtitle":"UK online slots, largest operators (~70% of market)","conf":"A","source":{"name":"UK Gambling Commission operator data to March 2026","url":"https://www.gamblingcommission.gov.uk/statistics-and-research/publication/market-overview-operator-data-to-march-2026-published-may-2026"},"quarters":["Apr-Jun 25","Jul-Sep 25","Oct-Dec 25","Jan-Mar 26"],"ggy_gbp_m":[745,747,788,773],"spins_bn":[24.4,24.4,25.7,25.1],"actives_m":[4.4,4.4,4.6,4.8],"spins_per_session":[129,130,128,124],"ggy_per_session":[3.95,3.96,3.91,3.82],"avg_session_min":[16,16,16,15],"note":"Slot GGY grew 12% YoY while spins per session, GGY per session and session length all fell. Growth came from a 6% larger active base, not from deeper engagement. This is the final edition of this dataset — the Commission discontinued it in May 2026."},"europe_supplier_share":{"title":"Pragmatic Play is #1 in Europe by actual GGR","subtitle":"Supplier share of European online casino GGR — participating casinos submit real GGR data","conf":"B","source":{"name":"Eilers & Krejcik / Eilers-Fantini Europe Online Game Performance Report","url":"https://ekgamingllc.com/downloads/eilers-fantini-europe-online-game-performance-report-may-26/"},"suppliers":["Pragmatic Play","Evolution","Playtech","Games Global","Amusnet"],"oct_2025":[17.3,12.5,7.3,8.1,5.2],"jun_2026":[17.8,12.5,9.0,9.0,null],"note":"Panel of 69-89 casinos across 15-18 countries, 100+ suppliers, 22-23k themes indexed. This is the closest thing to real market share that exists publicly."},"na_supplier_share":{"title":"…and not in the top four in North America","subtitle":"Supplier share of North American online casino GGR","conf":"B","source":{"name":"Eilers-Fantini via CasinoBeats / SlotBeats","url":"https://slotbeats.com/featured/eilers-fantini-igt-cash-eruption/"},"rows":[{"supplier":"Evolution","pct":17.9},{"supplier":"IGT","pct":16.2},{"supplier":"Light & Wonder","pct":13.4},{"supplier":"Games Global","pct":8.4},{"supplier":"Inspired","pct":2.4},{"supplier":"Pragmatic Play","pct":0}],"note":"Pragmatic Play scores zero because it is not licensed in the US regulated market at all — it does not appear on Pennsylvania's iGaming Manufacturers Eligibility List dated 28 July 2026, nor in iGamingCompass's June 2026 US top-100 supplier table. These Eilers US datapoints are older than the European series; treat the ordering as indicative."},"lobby_footprint":{"title":"Distribution scale: nobody is close","subtitle":"Q1 2026 lobby scan — 3,844 games and ~13,000 pages analysed","conf":"B","source":{"name":"SlotsRank Q1 2026 Provider Footprint Review","url":"https://slotsrank.ie/news/q1-2026-provider-footprint-review/"},"rows":[{"provider":"Pragmatic Play","games":1219,"sites":514,"pages":3291,"countries":45},{"provider":"Playtech","games":985,"sites":503,"pages":2993,"countries":45},{"provider":"Light & Wonder","games":687,"sites":408,"pages":2172,"countries":45},{"provider":"Games Global","games":486,"sites":483,"pages":2354,"countries":44},{"provider":"Evolution","games":467,"sites":428,"pages":2189,"countries":43}],"note":"A separate SlotsRank dataset using different counting rules gives Games Global 1,730 games and Evolution 1,450. Treat every catalogue count as plus or minus 40%."},"release_quality":{"title":"The single most revealing chart in this report","subtitle":"Slots Launch new-release quality score, 2026 year to date","conf":"B","source":{"name":"Slots Launch Leaderboard via Business of iGaming","url":"https://slotslaunch.com/leaderboard"},"rows":[{"provider":"ELK Studios","total":1445,"avg":206.43,"gold":5,"silver":2,"bronze":0,"releases":7},{"provider":"Peter & Sons","total":585,"avg":195.0,"gold":2,"silver":1,"bronze":0,"releases":3},{"provider":"Nolimit City","total":895,"avg":179.0,"gold":3,"silver":2,"bronze":0,"releases":5},{"provider":"Big Time Gaming","total":586,"avg":146.5,"gold":2,"silver":1,"bronze":1,"releases":4},{"provider":"Hacksaw Gaming","total":1175,"avg":90.38,"gold":3,"silver":10,"bronze":0,"releases":13},{"provider":"Play'n GO","total":701,"avg":33.38,"gold":0,"silver":20,"bronze":1,"releases":21},{"provider":"Playtech","total":493,"avg":29.0,"gold":0,"silver":14,"bronze":3,"releases":17},{"provider":"Pragmatic Play","total":779,"avg":25.13,"gold":0,"silver":22,"bronze":9,"releases":31},{"provider":"OctoPlay","total":568,"avg":23.67,"gold":0,"silver":16,"bronze":8,"releases":24}],"note":"Pragmatic Play ships more new slots than anyone and has zero gold-rated releases in 2026. ELK scores 8x higher per game. Full-year 2025 totals: Pragmatic 4,694, Hacksaw 4,380, ELK 3,511 (12 golds)."},"demo_demand":{"title":"Player discovery demand","subtitle":"Demo plays across 29,643 games and 9,562+ sites, 2.16m monthly plays","conf":"B","source":{"name":"Slots Launch game rankings via Business of iGaming","url":"https://www.businessofigaming.com/slots-launch-game-rankings-global-data/"},"rows":[{"provider":"Pragmatic Play","plays":54592},{"provider":"Light & Wonder","plays":34808},{"provider":"Blueprint Gaming","plays":26431},{"provider":"Hacksaw Gaming","plays":19358},{"provider":"IGT","plays":15480},{"provider":"TaDa Gaming","plays":14595},{"provider":"PG Soft","plays":14478},{"provider":"Nolimit City","plays":13685},{"provider":"NetEnt","plays":12041},{"provider":"Play'n GO","plays":11206}]},"supplier_financials":{"title":"FY2025 results — the plottable numbers","subtitle":"Audited and filed figures only. Pragmatic Play publishes nothing.","conf":"A","source":{"name":"Evolution Year-end Report 2025; Hacksaw Year-end Report 2025; Light & Wonder 8-K; Playtech LSE RNS; Novomatic Company Report 2025","url":"https://www.hacksawgroup.com/en/wp-content/uploads/sites/2/2026/02/year-end-report-2025.pdf"},"rows":[{"company":"Evolution AB","revenue_eur_m":2066.5,"growth":0.2,"margin":66.1,"margin_type":"Adj. EBITDA","listed":true},{"company":"Light & Wonder (iGaming segment)","revenue_eur_m":311,"growth":13,"margin":37,"margin_type":"AEBITDA","listed":true,"note":"$337m converted at 0.92"},{"company":"Playtech (B2B)","revenue_eur_m":688.3,"growth":-9,"margin":20.5,"margin_type":"Adj. EBITDA","listed":true},{"company":"Hacksaw Gaming","revenue_eur_m":197.5,"growth":44,"margin":82,"margin_type":"Adj. EBIT","listed":true},{"company":"Games Global","revenue_eur_m":306.9,"growth":82.3,"margin":47,"margin_type":"Adj. EBITDA","listed":false,"note":"FY to 31 Mar 2023 — last disclosure before the IPO was withdrawn. STALE."},{"company":"Pragmatic Play","revenue_eur_m":null,"growth":null,"margin":null,"margin_type":"Not disclosed","listed":false,"note":"No audited accounts filed in any public registry."}]},"evolution_quarterly":{"title":"Live casino has stopped growing; RNG has restarted","subtitle":"Evolution AB net revenue by quarter, EUR m","conf":"A","source":{"name":"Evolution AB quarterly reports","url":"https://www.evolution.com/investors/financial-publications/press-releases/evolution-interim-report-january-june-2026"},"quarters":["Q4 24","Q1 25","Q2 25","Q3 25","Q4 25","Q1 26","Q2 26"],"live":[459.4,448.7,453.7,431.7,438.6,434.9,437.3],"rng":[74.4,72.3,70.6,75.5,75.7,78.2,80.5],"note":"RNG grew 14.0% in Q2 2026, its first double-digit quarter in roughly three years, while Live fell 3.6% YoY. Q3 2025 was the first year-on-year revenue decline in Evolution's listed history. Light & Wonder exited live dealer entirely in 2025."},"hacksaw_quarterly":{"title":"The growth story: Hacksaw Gaming","subtitle":"Total revenue by quarter, EUR k, at an 82% adjusted EBIT margin","conf":"A","source":{"name":"Hacksaw Gaming Q2 2026 interim report","url":"https://storage.mfn.se/e9275d67-4763-4df5-86c5-9157cbaf59ea/interim-report-q2-2026.pdf"},"quarters":["Q3 24","Q4 24","Q1 25","Q2 25","Q3 25","Q4 25","Q1 26","Q2 26"],"revenue_eur_k":[37333,43729,44958,45415,52011,55096,57610,59294],"note":"FY2023 ~EUR 67m to FY2024 EUR 137.1m (+104%) to FY2025 EUR 197.5m (+44%) to LTM EUR 224.0m. Revenue comes from both its own games and from licensing its OpenRGS platform to third-party studios."},"margins":{"title":"Margin structure separates content from platform","subtitle":"FY2025 profitability. The spread is about where distribution cost sits, not operational quality.","conf":"A","source":{"name":"Company annual and interim reports; allabolag.se registry filings","url":"https://www.evolution.com/wp-content/uploads/2026/04/Annual_Report_English_2026_04_01.pdf"},"rows":[{"company":"Hacksaw Gaming","margin":82,"metric":"Adj. EBIT"},{"company":"Nolimit City (2022 acq.)","margin":77,"metric":"EBITDA"},{"company":"Evolution","margin":66.1,"metric":"Adj. EBITDA"},{"company":"EveryMatrix","margin":54,"metric":"EBITDA"},{"company":"ELKAB Studios AB","margin":47,"metric":"Pre-tax"},{"company":"Light & Wonder iGaming","margin":37,"metric":"AEBITDA"},{"company":"Playtech B2B","margin":20.5,"metric":"Adj. EBITDA"}],"note":"Hacksaw and Nolimit build a game once and push it through existing integrations at zero marginal cost. When benchmarking Pragmatic Play, note that it runs live studios in five countries expanding to nine — structurally a Playtech/Evolution-shaped cost base, not a Hacksaw-shaped one."},"top_titles_reach":{"title":"The three most widely distributed slots on earth are all Pragmatic","subtitle":"Operator sites carrying each title, and countries reached","conf":"B","source":{"name":"SlotsRank Q1 2026 Provider Footprint Review","url":"https://slotsrank.ie/news/q1-2026-provider-footprint-review/"},"rows":[{"title":"Big Bass Splash","provider":"Reel Kingdom / Pragmatic","sites":463,"countries":58,"pp":true},{"title":"Gates of Olympus","provider":"Pragmatic Play","sites":462,"countries":62,"pp":true},{"title":"Big Bass Bonanza","provider":"Reel Kingdom / Pragmatic","sites":453,"countries":56,"pp":true},{"title":"Immortal Romance","provider":"Games Global","sites":283,"countries":45,"pp":false},{"title":"Crazy Time Live","provider":"Evolution","sites":292,"countries":59,"pp":false},{"title":"Lightning Roulette","provider":"Evolution","sites":246,"countries":55,"pp":false},{"title":"Buffalo Blitz","provider":"Playtech","sites":200,"countries":null,"pp":false}]},"gates_depth":{"title":"Gates of Olympus: distribution depth by market","subtitle":"Operator brands carrying the title, and lobby front-page placements","conf":"B","source":{"name":"Blask Global Games dashboard","url":"https://igamingnewstoday.com/casino-games/gates-of-olympus-leads-global-igaming-placement-rankings/"},"rows":[{"market":"Brazil","brands":172,"lobbies":96},{"market":"Germany","brands":110,"lobbies":69},{"market":"Nigeria","brands":79,"lobbies":44},{"market":"United Kingdom","brands":67,"lobbies":34},{"market":"Chile","brands":59,"lobbies":39},{"market":"Ecuador","brands":59,"lobbies":36},{"market":"India","brands":59,"lobbies":34},{"market":"Ireland","brands":57,"lobbies":30},{"market":"Denmark","brands":54,"lobbies":23},{"market":"Sweden","brands":53,"lobbies":22}]},"no1_by_market":{"title":"There is no global #1 slot","subtitle":"The top-performing slot differed in all ten published markets in June 2026","conf":"B","source":{"name":"bet365 Gaming Insights and Performance, June 2026, via SlotBeats and PlayNJ","url":"https://slotbeats.com/slot-news/bet365-june-slot-charts/"},"rows":[{"market":"United Kingdom","title":"Gold Cash Freespins","provider":"Inspired Entertainment","pp":false},{"market":"Germany","title":"Legacy of Dead","provider":"Play'n GO","pp":false},{"market":"Spain","title":"Eye of Horus","provider":"Reel Time Gaming / Merkur","pp":false},{"market":"Greece","title":"Stacked Fire 7's","provider":"—","pp":false},{"market":"Brazil","title":"Gates of Olympus","provider":"Pragmatic Play","pp":true},{"market":"Canada","title":"Area Link Phoenix Firestorm","provider":"Games Global","pp":false},{"market":"Ontario","title":"Area Link Phoenix Firestorm","provider":"Games Global","pp":false},{"market":"Michigan","title":"Hypernova Megaways","provider":"ReelPlay","pp":false},{"market":"New Jersey","title":"Triple Diamond","provider":"IGT","pp":false},{"market":"Pennsylvania","title":"Mad Mad Monkey","provider":"Games Global","pp":false}],"note":"bet365 publishes monthly rankings across 7,500+ games in 20 markets, scored on revenue, stakes, sessions and engagement. Blask's distribution-weighted 2025 awards tell a different story — Gates of Olympus 1000 wins in Brazil, Italy, Germany and Argentina, Book of Dead in the Netherlands, Aviator in South Africa and Ghana. Distribution breadth and revenue performance are not the same measurement."},"shelf_share":{"title":"Two markets, two completely different shelves","subtitle":"Number of titles in each market's top 100, by studio, June 2026","conf":"B","source":{"name":"iGamingCompass full-lobby scans — 76 US licensed sites across 7 states; all licensed German .de lobbies","url":"https://igamingcompass.com/blogs/usa-top-100-slot-games-rankings/"},"us":[{"studio":"IGT","n":15},{"studio":"Light & Wonder","n":12},{"studio":"Inspired Gaming","n":8},{"studio":"Playtech","n":6},{"studio":"Blueprint Gaming","n":6},{"studio":"AGS","n":5},{"studio":"NetEnt","n":5},{"studio":"Red Tiger","n":5},{"studio":"ReelPlay","n":4},{"studio":"Hacksaw Gaming","n":4},{"studio":"Design Works","n":3},{"studio":"Play'n GO","n":2},{"studio":"Pragmatic Play","n":0}],"germany":[{"studio":"Pragmatic Play","n":24},{"studio":"Play'n GO","n":17},{"studio":"Greentube","n":12},{"studio":"Merkur","n":7},{"studio":"Edict","n":6},{"studio":"Gamomat","n":6},{"studio":"Reel Kingdom","n":5},{"studio":"Reel Time Gaming","n":5},{"studio":"Peter & Sons","n":4},{"studio":"Push Gaming","n":2},{"studio":"Playson","n":2},{"studio":"Novomatic","n":2}],"note":"Pragmatic Play plus Reel Kingdom hold 29 of Germany's top 100 and zero of America's."},"max_win":{"title":"The max-win arms race peaked and plateaued","subtitle":"Published maximum win multiplier by title","conf":"C","source":{"name":"Provider game pages and VegasSlotsOnline max-win analysis, April 2026","url":"https://www.vegasslotsonline.com/news/2026/04/09/an-unsustainable-arms-race-the-slot-max-win-multipliers-that-keep-climbing/"},"rows":[{"title":"Tombstone Slaughter","provider":"Nolimit City","max":500000,"rtp":null,"pp":false},{"title":"Tombstone RIP","provider":"Nolimit City","max":300000,"rtp":96.07,"pp":false},{"title":"San Quentin xWays","provider":"Nolimit City","max":150000,"rtp":96.03,"pp":false},{"title":"Money Train 4","provider":"Relax Gaming","max":150000,"rtp":96.1,"pp":false},{"title":"Mental 2","provider":"Nolimit City","max":99999,"rtp":96.06,"pp":false},{"title":"Money Train 3","provider":"Relax Gaming","max":100000,"rtp":96.22,"pp":false},{"title":"Mental","provider":"Nolimit City","max":50000,"rtp":96.08,"pp":false},{"title":"Sweet Bonanza 1000","provider":"Pragmatic Play","max":25000,"rtp":96.53,"pp":true},{"title":"Sugar Rush 1000","provider":"Pragmatic Play","max":25000,"rtp":96.53,"pp":true},{"title":"Big Bass Bonanza 1000","provider":"Reel Kingdom","max":20000,"rtp":96.51,"pp":true},{"title":"Gates of Olympus 1000","provider":"Pragmatic Play","max":15000,"rtp":96.5,"pp":true},{"title":"Pirots 5","provider":"ELK Studios","max":10000,"rtp":96.0,"pp":false},{"title":"Gates of Olympus","provider":"Pragmatic Play","max":5000,"rtp":96.5,"pp":true},{"title":"Book of Dead","provider":"Play'n GO","max":5000,"rtp":96.21,"pp":false}],"note":"Pragmatic's ceiling sits an order of magnitude below Nolimit City's and Relax's. That is a deliberate mass-market choice, not an oversight — but it cedes the entire high-volatility streamer segment. Affiliate sources conflict badly on Nolimit max wins; verify against the provider info panel before quoting."},"money_train_paradox":{"title":"The max-win illusion","subtitle":"Money Train series: the headline multiplier grew 7.5x while the actual payout ceiling fell","conf":"B","source":{"name":"ClearCasinos game data","url":"https://clearcasinos.com/games/money-train-4"},"rows":[{"game":"Money Train 1","multiplier":20000,"max_bet":50,"ceiling":1000000},{"game":"Money Train 2","multiplier":50000,"max_bet":20,"ceiling":1000000},{"game":"Money Train 3","multiplier":100000,"max_bet":10,"ceiling":1000000},{"game":"Money Train 4","multiplier":150000,"max_bet":6,"ceiling":900000}]},"rtp_compression":{"title":"The UK tax rise is being paid for out of player return","subtitle":"Provider maximum RTP versus RTP actually deployed on UK-facing sites","conf":"B","source":{"name":"SlotCatalog UK deployment data and RTPTrack","url":"https://rtptrack.com/blog/why-uk-casinos-lowering-rtp-2026"},"rows":[{"title":"Big Bass Reel Repeat","provider":"Reel Kingdom","max":96.51,"deployed":92.01},{"title":"Big Bass Splash 1000","provider":"Reel Kingdom","max":96.52,"deployed":92.02},{"title":"Big Bass Christmas Frozen","provider":"Reel Kingdom","max":96.07,"deployed":92.07},{"title":"Big Bass Bonanza 1000","provider":"Reel Kingdom","max":96.51,"deployed":94.51},{"title":"Bigger Bass Splash","provider":"Reel Kingdom","max":96.5,"deployed":94.5},{"title":"Book of Dead","provider":"Play'n GO","max":96.21,"deployed":94.25},{"title":"Big Bass Splash","provider":"Reel Kingdom","max":96.71,"deployed":95.67},{"title":"Money Train 4","provider":"Relax Gaming","max":96.4,"deployed":96.1}],"note":"Moving a game from 96% to 94% raises the operator's take from £4 to £6 per £100 wagered — a 50% increase in gross margin per spin. Six of the eight most-compressed titles are Pragmatic/Reel Kingdom, because configurable RTP tiers are a core part of the Pragmatic commercial offer."},"mechanics":{"title":"What actually drives performance","subtitle":"Eilers & Krejcik attribute analysis of 80+ attributes against top-performing US releases","conf":"B","source":{"name":"Eilers-Fantini OGPD Data Insights Q4-2025","url":"https://ekgamingllc.com/downloads/eilers-fantini-ogpd-data-insights-q4-2025-new-u-s-online-slots-attributes/"},"drivers":[{"mechanic":"Cash on Reels / money collect","status":"Dominant","trend":"up"},{"mechanic":"Hold & Spin","status":"Dominant","trend":"up"},{"mechanic":"Multipliers","status":"Dominant","trend":"flat"},{"mechanic":"Perceived persistence","status":"Dominant","trend":"up"},{"mechanic":"$ Jackpots","status":"Dominant","trend":"flat"},{"mechanic":"Nested Hold & Spin","status":"Fastest rising","trend":"up"},{"mechanic":"Multi-Trigger Jackpots","status":"Fastest rising","trend":"up"},{"mechanic":"Nested Wheels / Prize Areas","status":"Emerging","trend":"up"},{"mechanic":"Megaways","status":"Mature infrastructure","trend":"flat"}],"prevalence":[{"tag":"Additional Free Spins","count":10838},{"tag":"Substitution Symbols","count":3813},{"tag":"Bonus Game: Pick Objects","count":2968},{"tag":"Cluster Pays","count":1302},{"tag":"Crash / Bustabit-like","count":843},{"tag":"Random reward","count":810},{"tag":"\"Book of…\" mechanic","count":741},{"tag":"Expanding wild with re-spin","count":555},{"tag":"Big Bass / Fishin' Frenzy mechanic","count":181},{"tag":"9 Pots of Gold mechanic","count":142}],"note":"Prevalence counts are SlotCatalog title tags across ~45,000-51,000 titles — they measure supply, not revenue, and the index is incomplete because the page is Cloudflare-protected past the first render. Megaways is roughly 2% of titles: mature infrastructure, not a growth story. Light & Wonder paid Aristocrat $127.5m in January 2026 to settle trade-secret litigation over hold-and-spin math — a court-tested price tag on one mechanic."},"bonus_buy":{"title":"Bonus buy: banned in three of Europe's five biggest slot markets","subtitle":"Regulatory status, verified July 2026","conf":"A","source":{"name":"UKGC games warning Jan 2020; Ksa autoplay classification; GGL Interstate Treaty; DGOJ 2022; CT Interactive Slovak launches","url":"https://casinogrounds.com/blog/bonus-buy-slots-regulations-in-uk/"},"rows":[{"market":"United Kingdom","status":"Banned","detail":"UKGC games warning, January 2020; underpinned by RTS 14"},{"market":"Germany","status":"Banned","detail":"Interstate Treaty — also no autoplay, no jackpots, 5-second minimum spin"},{"market":"Netherlands","status":"Banned","detail":"Classified under the autoplay prohibition in the Wet Kansspelen op afstand"},{"market":"Belgium","status":"Banned","detail":"All bonuses banned since 2020, plus a EUR 200/week deposit cap"},{"market":"Spain","status":"Constrained","detail":"DGOJ bet limits and disclosure rules — most studios ship no-buy builds rather than maintain two configurations"},{"market":"Italy","status":"Patchy","detail":"No ADM prohibition located. Availability varies by operator and title; wagering contribution usually 10-20% or excluded"},{"market":"Sweden","status":"Contested","detail":"Swedish sources directly contradict each other and no primary Spelinspektionen instrument exists either way"},{"market":"Romania","status":"Permitted","detail":"CT Interactive launched its Buy Bonus series there in 2025"},{"market":"Slovakia","status":"Permitted","detail":"Five Buy Bonus titles live on Tipos.sk and Ifortuna.sk — the common claim that Slovakia bans it is wrong"},{"market":"Ontario / New Jersey","status":"Permitted","detail":"Subject to technical certification"}],"player_sentiment":{"ban_it":55,"lose_more_than_win":63,"source":"Play'n GO / Opinium survey of Swedish monthly slot players"},"note":"No credible public figure exists for bonus buy's share of slot GGR. The circulating '15-25%' has no named source and should not be published. Play'n GO committed in 2021 never to build a bonus-buy game — 'a decision that has cost us hundreds of millions of Swedish kronor' — and Book of Dead is still the #1 slot in Germany and the Netherlands without one."},"streaming":{"title":"Slot streaming is consolidating around fewer, bigger channels","subtitle":"Twitch 'Slots' category, trailing 365 days to 28 July 2026","conf":"B","source":{"name":"SullyGnome / TwitchTracker aggregate","url":"https://sullygnome.com/"},"metrics":[{"metric":"Hours watched","value":"121.5m","change":39.5},{"metric":"Hours streamed","value":"649.3k","change":-11.5},{"metric":"Average viewers","value":"13.9k","change":39.5},{"metric":"Average channels","value":"74","change":-10.8},{"metric":"Viewer ratio","value":"187.1","change":57.5},{"metric":"Peak viewers","value":"93k","change":52.6},{"metric":"Unique streamers","value":"23.9k","change":-13.2}],"note":"Audience up 40% on 11.5% fewer streamed hours and 13% fewer streamers. The streamer audience selects hard for extreme volatility and big max wins — the exact segment where Pragmatic does not compete."},"pragmatic_scorecard":{"title":"Pragmatic Play versus the field","subtitle":"Analyst scoring, 0-100. This is judgement, not measurement — the underlying evidence is cited per axis.","conf":"D","axes":[{"axis":"Distribution reach","basis":"514 sites, 45 countries, 3,291 lobby pages (SlotsRank Q1 2026)"},{"axis":"GGR share (Europe)","basis":"17.8% Eilers-Fantini, June 2026"},{"axis":"Per-release quality","basis":"Slots Launch average score per game, 2026 YTD"},{"axis":"US regulated access","basis":"Presence on state manufacturer eligibility lists"},{"axis":"High-volatility appeal","basis":"Published max-win ceilings and Twitch category presence"},{"axis":"Mechanical originality","basis":"Owned, licensable mechanics versus licensed-in or generic"},{"axis":"Multi-vertical depth","basis":"Slots, live, bingo, virtual sports, sportsbook, arcade"},{"axis":"Promo / network tooling","basis":"Drops & Wins, EUR 30m annual prize pool, 60+ slots per season"}],"providers":{"Pragmatic Play":[98,95,20,5,30,35,90,100],"Evolution Group":[80,70,70,85,85,90,95,45],"Hacksaw Gaming":[55,30,75,60,95,80,20,30],"Nolimit City":[40,20,90,55,100,95,10,15],"Play'n GO":[70,45,35,45,45,55,25,25],"Light & Wonder":[80,50,40,95,40,50,45,55]}},"blind_spots":{"title":"Pragmatic Play's blind spots","subtitle":"Ranked by the size of the addressable gap","conf":"A/B","rows":[{"rank":1,"gap":"The United States","severity":95,"evidence":"Absent from Pennsylvania's iGaming Manufacturers Eligibility List dated 28 July 2026, and from iGamingCompass's June 2026 US top-100 supplier table. NEXT.io: 'Pragmatic, unlike the other businesses named in the suit, is not currently active in the licensed US iGaming market.'","size":"$10.74bn market growing 27.6%; the fastest-growing regulated iCasino pool on earth. Games Global self-reports ~10% US GGR share; Evolution, IGT and L&W split roughly 48%.","beneficiary":"IGT, Light & Wonder, Games Global, Evolution, Inspired"},{"rank":2,"gap":"Per-release quality","severity":80,"evidence":"Slots Launch 2026 YTD: 779 points across ~31 releases = 25.1 per game, with zero gold ratings. ELK 206.4, Peter & Sons 195.0, Nolimit City 179.0, Hacksaw 90.4.","size":"Volume strategies decay when operators start curating lobbies instead of filling them — and UK/Dutch/German lobby caps and tax pressure are pushing exactly that way.","beneficiary":"ELK Studios, Nolimit City, Hacksaw, Peter & Sons"},{"rank":3,"gap":"High volatility and the streamer economy","severity":70,"evidence":"Pragmatic's flagship ceiling is 25,000x against Nolimit City's 500,000x and Relax's 150,000x. Twitch Slots watch hours grew 39.5% YoY to 121.5m.","size":"The highest-intent discovery channel in the category, and the segment that converts to crypto and high-roller play.","beneficiary":"Nolimit City, Hacksaw Gaming, Relax Gaming, Massive Studios"},{"rank":4,"gap":"Asia and mobile-first design","severity":65,"evidence":"PG Soft leads the Philippines at 5.68% against Pragmatic's 5.34%, and ranks #2 globally on composite discovery traffic. Philippine e-games GGR grew 30% in 2025 to overtake land-based casinos.","size":"Asia-Pacific is $28.5bn of online GGR. Pragmatic has no equivalent portrait-first, low-bandwidth architecture.","beneficiary":"PG Soft, Jili, TaDa Gaming, Fa Chai"},{"rank":5,"gap":"Crash and instant-win","severity":55,"evidence":"Spribe's Aviator won Blask's Crash Game of the Year and is the #1 game outright in South Africa and Ghana, plus ~18% of Colombian online casino bets.","size":"The mobile-first, short-session, sub-35 audience that slots convert poorly. Pragmatic's answer (Chicken+, arcade vertical) launched in 2025-26 and is unproven.","beneficiary":"Spribe, BGaming, TaDa Gaming"},{"rank":6,"gap":"Live casino cost structure","severity":50,"evidence":"Expanding from 5 studios to 9 and 500 tables to 1,500+, into a vertical where Evolution's live revenue fell 3.6% YoY in Q2 2026 and Light & Wonder exited entirely in 2025.","size":"Structurally a Playtech/Evolution-shaped cost base being built as the live land-grab ends.","beneficiary":"Evolution (incumbency), Hacksaw (asset-light comparison)"},{"rank":7,"gap":"Franchise and studio concentration","severity":45,"evidence":"Big Bass Splash, Gates of Olympus and Big Bass Bonanza are the three most widely distributed slots on earth. Two of the three are Reel Kingdom content — a separate studio, however tightly bound.","size":"Distribution footprint rests on a narrow IP base whose top title commands just 1.35% of European slot GGR.","beneficiary":"Any studio with an emergent franchise — ELK's Pirots, Games Global's Area Link"},{"rank":8,"gap":"Supply-chain regulatory exposure without disclosure","severity":75,"evidence":"AGCO fined Arrise Solutions CAD $40,000 on 7 May 2026 for games on unregulated sites reachable from Ontario. Named in the Los Angeles City Attorney's action against Stake.us. First major supplier to quit US sweepstakes (2 Sep 2025). Geo-blocked Dutch IPs on unlicensed casinos in 2026, removing ~29% of the top offshore slot inventory overnight.","size":"The UKGC took £4.75m from Evolution in July 2026 for exactly this conduct and stated it considered suspending the licence. Pragmatic's content is far more widely distributed on offshore sites than Evolution's, and as a private company it discloses nothing about its compliance posture.","beneficiary":"Studios with a US-regulated-first distribution model"}]},"pragmatic_regional_rank":{"title":"#1 in three regions, absent in the fourth","subtitle":"Pragmatic Play's supplier position by region","conf":"B","source":{"name":"Eilers-Fantini (Europe, verified); CasinoRank regional supplier analysis (South America, Africa, North America)","url":"https://news.cision.com/casinorank/r/casinorank-reveals-2025-s-top-igaming-suppliers-driving-regional-growth,c4104690"},"rows":[{"region":"Europe","pp":17.8,"rank":1,"next":"Evolution 12.5%","conf":"B"},{"region":"Africa","pp":19.6,"rank":1,"next":"Gaming Corps 10.7%","conf":"C"},{"region":"South America","pp":19.3,"rank":1,"next":"Playtech 14.2%","conf":"C"},{"region":"Canada","pp":11.9,"rank":3,"next":"IGT 18.3%","conf":"B"},{"region":"Philippines","pp":5.34,"rank":2,"next":"PG Soft 5.68%","conf":"B"},{"region":"United States","pp":0,"rank":null,"next":"Evolution 17.9%","conf":"A"}],"note":"The Europe and US figures are the reliable ones. The African and South American shares come from a single commercial press release and use a lobby-presence rather than GGR methodology."},"pragmatic_profile":{"founded":2015,"hq":"Gibraltar (operations also Malta)","ownership":"Private investor group led by Veridian (Gibraltar) Limited; serviced by ARRISE","ceo":"Julian Jarvis","headcount":"~1,200 direct plus ~4,000 via ARRISE","slots":"~800 slots; 1,219 titles across all verticals in lobby scans","cadence":"8 new slots per month; 100+ network games across all verticals in 2025","verticals":["Slots","Live casino (500+ tables, 5 studios to 9 planned)","Bingo","Virtual sports","Sportsbook","Arcade (new 2025)"],"revenue":null,"revenue_note":"No audited accounts filed in any public registry. No IPO plans and no credible reported sale process. The widely quoted '$1bn+ net revenue' traces to an AI-generated aggregator page with no methodology and should not be used.","awards_2025":39,"drops_and_wins_pool_eur_m":30,"conf":"C"},"regulatory_actions":{"title":"Supply-chain enforcement is now a first-order risk","subtitle":"Regulators have started fining studios, not just operators","conf":"A","rows":[{"date":"2026-07-23","target":"Evolution Malta Holding","regulator":"UK Gambling Commission","amount":"£4.75m","detail":"18-month licence review found 'serious weaknesses' in AML risk assessment and supply-chain oversight; five Evolution games were on six unlicensed sites serving GB consumers. The Commission stated it considered suspending the licence, and imposed a new condition requiring an independent audit within 12 months."},{"date":"2026-05-07","target":"Arrise Solutions (Pragmatic Play) and Relax Gaming","regulator":"AGCO (Ontario)","amount":"CAD $40,000 each","detail":"Games found available on unregulated sites accessible to Ontario players. Both cooperated and restricted access. This is the only confirmed monetary penalty against Pragmatic Play found in this research."},{"date":"2025-10-11","target":"Gaming content suppliers","regulator":"California AB 831","amount":"Criminal","detail":"Criminalises the full sweepstakes supply chain including content suppliers who knowingly support an online sweepstakes game."},{"date":"2025-09-02","target":"Pragmatic Play (voluntary)","regulator":"—","amount":"Exit","detail":"First major supplier to withdraw from US sweepstakes, days after the Los Angeles City Attorney named it alongside Evolution, Hacksaw, Nolimit City, Red Tiger, BTG and NetEnt in an action against Stake.us. Games were locked rather than removed."},{"date":"2026","target":"Pragmatic Play (voluntary)","regulator":"—","amount":"Geo-block","detail":"Began blocking Dutch IPs on unlicensed casinos. Blask measured the impact at 25 of the top 86 slots and 28 of the top 100 games on Dutch offshore lobbies — roughly 29% of top offshore slot inventory removed in one move. Neither Pragmatic nor the Ksa commented."},{"date":"2025-08-01","target":"B2B suppliers","regulator":"Romania Law 141/2025","amount":"Licence","detail":"Software providers, platform providers and payment processors must block access from Romania via unlicensed operators. A EUR 20,000/year Class 2 B2B licence is now mandatory."},{"date":"2028","target":"Game software suppliers","regulator":"Finland Gambling Act 10/2026","amount":"Licence","detail":"From 2028 Finnish-licensed operators may only use software from Finnish-licensed suppliers."}]},"crypto":{"title":"The biggest unmeasured pool in the industry","subtitle":"Crypto casino GGR estimates — unaudited, and methodologically contested by a factor of four","conf":"C","source":{"name":"Yield Sec via Financial Times; SCCG Research 'The Border Toll', July 2026","url":"https://sccgmanagement.com/wp-content/uploads/2026/07/2026-07-23_SCCG-Research_The-Border-Toll_FINAL_v2.pdf"},"rows":[{"entity":"Stake.com GGR 2024","value":4.7,"unit":"US$bn","note":"Comparable to Entain group revenue. 25m users, ~4% of all Bitcoin transaction volume."},{"entity":"Roobet GGR","value":0.5,"unit":"US$bn","note":"Range $400-600m"},{"entity":"BC.Game GGR","value":0.4,"unit":"US$bn","note":"Range $300-500m"}],"category_high":81.4,"category_low":12,"note":"The $81.4bn category estimate would make crypto casinos larger than the entire regulated global online casino market, which strains credulity. The conservative methodology gives $9-14bn for 2023. Do not chart the high figure next to regulator-verified GGR. What is not in doubt: Pragmatic Play, Evolution, Hacksaw, Nolimit City, Play'n GO, NetEnt, BTG, Push, Relax, Red Tiger and Thunderkick all supply Stake.com today — the same roster that supplies regulated Europe."}};
+
+/* ── theme for chart.js ─────────────────────────────── */
+const C = { pp:'#ff7a1a', rival:'#4c9aff', good:'#3fb950', bad:'#f85149', warn:'#e3b341',
+            purple:'#a371f7', teal:'#2dd4bf', pink:'#f778ba', grid:'#242c38',
+            text:'#e6edf3', muted:'#8b98a9', panel:'#141a22' };
+Chart.defaults.color = C.muted;
+Chart.defaults.borderColor = C.grid;
+Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.boxWidth = 8;
+Chart.defaults.plugins.legend.labels.color = C.text;
+Chart.defaults.plugins.tooltip.backgroundColor = '#0b0f14';
+Chart.defaults.plugins.tooltip.borderColor = C.grid;
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.titleColor = C.text;
+Chart.defaults.plugins.tooltip.bodyColor = '#c9d4e0';
+Chart.defaults.plugins.tooltip.padding = 11;
+Chart.defaults.maintainAspectRatio = false;
+const axis = (t) => ({ grid:{ color:C.grid }, ticks:{ color:C.muted }, title:{ display:!!t, text:t, color:C.muted } });
+
+/* ── KPI cards ──────────────────────────────────────── */
+document.getElementById('kpis').innerHTML = DATA.kpis.map(k => `
+  <div class="kpi">
+    <div class="v">${k.value}</div>
+    <div class="l">${k.label}</div>
+    <div class="s">${k.sub}</div>
+    <div class="c">Tier ${k.conf} · ${k.src}</div>
+  </div>`).join('');
+
+/* ── 1. global trajectory ───────────────────────────── */
+{
+  const d = DATA.global_trajectory;
+  new Chart(document.getElementById('ch_traj'), {
+    type:'bar',
+    data:{ labels:d.years.map(String), datasets:[
+      { label:'Land-based GGR', data:d.total_ggr.map((t,i)=>t-d.online_ggr[i]), backgroundColor:'#2b3442', borderRadius:3 },
+      { label:'Online GGR', data:d.online_ggr, backgroundColor:C.pp, borderRadius:3 }
+    ]},
+    options:{ scales:{ x:{ stacked:true, ...axis() }, y:{ stacked:true, ...axis('US$bn') } },
+      plugins:{ tooltip:{ callbacks:{ footer:(it)=>{
+        const i = it[0].dataIndex;
+        return `Total $${d.total_ggr[i]}bn · online ${d.online_share_pct[i]}%`; } } } } }
+  });
+}
+
+/* ── 2. region bubbles ──────────────────────────────── */
+{
+  const d = DATA.region_ggr_2026, cols=[C.pp,C.rival,C.teal,C.purple,C.warn,C.pink];
+  new Chart(document.getElementById('ch_region'), {
+    type:'bubble',
+    data:{ datasets: d.rows.map((r,i)=>({
+      label:`${r.region} — $${r.ggr}bn`,
+      data:[{x:r.growth, y:r.regulated, r:Math.sqrt(r.ggr)*4.2}],
+      backgroundColor:cols[i]+'cc', borderColor:cols[i], borderWidth:2 })) },
+    options:{ scales:{ x:{ ...axis('YoY growth, %'), min:0, max:36 },
+                       y:{ ...axis('Regulated share of GGR, %'), min:0, max:105 } },
+      plugins:{ tooltip:{ callbacks:{ label:(c)=>{
+        const r = d.rows[c.datasetIndex];
+        return `${r.region}: $${r.ggr}bn · +${r.growth}% · ${r.regulated}% regulated`; } } } } }
+  });
+}
+
+/* ── 3. UK slots ────────────────────────────────────── */
+{
+  const d = DATA.uk_slots_quarterly;
+  new Chart(document.getElementById('ch_uk'), {
+    data:{ labels:d.quarters, datasets:[
+      { type:'bar', label:'Slots GGY (£m)', data:d.ggy_gbp_m, backgroundColor:C.pp, borderRadius:3, yAxisID:'y', order:3 },
+      { type:'line', label:'Spins per session', data:d.spins_per_session, borderColor:C.rival, backgroundColor:C.rival, yAxisID:'y1', tension:.3, pointRadius:5 },
+      { type:'line', label:'GGY per session (£)', data:d.ggy_per_session, borderColor:C.teal, backgroundColor:C.teal, yAxisID:'y2', tension:.3, pointRadius:5, borderDash:[5,4] },
+      { type:'line', label:'Avg session (min)', data:d.avg_session_min, borderColor:C.purple, backgroundColor:C.purple, yAxisID:'y3', tension:.3, pointRadius:5, borderDash:[2,3] }
+    ]},
+    options:{ scales:{
+      x:axis(),
+      y:{ ...axis('Slots GGY, £m'), min:600, max:860, position:'left' },
+      y1:{ ...axis(), min:110, max:140, position:'right', grid:{drawOnChartArea:false} },
+      y2:{ display:false, min:3.5, max:4.2 },
+      y3:{ display:false, min:13, max:19 } } }
+  });
+}
+
+/* ── 4. Europe share ────────────────────────────────── */
+{
+  const d = DATA.europe_supplier_share;
+  new Chart(document.getElementById('ch_eu'), {
+    type:'bar',
+    data:{ labels:d.suppliers, datasets:[
+      { label:'Oct 2025', data:d.oct_2025, backgroundColor:'#2b3442', borderRadius:3 },
+      { label:'Jun 2026', data:d.jun_2026, borderRadius:3,
+        backgroundColor:d.suppliers.map(s=>s==='Pragmatic Play'?C.pp:C.rival) }
+    ]},
+    options:{ scales:{ x:axis(), y:{ ...axis('% of European online casino GGR'), min:0, max:21 } } }
+  });
+}
+
+/* ── 5. release quality scatter ─────────────────────── */
+{
+  const d = DATA.release_quality;
+  new Chart(document.getElementById('ch_quality'), {
+    type:'bubble',
+    data:{ datasets: d.rows.map(r=>({
+      label:r.provider,
+      data:[{x:r.releases, y:r.avg, r:8+r.gold*3.2}],
+      backgroundColor:(r.provider==='Pragmatic Play'?C.pp:(r.gold?C.good:C.rival))+'cc',
+      borderColor:(r.provider==='Pragmatic Play'?C.pp:(r.gold?C.good:C.rival)), borderWidth:2 })) },
+    options:{ scales:{ x:{ ...axis('New releases, 2026 YTD'), min:0, max:35 },
+                       y:{ ...axis('Average quality score per release'), min:0, max:230 } },
+      plugins:{ legend:{ position:'right', labels:{ boxWidth:8, padding:9 } },
+        tooltip:{ callbacks:{ label:(c)=>{ const r=d.rows[c.datasetIndex];
+          return `${r.provider}: ${r.releases} releases · ${r.avg} avg · ${r.gold} gold / ${r.silver} silver`; } } } } }
+  });
+}
+
+/* ── 6. Evolution live vs RNG ───────────────────────── */
+{
+  const d = DATA.evolution_quarterly;
+  new Chart(document.getElementById('ch_evo'), {
+    type:'line',
+    data:{ labels:d.quarters, datasets:[
+      { label:'Live casino (left)', data:d.live, borderColor:C.rival, backgroundColor:C.rival, yAxisID:'y', tension:.3, pointRadius:5 },
+      { label:'RNG slots (right)', data:d.rng, borderColor:C.pp, backgroundColor:C.pp, yAxisID:'y1', tension:.3, pointRadius:5 }
+    ]},
+    options:{ scales:{ x:axis(),
+      y:{ ...axis('Live, €m'), min:415, max:470 },
+      y1:{ ...axis('RNG, €m'), min:66, max:86, position:'right', grid:{drawOnChartArea:false} } } }
+  });
+}
+
+/* ── 7. max win ─────────────────────────────────────── */
+{
+  const d = DATA.max_win, rows = d.rows;
+  new Chart(document.getElementById('ch_maxwin'), {
+    type:'bar',
+    data:{ labels:rows.map(r=>r.title), datasets:[
+      { label:'Max win multiplier', data:rows.map(r=>r.max), borderRadius:3,
+        backgroundColor:rows.map(r=>r.pp?C.pp:C.rival) } ]},
+    options:{ indexAxis:'y',
+      scales:{ x:{ type:'logarithmic', ...axis('Max win multiplier (log)'), min:3000 },
+               y:{ ...axis(), ticks:{ color:C.muted, font:{size:11} } } },
+      plugins:{ legend:{ display:false },
+        tooltip:{ callbacks:{ label:(c)=>{ const r=rows[c.dataIndex];
+          return `${r.provider} · ${r.max.toLocaleString()}x` + (r.rtp?` · RTP ${r.rtp}%`:''); } } } } }
+  });
+}
+
+/* ── 8. RTP compression ─────────────────────────────── */
+{
+  const d = DATA.rtp_compression, rows = d.rows;
+  new Chart(document.getElementById('ch_rtp'), {
+    type:'bar',
+    data:{ labels:rows.map(r=>r.title), datasets:[
+      { label:'RTP deployed on UK sites', data:rows.map(r=>r.deployed), backgroundColor:C.bad, borderRadius:3, base:91 },
+      { label:'Headroom withheld from players', data:rows.map(r=>r.max - r.deployed), backgroundColor:C.rival+'55', borderRadius:3 }
+    ]},
+    options:{ indexAxis:'y',
+      scales:{ x:{ stacked:true, ...axis('Return to player, %'), min:91, max:97.5 },
+               y:{ stacked:true, ...axis(), ticks:{ color:C.muted, font:{size:11} } } },
+      plugins:{ tooltip:{ callbacks:{ label:(c)=>{ const r=rows[c.dataIndex];
+        return `${r.provider} · deployed ${r.deployed}% vs max ${r.max}% (−${(r.max-r.deployed).toFixed(2)}pp)`; } } } } }
+  });
+}
+
+/* ── 9. blind spots ─────────────────────────────────── */
+{
+  const rows = [...DATA.blind_spots.rows].sort((a,b)=>b.severity-a.severity);
+  new Chart(document.getElementById('ch_blind'), {
+    type:'bar',
+    data:{ labels:rows.map(r=>r.gap), datasets:[
+      { label:'Severity', data:rows.map(r=>r.severity), borderRadius:3,
+        backgroundColor:rows.map(r=>r.severity>=75?C.bad:(r.severity>=55?C.warn:C.rival)) } ]},
+    options:{ indexAxis:'y', scales:{ x:{ ...axis('Severity (analyst score)'), min:0, max:100 }, y:axis() },
+      plugins:{ legend:{ display:false },
+        tooltip:{ callbacks:{ label:(c)=>rows[c.dataIndex].size.slice(0,120)+'…',
+                              afterLabel:(c)=>'Beneficiary: '+rows[c.dataIndex].beneficiary } } },
+      onClick:(e,el)=>{ if(el.length) location.hash='#bs'+rows[el[0].index].rank; } }
+  });
+}
+
+/* ── blind spot cards ───────────────────────────────── */
+document.getElementById('bscards').innerHTML =
+  [...DATA.blind_spots.rows].sort((a,b)=>b.severity-a.severity).map(r=>`
+  <div class="bsc" id="bs${r.rank}">
+    <div class="hd">
+      <div class="rk">${r.rank}</div>
+      <h4>${r.gap}</h4>
+      <div class="sev">severity ${r.severity}/100</div>
+    </div>
+    <div class="bar"><i style="width:${r.severity}%"></i></div>
+    <dl>
+      <dt>Evidence</dt><dd>${r.evidence}</dd>
+      <dt>Size of gap</dt><dd>${r.size}</dd>
+      <dt>Who benefits</dt><dd>${r.beneficiary}</dd>
+    </dl>
+  </div>`).join('');
+
+/* ── timeline ───────────────────────────────────────── */
+document.getElementById('timeline').innerHTML = DATA.regulatory_actions.rows.map(r=>`
+  <div class="tl-i">
+    <div class="d">${r.date} · ${r.regulator || 'voluntary'} · <b style="color:var(--bad)">${r.amount}</b></div>
+    <div class="t">${r.target.includes('Pragmatic') ? '<em>'+r.target+'</em>' : r.target}</div>
+    <div class="x">${r.detail}</div>
+  </div>`).join('');
+
+/* ── method blocks ──────────────────────────────────── */
+document.getElementById('legend').innerHTML =
+  Object.entries(DATA.meta.confidence_scale).map(([k,v])=>
+    `<div><b class="tier t-${k}">${k}</b> &nbsp;${v}</div>`).join('');
+document.getElementById('gaps').innerHTML =
+  DATA.meta.hard_gaps.map(g=>`<li>${g}</li>`).join('');
+
+/* ── gallery ────────────────────────────────────────── */
+const CAPTIONS = {
+ '01_global_trajectory':'Online overtakes land-based gambling in 2029',
+ '02_region_ggr':'Online GGR by region, 2026',
+ '03_slot_intensity':'Slots as a share of online casino GGR',
+ '04_us_states':'US iGaming by state, 2025',
+ '05_tax_rates':'Online casino tax rates',
+ '06_channelisation':'Channelisation versus tax rate',
+ '07_market_growth':'Growth and contraction by market',
+ '08_uk_slots_quarterly':'UK slots: harder per spin, not more spins',
+ '09_europe_supplier_share':'European supplier GGR share',
+ '10_na_supplier_share':'North American supplier GGR share',
+ '11_lobby_footprint':'Provider lobby footprint',
+ '12_release_quality':'Output versus craft',
+ '13_demo_demand':'Demo play demand by provider',
+ '14_supplier_financials':'FY2025 supplier revenue',
+ '15_evolution_live_vs_rng':'Evolution: live versus RNG',
+ '16_hacksaw_growth':'Hacksaw Gaming quarterly revenue',
+ '17_margins':'FY2025 margin structure',
+ '18_title_reach':'Most widely distributed titles',
+ '19_gates_depth':'Gates of Olympus depth by market',
+ '20_no_global_number_one':'There is no global #1 slot',
+ '21_shelf_share':'Top-100 shelf share: US versus Germany',
+ '22_max_win':'Max-win ceilings',
+ '23_money_train_paradox':'The max-win illusion',
+ '24_rtp_compression':'Deployed RTP versus provider maximum',
+ '25_mechanic_prevalence':'Mechanic prevalence',
+ '26_bonus_buy':'Bonus buy regulatory status',
+ '27_streaming':'Twitch slots category, YoY',
+ '28_scorecard_radar':'Pragmatic Play versus the field',
+ '29_blind_spots':'Blind spots by severity',
+ '30_pragmatic_regional_rank':'Pragmatic Play share by region'
+};
+document.getElementById('gallery').innerHTML = Object.entries(CAPTIONS).map(([f,c])=>
+  `<a href="charts/${f}.png" data-lb><img loading="lazy" src="charts/${f}.png" alt="${c}"><span>${c}</span></a>`).join('');
+
+/* ── sources ────────────────────────────────────────── */
+const SRC = [];
+for (const [k,v] of Object.entries(DATA)) {
+  if (v && v.source && v.source.url) SRC.push([v.source.name, v.source.url]);
+}
+const EXTRA = [
+  ['UK Gambling Commission — industry statistics','https://www.gamblingcommission.gov.uk/statistics-and-research/publication/industry-statistics-annual-report-financial-year-april-2024-to-march-2025'],
+  ['American Gaming Association — State of the States 2026','https://www.americangaming.org/resources/state-of-the-states-2026/'],
+  ['Kansspelautoriteit — monitoring report spring 2026','https://kansspelautoriteit.nl/monitoringsrapportage-voorjaar-2026-marktontwikkeling-blijft-gelijk'],
+  ['GGL — Tätigkeitsbericht 2025','https://www.gluecksspiel-behoerde.de/de/news/ggl-veroeffentlicht-taetigkeitsbericht-2025'],
+  ['Spelinspektionen — Spelmarknaden 2025','https://www.spelinspektionen.se/globalassets/dokument/statistik/spelmarknaden-2025.pdf'],
+  ['iGaming Ontario — market performance reports','https://www.igamingontario.ca/en/operator/market-performance-report-monthly'],
+  ['PAGCOR — 2025 gross gaming revenue','https://www.pagcor.ph/headlines/ph-gross-gaming-revenues-up-6.39percent-to-php396.14b-in-2025.html'],
+  ['AGCO — enforcement action against Arrise and Relax','https://www.agco.ca/en/news/agco-takes-enforcement-action-against-two-companies-allowing-their-games-unregulated-gaming'],
+  ['UKGC / Evolution £4.75m settlement','https://www.evolution.com/investors/financial-publications/press-releases/evolution-agrees-gbp-4-75-million-settlement-with-uk-gambling-commission'],
+  ['Pennsylvania Gaming Control Board — iGaming manufacturer eligibility list','https://pgcb.pa.gov/files/licensure/Reports/igaming_manufacturer_Eligibility_List.pdf'],
+  ['NEXT.io — Pragmatic Play ends supply to sweepstakes','https://next.io/news/regulation/exclusive-pragmatic-play-ends-supply-sweepstakes/'],
+  ['Blask — Pragmatic Play and the Dutch offshore market','https://blask.com/newsroom/pragmatic-play-netherlands-offshore-slots/'],
+  ['Eilers & Krejcik — OGPD attribute insights','https://ekgamingllc.com/downloads/eilers-fantini-ogpd-data-insights-q4-2025-new-u-s-online-slots-attributes/'],
+  ['Curaçao Gaming Authority — online gaming licence registry','https://gamingcontrol.spin-cdn.com/media/license_registry/20260109_20260109_ogl_license_registry.pdf'],
+  ['SPA Brazil — first regulated year results','https://igamingbusiness.com/finance/licensed-brazil-online-betting-7bn-ggr-2025/']
+];
+const seen = new Set();
+document.getElementById('srcs').innerHTML = [...SRC, ...EXTRA]
+  .filter(([n,u]) => !seen.has(u) && seen.add(u))
+  .map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join('');
+
+/* ── lightbox ───────────────────────────────────────── */
+const lb = document.getElementById('lb'), lbi = document.getElementById('lbimg');
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-lb]');
+  if (a) { e.preventDefault(); lbi.src = a.getAttribute('href'); lb.classList.add('on'); return; }
+  if (e.target.closest('figure img')) { lbi.src = e.target.getAttribute('src'); lb.classList.add('on'); return; }
+  if (e.target.closest('#lb')) lb.classList.remove('on');
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
+
+/* ── scrollspy ──────────────────────────────────────── */
+const links = [...document.querySelectorAll('nav a.nl')];
+const secs = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const spy = new IntersectionObserver(es => {
+  es.forEach(en => {
+    if (en.isIntersecting) {
+      links.forEach(l => l.classList.remove('on'));
+      const i = secs.indexOf(en.target);
+      if (i > -1) links[i].classList.add('on');
+    }
+  });
+}, { rootMargin: '-45% 0px -50% 0px' });
+secs.forEach(s => spy.observe(s));
+</script>
 </body>
 </html>
