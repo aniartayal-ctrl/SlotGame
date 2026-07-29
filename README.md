@@ -20,6 +20,7 @@ Then visit: `http://localhost:8080/igaming-research/index.html`
 
 ## Contents
 
+- **GROK_RESEARCH_BRIEF.md** — full text brief for Grok/AI consumption (all insights, no charts needed)
 - 12 research sections (market, games, competitors, operators, aggregators, platforms)
 - 20 data visualization charts
 - Light skeuomorphic UI theme
