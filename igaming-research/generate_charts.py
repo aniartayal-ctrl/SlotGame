@@ -10,26 +10,29 @@ from pathlib import Path
 OUT = Path(__file__).parent / "charts"
 OUT.mkdir(exist_ok=True)
 
-# Brand palette
-PP_ORANGE = "#F97316"
-PP_DARK = "#1E293B"
-ACCENT_BLUE = "#3B82F6"
-ACCENT_GREEN = "#10B981"
-ACCENT_PURPLE = "#8B5CF6"
-ACCENT_RED = "#EF4444"
-ACCENT_YELLOW = "#F59E0B"
-GRAY = "#94A3B8"
-COLORS = [PP_ORANGE, ACCENT_BLUE, ACCENT_GREEN, ACCENT_PURPLE, ACCENT_RED, ACCENT_YELLOW, "#EC4899", "#06B6D4"]
+# Light skeuomorphic palette
+PP_ORANGE = "#D4621A"
+PP_DARK = "#3D3429"
+ACCENT_BLUE = "#2B6CB0"
+ACCENT_GREEN = "#2F855A"
+ACCENT_PURPLE = "#6B46C1"
+ACCENT_RED = "#C53030"
+ACCENT_YELLOW = "#B7791F"
+GRAY = "#8B7E6A"
+COLORS = [PP_ORANGE, ACCENT_BLUE, ACCENT_GREEN, ACCENT_PURPLE, ACCENT_RED, ACCENT_YELLOW, "#B83280", "#2C7A7B"]
+CHART_BG = "#FAF7F2"
+PANEL_BG = "#FFFFFF"
+GRID = "#E2D9CC"
 
 plt.rcParams.update({
-    "figure.facecolor": "#0F172A",
-    "axes.facecolor": "#1E293B",
-    "axes.edgecolor": "#334155",
-    "axes.labelcolor": "#E2E8F0",
-    "text.color": "#E2E8F0",
-    "xtick.color": "#CBD5E1",
-    "ytick.color": "#CBD5E1",
-    "grid.color": "#334155",
+    "figure.facecolor": CHART_BG,
+    "axes.facecolor": PANEL_BG,
+    "axes.edgecolor": "#C4B8A8",
+    "axes.labelcolor": PP_DARK,
+    "text.color": PP_DARK,
+    "xtick.color": "#5C5347",
+    "ytick.color": "#5C5347",
+    "grid.color": GRID,
     "font.family": "DejaVu Sans",
     "font.size": 11,
 })
@@ -60,7 +63,7 @@ def chart_global_market_by_region():
     bars = ax2.barh(regions, ggr, color=COLORS, height=0.6)
     for bar, g in zip(bars, growth):
         ax2.text(bar.get_width() + 0.5, bar.get_y() + bar.get_height()/2,
-                 f"${bar.get_width():.1f}B  (+{g}%)", va="center", fontsize=9, color="#E2E8F0")
+                 f"${bar.get_width():.1f}B  (+{g}%)", va="center", fontsize=9, color=PP_DARK)
     ax2.set_xlabel("Gross Gaming Revenue ($B)")
     ax2.set_title("Regional GGR & YoY Growth", fontsize=12, pad=10)
     ax2.set_xlim(0, 55)
@@ -329,8 +332,8 @@ def chart_growth_markets():
                     xytext=(8, 5), fontsize=9)
 
     cbar = plt.colorbar(scatter, ax=ax)
-    cbar.set_label("Pragmatic Play Dominance (%)", color="#E2E8F0")
-    cbar.ax.yaxis.set_tick_params(color="#E2E8F0")
+    cbar.set_label("Pragmatic Play Dominance (%)", color=PP_DARK)
+    cbar.ax.yaxis.set_tick_params(color=PP_DARK)
 
     ax.set_xlabel("YoY Growth Rate (%)")
     ax.set_ylabel("Market GGR 2026 ($B)")
@@ -455,7 +458,7 @@ def chart_top_operators_pragmatic():
     for i, (bar, depth, g) in enumerate(zip(bars, pp_depth, ggr)):
         depth_label = "Exclusive Live" if depth == 100 else ("Deep" if depth >= 90 else "Standard")
         ax.text(bar.get_width() + 0.15, bar.get_y() + bar.get_height()/2,
-                f"${g}B  |  PP: {depth_label}", va="center", fontsize=9, color="#E2E8F0")
+                f"${g}B  |  PP: {depth_label}", va="center", fontsize=9, color=PP_DARK)
 
     ax.set_yticks(y)
     ax.set_yticklabels(operators)
@@ -581,7 +584,7 @@ def chart_operator_brands_map():
         "BetMGM, Caesars\nPalace Online"
     ]
     for i, detail in enumerate(brands_detail):
-        ax.text(i, brand_count[i] + 0.3, detail, ha="center", fontsize=7, color="#CBD5E1")
+        ax.text(i, brand_count[i] + 0.3, detail, ha="center", fontsize=7, color="#5C5347")
 
     ax.set_xticks(x)
     ax.set_xticklabels(groups, rotation=15, ha="right")
