@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iGaming Intelligence — Pragmatic Play Worldwide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --ink: #12161c;
+      --ink-soft: #3a4450;
+      --paper: #f3f0ea;
+      --paper-2: #e8e4db;
+      --teal: #0b6e6e;
+      --teal-deep: #084848;
+      --amber: #d4891a;
+      --coral: #c44b3c;
+      --slate: #5c6b7a;
+      --line: rgba(18, 22, 28, 0.1);
+      --glow: rgba(11, 110, 110, 0.12);
+      --radius: 4px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Manrope", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(11, 110, 110, 0.14), transparent 55%),
+        radial-gradient(900px 500px at 100% 5%, rgba(212, 137, 26, 0.12), transparent 50%),
+        linear-gradient(180deg, #efebe3 0%, var(--paper) 28%, #ebe7de 100%);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(18, 22, 28, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18, 22, 28, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, black, transparent 85%);
+      z-index: 0;
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+    /* —— Hero —— */
+    .hero {
+      padding: 3.5rem 0 2.5rem;
+      display: grid;
+      gap: 1.75rem;
+      animation: rise 0.8s ease both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes drawBar {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-deep);
+      font-weight: 500;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 1.5rem;
+      height: 2px;
+      background: var(--amber);
+    }
+
+    .brand {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.6rem, 7vw, 4.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      max-width: 14ch;
+    }
+
+    .brand span {
+      display: block;
+      background: linear-gradient(105deg, var(--teal-deep) 0%, var(--teal) 45%, var(--amber) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lede {
+      max-width: 38rem;
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .chip {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(6px);
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .chip:hover {
+      border-color: var(--teal);
+      color: var(--teal-deep);
+      transform: translateY(-1px);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 800px) {
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stat {
+      padding: 1rem 1.1rem;
+      background: linear-gradient(160deg, rgba(255,255,255,0.72), rgba(255,255,255,0.35));
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      animation: rise 0.9s ease both;
+    }
+
+    .stat:nth-child(2) { animation-delay: 0.08s; }
+    .stat:nth-child(3) { animation-delay: 0.16s; }
+    .stat:nth-child(4) { animation-delay: 0.24s; }
+
+    .stat::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: 0; height: 3px; width: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--amber));
+      transform-origin: left;
+      animation: drawBar 1s 0.4s ease both;
+    }
+
+    .stat b {
+      display: block;
+      font-family: "Syne", sans-serif;
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      font-size: 0.78rem;
+      color: var(--slate);
+      font-weight: 600;
+    }
+
+    /* —— Nav —— */
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 0.35rem;
+      overflow-x: auto;
+      padding: 0.65rem 0;
+      margin: 0 -0.25rem 2rem;
+      background: linear-gradient(180deg, rgba(243, 240, 234, 0.92), rgba(243, 240, 234, 0.75));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      scrollbar-width: none;
+    }
+
+    .toc::-webkit-scrollbar { display: none; }
+
+    .toc a {
+      flex: 0 0 auto;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 0.7rem;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .toc a:hover { color: var(--teal-deep); border-color: var(--line); background: rgba(255,255,255,0.5); }
+
+    /* —— Sections —— */
+    section {
+      margin-bottom: 3.25rem;
+      scroll-margin-top: 3.5rem;
+      animation: rise 0.7s ease both;
+    }
+
+    .sec-head {
+      display: grid;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+      max-width: 40rem;
+    }
+
+    .sec-head h2 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.55rem, 3.2vw, 2.15rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+    }
+
+    .sec-head p { color: var(--ink-soft); font-size: 0.98rem; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+    }
+
+    @media (max-width: 860px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid var(--line);
+      padding: 1.15rem 1.2rem 1.25rem;
+      position: relative;
+    }
+
+    .panel h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.01em;
+    }
+
+    .panel.accent {
+      background:
+        linear-gradient(145deg, rgba(11, 110, 110, 0.1), rgba(255,255,255,0.5) 55%),
+        rgba(255,255,255,0.5);
+    }
+
+    .panel.warn {
+      background:
+        linear-gradient(145deg, rgba(196, 75, 60, 0.08), rgba(255,255,255,0.5) 55%),
+        rgba(255,255,255,0.5);
+    }
+
+    .chart-box { position: relative; height: 280px; }
+
+    .chart-box.tall { height: 340px; }
+
+    .chart-box.radar { height: 360px; }
+
+    /* —— Tables / lists —— */
+    .geo-list { display: grid; gap: 0.55rem; }
+
+    .geo-row {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      gap: 0.65rem;
+      align-items: start;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.88rem;
+    }
+
+    .geo-row strong {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--teal-deep);
+      padding-top: 0.15rem;
+    }
+
+    .geo-row span { color: var(--ink-soft); }
+
+    .bar-stack { display: grid; gap: 0.7rem; margin-top: 0.25rem; }
+
+    .bar-item label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.28rem;
+    }
+
+    .bar-item label em {
+      font-style: normal;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--slate);
+      font-weight: 500;
+    }
+
+    .track {
+      height: 8px;
+      background: var(--paper-2);
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      width: var(--w);
+      background: linear-gradient(90deg, var(--teal-deep), var(--teal) 60%, var(--amber));
+      transform-origin: left;
+      animation: drawBar 1.1s ease both;
+    }
+
+    .fill.amber { background: linear-gradient(90deg, var(--amber), #e8b45a); }
+    .fill.coral { background: linear-gradient(90deg, var(--coral), #d9786a); }
+
+    /* —— Games —— */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 700px) { .game-grid { grid-template-columns: 1fr; } }
+
+    .game {
+      padding: 1rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.55);
+      display: grid;
+      gap: 0.45rem;
+      transition: transform 0.25s ease, border-color 0.25s;
+    }
+
+    .game:hover {
+      transform: translateY(-3px);
+      border-color: rgba(11, 110, 110, 0.35);
+    }
+
+    .game .rank {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.68rem;
+      color: var(--amber);
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    .game h4 {
+      font-family: "Syne", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .game p { font-size: 0.84rem; color: var(--ink-soft); }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.2rem;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.22rem 0.45rem;
+      background: var(--paper-2);
+      color: var(--ink-soft);
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .tag.teal { background: rgba(11, 110, 110, 0.12); color: var(--teal-deep); }
+
+    /* —— Feature matrix —— */
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .matrix th, .matrix td {
+      text-align: left;
+      padding: 0.7rem 0.55rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .matrix th {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--slate);
+      font-weight: 500;
+    }
+
+    .matrix td:first-child { font-weight: 700; color: var(--ink); }
+
+    /* —— Competitor cards —— */
+    .comp-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 700px) { .comp-grid { grid-template-columns: 1fr; } }
+
+    .comp {
+      padding: 1rem 1.05rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.55);
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .comp h4 {
+      font-family: "Syne", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .comp .focus { font-size: 0.78rem; color: var(--teal-deep); font-weight: 600; }
+    .comp p { font-size: 0.84rem; color: var(--ink-soft); }
+
+    /* —— Blind spots —— */
+    .blind {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .blind article {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.85rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.5);
+      border-left: 3px solid var(--coral);
+    }
+
+    .blind .num {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--coral);
+      line-height: 1;
+    }
+
+    .blind h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .blind p { font-size: 0.84rem; color: var(--ink-soft); }
+
+    /* —— Verdict —— */
+    .verdict {
+      padding: 1.5rem 1.4rem;
+      background:
+        linear-gradient(125deg, rgba(8, 72, 72, 0.92), rgba(11, 110, 110, 0.88) 55%, rgba(212, 137, 26, 0.75)),
+        var(--teal-deep);
+      color: #f7f4ee;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .verdict::before {
+      content: "";
+      position: absolute;
+      width: 280px; height: 280px;
+      right: -60px; top: -80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .verdict h2 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.65rem;
+      position: relative;
+    }
+
+    .verdict p {
+      position: relative;
+      max-width: 46rem;
+      font-size: 0.98rem;
+      opacity: 0.92;
+      margin-bottom: 0.85rem;
+    }
+
+    .verdict ul {
+      position: relative;
+      list-style: none;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .verdict li {
+      font-size: 0.9rem;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .verdict li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #f0c36a;
+    }
+
+    /* —— Foot —— */
+    footer {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.75rem;
+      color: var(--slate);
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    footer a { color: var(--teal-deep); }
+
+    .sources {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.68rem;
+      line-height: 1.6;
+      color: var(--slate);
+    }
+
+    .map-visual {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+    }
+
+    @media (max-width: 700px) { .map-visual { grid-template-columns: 1fr; } }
+
+    .heat {
+      padding: 0.9rem;
+      border: 1px solid var(--line);
+      min-height: 7.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .heat strong {
+      font-family: "Syne", sans-serif;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .heat span {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      position: relative;
+      font-weight: 500;
+    }
+
+    .heat .badge {
+      align-self: flex-start;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.4rem;
+      background: rgba(255,255,255,0.55);
+      font-weight: 600;
+      position: relative;
+    }
+
+    .heat.hot {
+      background: linear-gradient(160deg, rgba(11,110,110,0.28), rgba(11,110,110,0.08));
+    }
+    .heat.warm {
+      background: linear-gradient(160deg, rgba(212,137,26,0.22), rgba(212,137,26,0.06));
+    }
+    .heat.cool {
+      background: linear-gradient(160deg, rgba(92,107,122,0.18), rgba(92,107,122,0.05));
+    }
+    .heat.cold {
+      background: linear-gradient(160deg, rgba(196,75,60,0.16), rgba(196,75,60,0.05));
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="eyebrow">Intelligence brief · As of July 2026</p>
+      <h1 class="brand">Pragmatic Play<span>Worldwide Map</span></h1>
+      <p class="lede">
+        A lit read of global iGaming: where the money is, where Pragmatic owns the lobby,
+        which games and features pull volume, where the blind spots sit, and how rivals stack up.
+      </p>
+      <div class="cta-row">
+        <a class="chip" href="#market">Market</a>
+        <a class="chip" href="#footprint">PP Footprint</a>
+        <a class="chip" href="#games">Games</a>
+        <a class="chip" href="#features">Features</a>
+        <a class="chip" href="#blind">Blind Spots</a>
+        <a class="chip" href="#rivals">Competitors</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>$97.7B</b><span>Online gambling 2026E (GVR)</span></div>
+        <div class="stat"><b>$121B</b><span>Online GGR 2026E (Track360)</span></div>
+        <div class="stat"><b>#1</b><span>Lobby share · EU / LatAm / Africa</span></div>
+        <div class="stat"><b>11%</b><span>CAGR to 2033 (GVR)</span></div>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Sections">
+      <a href="#market">01 Market</a>
+      <a href="#footprint">02 Footprint</a>
+      <a href="#games">03 Games</a>
+      <a href="#features">04 Features</a>
+      <a href="#blind">05 Blind spots</a>
+      <a href="#rivals">06 Rivals</a>
+      <a href="#verdict">07 Verdict</a>
+    </nav>
+
+    <!-- MARKET -->
+    <section id="market">
+      <div class="sec-head">
+        <h2>Global iGaming money map</h2>
+        <p>Europe still holds the largest regulated pool. LatAm posts the sharpest growth. Casino content leads sportsbook on online GGR mix.</p>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Online GGR by region · 2026E</h3>
+          <div class="chart-box"><canvas id="chartRegions"></canvas></div>
+        </div>
+        <div class="panel accent">
+          <h3>Vertical mix · 2026E</h3>
+          <div class="chart-box"><canvas id="chartVerticals"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:1rem">
+        <div class="panel">
+          <h3>Market trajectory (USD bn)</h3>
+          <div class="chart-box"><canvas id="chartTrajectory"></canvas></div>
+        </div>
+        <div class="panel">
+          <h3>Growth heat · YoY by region</h3>
+          <div class="bar-stack">
+            <div class="bar-item">
+              <label>Latin America <em>+30%</em></label>
+              <div class="track"><div class="fill" style="--w:100%"></div></div>
+            </div>
+            <div class="bar-item">
+              <label>Africa <em>+24%</em></label>
+              <div class="track"><div class="fill" style="--w:80%"></div></div>
+            </div>
+            <div class="bar-item">
+              <label>North America <em>+21%</em></label>
+              <div class="track"><div class="fill" style="--w:70%"></div></div>
+            </div>
+            <div class="bar-item">
+              <label>Asia-Pacific <em>+9%</em></label>
+              <div class="track"><div class="fill amber" style="--w:30%"></div></div>
+            </div>
+            <div class="bar-item">
+              <label>Europe <em>+7%</em></label>
+              <div class="track"><div class="fill amber" style="--w:23%"></div></div>
+            </div>
+            <div class="bar-item">
+              <label>Middle East &amp; Other <em>+5%</em></label>
+              <div class="track"><div class="fill coral" style="--w:17%"></div></div>
+            </div>
+          </div>
+          <p style="margin-top:1rem;font-size:0.8rem;color:var(--slate)">US iGaming alone grew ~27.6% in 2025 (AGA-linked reporting). Brazil’s regulated Bets market is the LatAm catalyst.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTPRINT -->
+    <section id="footprint">
+      <div class="sec-head">
+        <h2>Where Pragmatic actually owns the floor</h2>
+        <p>Blask lobby “content share” shows PP as the default #1 across most of Europe, Latin America, and Africa — with clear exceptions in the US and Australia.</p>
+      </div>
+
+      <div class="map-visual" style="margin-bottom:1rem">
+        <div class="heat hot"><span class="badge">Dominant</span><strong>Europe · LatAm · Africa</strong><span>PP leads lobby share; mid-tier fights for #2</span></div>
+        <div class="heat warm"><span class="badge">Expanding</span><strong>Brazil · Ontario · Mexico</strong><span>Casino live + sportsbook certification path</span></div>
+        <div class="heat cold"><span class="badge">Blind GEO</span><strong>US · Australia</strong><span>RTG (~18%) / 3 Oaks lead locally</span></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Europe lobby share snapshots</h3>
+          <div class="chart-box"><canvas id="chartEurope"></canvas></div>
+          <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--slate)">UK &amp; Germany still #1 for PP, but share is compressing as Evolution, Hacksaw, Playtech, and Reel Kingdom diversify lobbies.</p>
+        </div>
+        <div class="panel">
+          <h3>Regional readouts</h3>
+          <div class="geo-list">
+            <div class="geo-row"><strong>UK</strong><span>13.99% (was 15.53%) — still largest; Playtech &amp; Reel Kingdom rising</span></div>
+            <div class="geo-row"><strong>Germany</strong><span>14.40% (was 17.39%) — Hacksaw more than doubled, now top-tier threat</span></div>
+            <div class="geo-row"><strong>Spain</strong><span>PP &amp; Playtech up; Evolution leapt 0.33% → 5.58% on live demand</span></div>
+            <div class="geo-row"><strong>Italy</strong><span>Near parity with Playtech; Evolution 0.13% → 3.41%</span></div>
+            <div class="geo-row"><strong>Brazil</strong><span>PP leads; PG Soft ~½ of PP; Evolution / Hacksaw / TaDa crossing 2%</span></div>
+            <div class="geo-row"><strong>Mexico</strong><span>PP ~13–15% vs Playtech ~7–9%</span></div>
+            <div class="geo-row"><strong>Argentina</strong><span>PP ~3× Evolution; field opening past top-1 monopoly</span></div>
+            <div class="geo-row"><strong>Nigeria / Ghana</strong><span>PP dominates; Ghana ~15% monthly; mid-tier crowded</span></div>
+            <div class="geo-row"><strong>USA</strong><span>RTG 18.05% leader — PP not the structural #1</span></div>
+            <div class="geo-row"><strong>Australia</strong><span>3 Oaks leads narrowly vs Playson</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAMES -->
+    <section id="games">
+      <div class="sec-head">
+        <h2>Popular Pragmatic games</h2>
+        <p>The catalog that travels: tumble scatter-pays, franchise sequels, and a few cross-vertical bridges into crash and live.</p>
+      </div>
+      <div class="game-grid">
+        <article class="game">
+          <div class="rank">01 · GLOBAL FLAGSHIP</div>
+          <h4>Gates of Olympus / 1000</h4>
+          <p>Greek myth scatter-pay tumble with cumulative Zeus multipliers. High-vol chase title; 1000 series pushes ceiling culture.</p>
+          <div class="meta"><span class="tag teal">RTP ~96.5%</span><span class="tag">Max ~5,000×</span><span class="tag">High vol</span></div>
+        </article>
+        <article class="game">
+          <div class="rank">02 · GLOBAL FLAGSHIP</div>
+          <h4>Sweet Bonanza / 1000</h4>
+          <p>Candy tumble + bomb multipliers; buy-bonus culture made it a session staple wherever feature buy is legal.</p>
+          <div class="meta"><span class="tag teal">RTP ~96.48%</span><span class="tag">Max ~21,100×</span><span class="tag">Buy bonus</span></div>
+        </article>
+        <article class="game">
+          <div class="rank">03 · FRANCHISE ENGINE</div>
+          <h4>Big Bass Bonanza family</h4>
+          <p>Collect mechanics that spawn endless sequels — Hold &amp; Spin, Megaways hybrids, Day at the Races — mid/high vol mass appeal.</p>
+          <div class="meta"><span class="tag teal">RTP ~96.7%</span><span class="tag">Collect</span><span class="tag">Series IP</span></div>
+        </article>
+        <article class="game">
+          <div class="rank">04 · AESTHETIC TWIN</div>
+          <h4>Starlight Princess</h4>
+          <p>Olympus math in anime skin — same multiplier fantasy, different demographic hook across APAC &amp; youth-leaning lobbies.</p>
+          <div class="meta"><span class="tag teal">Scatter-pay</span><span class="tag">Multipliers</span><span class="tag">High vol</span></div>
+        </article>
+        <article class="game">
+          <div class="rank">05 · CLUSTER / GRID</div>
+          <h4>Sugar Rush</h4>
+          <p>Cluster-style grid with sticky multiplier spots — extends the candy universe beyond Bonanza.</p>
+          <div class="meta"><span class="tag teal">Cluster</span><span class="tag">Max ~5,000×</span></div>
+        </article>
+        <article class="game">
+          <div class="rank">06 · CLASSICS + CRASH</div>
+          <h4>Dog House · Wolf Gold · Spaceman</h4>
+          <p>Sticky-wild Megaways energy, Money Respin jackpot comfort, and Spaceman as the regulated crash bridge (~6–8M MAU vs Aviator’s ~77M).</p>
+          <div class="meta"><span class="tag teal">Breadth</span><span class="tag">Cross-sell</span></div>
+        </article>
+      </div>
+      <div class="panel" style="margin-top:1rem">
+        <h3>Flagship math profile</h3>
+        <div class="chart-box"><canvas id="chartGames"></canvas></div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+      <div class="sec-head">
+        <h2>Popular features · what players actually chase</h2>
+        <p>2026 slot culture rewards compounding multipliers, hybrid bonuses, and franchise familiarity — Pragmatic’s wheelhouse, with a few industry-wide constraints.</p>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Feature demand index (synthetic)</h3>
+          <div class="chart-box tall"><canvas id="chartFeatures"></canvas></div>
+          <p style="margin-top:0.6rem;font-size:0.78rem;color:var(--slate)">Index = relative player/operator demand signal based on release patterns, lobby prominence, and industry trend reporting (not proprietary GGR).</p>
+        </div>
+        <div class="panel">
+          <h3>Feature matrix</h3>
+          <table class="matrix">
+            <thead>
+              <tr><th>Feature</th><th>PP strength</th><th>2026 trend</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tumble / cascade</td><td>Signature</td><td>Table stakes</td></tr>
+              <tr><td>Scatter-pay 6×5</td><td>Olympus engine</td><td>Still top engagement</td></tr>
+              <tr><td>Cumulative multipliers</td><td>Differentiator</td><td>1000-series arms race</td></tr>
+              <tr><td>Bonus Buy / Ante</td><td>Widely shipped</td><td>GEO-restricted</td></tr>
+              <tr><td>Hold &amp; Spin / Collect</td><td>Big Bass line</td><td>Hybrid Megaways</td></tr>
+              <tr><td>Megaways</td><td>Strong licensee</td><td>Hybrid dual paths</td></tr>
+              <tr><td>Drops &amp; Wins</td><td>€25M+ season</td><td>Operator lock-in</td></tr>
+              <tr><td>Live game shows</td><td>#2 vs Evolution</td><td>Rising EU demand</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLIND SPOTS -->
+    <section id="blind">
+      <div class="sec-head">
+        <h2>Pragmatic blind spots</h2>
+        <p>Scale is not the same as category or GEO ownership. These are the gaps competitors exploit.</p>
+      </div>
+      <div class="blind">
+        <article>
+          <div class="num">01</div>
+          <div>
+            <h4>US &amp; Australia are not “PP by default”</h4>
+            <p>RTG leads US lobbies (~18%); 3 Oaks / Playson lead Australia. Global content-share leadership does not translate one-to-one into every regulated GEO.</p>
+          </div>
+        </article>
+        <article>
+          <div class="num">02</div>
+          <div>
+            <h4>Crash / casual specialty depth</h4>
+            <p>Thin shelf (Spaceman, Big Bass Crash, High Flyer) vs Spribe’s Aviator benchmark (~77M MAU). Distribution helps trial; mechanic depth drives crash retention.</p>
+          </div>
+        </article>
+        <article>
+          <div class="num">03</div>
+          <div>
+            <h4>Live casino is Evolution’s house</h4>
+            <p>PP is a credible #2, but Evolution’s lobby surge in Spain, Italy, and Denmark shows live demand migrating share away from pure-slot concentration.</p>
+          </div>
+        </article>
+        <article>
+          <div class="num">04</div>
+          <div>
+            <h4>Ultra-vol creative niche</h4>
+            <p>Hacksaw, Nolimit City, and Push Gaming own edgier art/math mindshare. Hacksaw’s German doubling is the clearest European warning light.</p>
+          </div>
+        </article>
+        <article>
+          <div class="num">05</div>
+          <div>
+            <h4>Provably-fair / crypto-native story</h4>
+            <p>PP’s trust layer is institutional RNG + licences (correct for regulated markets). Crypto-native players still default to studios that lead with client-side fairness narratives.</p>
+          </div>
+        </article>
+        <article>
+          <div class="num">06</div>
+          <div>
+            <h4>Mature-EU share compression</h4>
+            <p>UK and Germany show clear YoY lobby-share declines while remaining #1 — fragmentation is structural, not a one-off.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- RIVALS -->
+    <section id="rivals">
+      <div class="sec-head">
+        <h2>Competitors · how they stand</h2>
+        <p>Everyone fights for second in PP strongholds. In live, crash, US, and Australia, the hierarchy flips.</p>
+      </div>
+      <div class="grid-2" style="margin-bottom:1rem">
+        <div class="panel">
+          <h3>Capability radar · PP vs key rivals</h3>
+          <div class="chart-box radar"><canvas id="chartRadar"></canvas></div>
+        </div>
+        <div class="panel accent">
+          <h3>Competitive posture</h3>
+          <div class="chart-box tall"><canvas id="chartCompete"></canvas></div>
+        </div>
+      </div>
+      <div class="comp-grid">
+        <div class="comp">
+          <h4>Evolution</h4>
+          <div class="focus">Live casino crown · first-party slots group</div>
+          <p>Beats PP in live. Fastest lobby gains where live demand spikes (ES/IT/DK). Weaker as pure viral slot publisher vs Olympus/Bonanza.</p>
+        </div>
+        <div class="comp">
+          <h4>Playtech</h4>
+          <div class="focus">Full-stack · Italy parity battles</div>
+          <p>Closest structural peer in several EU markets. Platform lock-in &gt; consumer meme IPs. Gains where operators want suite deals.</p>
+        </div>
+        <div class="comp">
+          <h4>Hacksaw Gaming</h4>
+          <div class="focus">Premium high-volatility slots</div>
+          <p>Fastest European mid-tier climber (Germany doubled). Threatens high-roller shelf more than mass-market Bonanza volume.</p>
+        </div>
+        <div class="comp">
+          <h4>PG Soft</h4>
+          <div class="focus">Mobile-first · Brazil #2</div>
+          <p>Roughly half of PP’s Brazil content share. Strong mobile UX competitor across LatAm growth corridors.</p>
+        </div>
+        <div class="comp">
+          <h4>Spribe</h4>
+          <div class="focus">Crash category king (Aviator)</div>
+          <p>Owns crash MAU. PP’s Spaceman is the regulated-market alternative with partial cashout — not the category default.</p>
+        </div>
+        <div class="comp">
+          <h4>RTG · 3 Oaks · Play’n GO</h4>
+          <div class="focus">Regional kings &amp; classic IP</div>
+          <p>RTG (US) and 3 Oaks (AU) prove GEO specialists can outrank global leaders. Play’n GO still sticky via Book-of franchises; lost France lead to PP.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERDICT -->
+    <section id="verdict">
+      <div class="verdict">
+        <h2>Verdict</h2>
+        <p>
+          Pragmatic Play is the world’s default casino content layer for Europe, Latin America, and Africa —
+          powered by viral tumble IPs, franchise factories, and network promotions. The competitive story in 2026
+          is not “who replaces PP,” but where specialists win: Evolution in live, Spribe in crash, RTG/3 Oaks in US/AU,
+          Hacksaw in premium high-vol, PG Soft in LatAm mobile.
+        </p>
+        <ul>
+          <li>Defend: Olympus / Bonanza / Big Bass sequels + Drops &amp; Wins economics</li>
+          <li>Attack: US state depth, Australia supplier relevance, crash mechanic depth</li>
+          <li>Watch: EU lobby fragmentation + Evolution live share in Southern/Nordic Europe</li>
+          <li>Bet: Brazil multi-product (slots + live + certified sportsbook) as LatAm flywheel</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p><strong>Sources &amp; method.</strong> Synthesized from Grand View Research, Track360, Axis Intelligence / AGA-linked US figures, Blask provider content share (May–Jun 2026), EE Gaming / OnlineCasinoRank summaries, LiveCasinoRank live rankings, and public game specs. Lobby share ≠ GGR. Methodologies differ across market-size publishers ($97.7B GVR online gambling vs ~$121B Track360 online GGR).</p>
+      <p class="sources">
+        Data file: <a href="../data/research-sources.json">/data/research-sources.json</a> ·
+        Open this report: <a href="./index.html">/report/index.html</a>
+      </p>
+      <p>For operator strategy only. 18+ · Gamble responsibly. Not investment advice.</p>
+    </footer>
+  </div>
+
+  <script>
+    const ink = "#12161c";
+    const teal = "#0b6e6e";
+    const amber = "#d4891a";
+    const coral = "#c44b3c";
+    const slate = "#5c6b7a";
+    const grid = "rgba(18,22,28,0.08)";
+
+    Chart.defaults.font.family = "'Manrope', system-ui, sans-serif";
+    Chart.defaults.color = slate;
+    Chart.defaults.borderColor = grid;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.boxHeight = 12;
+
+    const tip = {
+      backgroundColor: "rgba(18,22,28,0.92)",
+      titleFont: { family: "'Syne', sans-serif", size: 13, weight: "700" },
+      bodyFont: { size: 12 },
+      padding: 10,
+      cornerRadius: 2
+    };
+
+    new Chart(document.getElementById("chartRegions"), {
+      type: "bar",
+      data: {
+        labels: ["Europe", "N. America", "Asia-Pacific", "LatAm", "ME & Other", "Africa"],
+        datasets: [{
+          label: "Online GGR $bn (2026E)",
+          data: [43.5, 29.0, 28.5, 11.0, 6.8, 2.2],
+          backgroundColor: [
+            teal, "#0d8585", "#149494", amber, "#c9a06a", coral
+          ],
+          borderWidth: 0,
+          borderRadius: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: tip },
+        scales: {
+          x: { grid: { display: false } },
+          y: { beginAtZero: true, ticks: { callback: v => "$" + v + "B" } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartVerticals"), {
+      type: "doughnut",
+      data: {
+        labels: ["Online Casino 52%", "Sports 35%", "Other 13%"],
+        datasets: [{
+          data: [52, 35, 13],
+          backgroundColor: [teal, amber, "#9aa5b1"],
+          borderWidth: 0,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "62%",
+        plugins: {
+          legend: { position: "bottom", labels: { padding: 14 } },
+          tooltip: tip
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartTrajectory"), {
+      type: "line",
+      data: {
+        labels: ["2025", "2026E", "2033F"],
+        datasets: [{
+          label: "Online gambling (GVR) $bn",
+          data: [88.0, 97.7, 202.8],
+          borderColor: teal,
+          backgroundColor: "rgba(11,110,110,0.15)",
+          fill: true,
+          tension: 0.25,
+          pointRadius: 5,
+          pointBackgroundColor: amber,
+          pointBorderColor: "#fff",
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: tip },
+        scales: {
+          x: { grid: { display: false } },
+          y: { beginAtZero: false, ticks: { callback: v => "$" + v + "B" } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartEurope"), {
+      type: "bar",
+      data: {
+        labels: ["UK", "Germany"],
+        datasets: [
+          {
+            label: "Prior YoY",
+            data: [15.53, 17.39],
+            backgroundColor: "rgba(92,107,122,0.35)",
+            borderRadius: 2
+          },
+          {
+            label: "Latest (Blask)",
+            data: [13.99, 14.40],
+            backgroundColor: teal,
+            borderRadius: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { tooltip: tip, legend: { position: "bottom" } },
+        scales: {
+          x: { grid: { display: false } },
+          y: { beginAtZero: true, ticks: { callback: v => v + "%" }, title: { display: true, text: "Lobby content share" } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartGames"), {
+      type: "bar",
+      data: {
+        labels: ["Gates of Olympus", "Sweet Bonanza", "Big Bass*", "Starlight Princess", "Sugar Rush", "Spaceman"],
+        datasets: [
+          {
+            label: "RTP %",
+            data: [96.5, 96.48, 96.71, 96.5, 96.5, 96.5],
+            backgroundColor: teal,
+            borderRadius: 2,
+            yAxisID: "y"
+          },
+          {
+            label: "Max win (× stake, log-scaled plot uses raw)",
+            data: [5000, 21100, 5000, 5000, 5000, 5000],
+            backgroundColor: amber,
+            borderRadius: 2,
+            yAxisID: "y1"
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: tip,
+          legend: { position: "bottom" },
+          title: { display: false }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 35, minRotation: 0, font: { size: 10 } } },
+          y: {
+            type: "linear",
+            position: "left",
+            min: 95.5,
+            max: 97.2,
+            title: { display: true, text: "RTP %" }
+          },
+          y1: {
+            type: "linear",
+            position: "right",
+            grid: { drawOnChartArea: false },
+            title: { display: true, text: "Max win ×" },
+            ticks: { callback: v => v >= 1000 ? (v/1000) + "k×" : v + "×" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartFeatures"), {
+      type: "polarArea",
+      data: {
+        labels: [
+          "Tumble / cascade",
+          "Multipliers",
+          "Bonus Buy",
+          "Hold & Spin",
+          "Megaways hybrids",
+          "Franchise sequels",
+          "Network promos",
+          "Live game shows"
+        ],
+        datasets: [{
+          data: [95, 92, 78, 80, 74, 88, 85, 70],
+          backgroundColor: [
+            "rgba(11,110,110,0.75)",
+            "rgba(11,110,110,0.55)",
+            "rgba(212,137,26,0.7)",
+            "rgba(212,137,26,0.5)",
+            "rgba(92,107,122,0.55)",
+            "rgba(11,110,110,0.4)",
+            "rgba(212,137,26,0.35)",
+            "rgba(196,75,60,0.45)"
+          ],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom", labels: { font: { size: 10 }, padding: 10 } },
+          tooltip: tip
+        },
+        scales: {
+          r: {
+            ticks: { display: false },
+            grid: { color: grid },
+            suggestedMin: 0,
+            suggestedMax: 100
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartRadar"), {
+      type: "radar",
+      data: {
+        labels: [
+          "Slot viral IPs",
+          "Lobby distribution",
+          "Live casino",
+          "Crash / casual",
+          "Release cadence",
+          "US relevance",
+          "LatAm / Africa",
+          "Promo networks"
+        ],
+        datasets: [
+          {
+            label: "Pragmatic Play",
+            data: [95, 94, 72, 48, 92, 45, 93, 90],
+            borderColor: teal,
+            backgroundColor: "rgba(11,110,110,0.2)",
+            pointBackgroundColor: teal,
+            borderWidth: 2
+          },
+          {
+            label: "Evolution",
+            data: [70, 78, 98, 40, 75, 70, 70, 65],
+            borderColor: coral,
+            backgroundColor: "rgba(196,75,60,0.12)",
+            pointBackgroundColor: coral,
+            borderWidth: 2
+          },
+          {
+            label: "Hacksaw",
+            data: [78, 55, 20, 25, 70, 35, 50, 40],
+            borderColor: amber,
+            backgroundColor: "rgba(212,137,26,0.1)",
+            pointBackgroundColor: amber,
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" }, tooltip: tip },
+        scales: {
+          r: {
+            min: 0,
+            max: 100,
+            ticks: { display: false, stepSize: 20 },
+            pointLabels: { font: { size: 10, family: "'Manrope'" } },
+            grid: { color: grid },
+            angleLines: { color: grid }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartCompete"), {
+      type: "bar",
+      data: {
+        labels: ["Mass-market slots", "Live casino", "Crash", "US lobbies", "EU mid-premium", "LatAm mobile"],
+        datasets: [
+          { label: "PP position", data: [1, 2, 3, 4, 1, 1], backgroundColor: teal, borderRadius: 2 },
+          { label: "Category leader rank (1=best)", data: [1, 1, 1, 1, 2, 2], backgroundColor: "rgba(92,107,122,0.35)", borderRadius: 2 }
+        ]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: {
+            ...tip,
+            callbacks: {
+              label: (ctx) => {
+                const leaders = {
+                  "Mass-market slots": "PP leads",
+                  "Live casino": "Evolution leads",
+                  "Crash": "Spribe Aviator leads",
+                  "US lobbies": "RTG leads",
+                  "EU mid-premium": "Hacksaw climbing",
+                  "LatAm mobile": "PP leads; PG Soft #2"
+                };
+                if (ctx.datasetIndex === 0) return `PP rank: #${ctx.raw}`;
+                return leaders[ctx.label] || "";
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            reverse: false,
+            min: 0,
+            max: 5,
+            ticks: { stepSize: 1, callback: v => v === 0 ? "" : "#" + v },
+            title: { display: true, text: "Rank (lower is better)" }
+          },
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

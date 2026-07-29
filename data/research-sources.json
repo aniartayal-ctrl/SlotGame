@@ -1,0 +1,138 @@
+{
+  "title": "Global iGaming & Pragmatic Play Competitive Intelligence",
+  "asOf": "2026-07",
+  "disclaimer": "Figures synthesize public industry reports (Grand View Research, Track360, Axis Intelligence, Blask lobby share, LiveCasinoRank, EGBA-linked summaries). Provider content share is lobby visibility, not GGR. Some regional GGR estimates include grey-market activity and vary by methodology.",
+  "globalMarket": {
+    "onlineGambling2025UsdBn": 88.0,
+    "onlineGambling2026UsdBn": 97.7,
+    "onlineGambling2033UsdBn": 202.8,
+    "cagr2026to2033Pct": 11.0,
+    "altPlatformMarket2026UsdBn": 130.52,
+    "sources": [
+      "Grand View Research — Online Gambling Market 2026-2033",
+      "Research and Markets — iGaming Platform Global Market Report 2026",
+      "Track360 — Online Gambling Statistics 2026"
+    ]
+  },
+  "regionalOnlineGgr2026E": [
+    { "region": "Europe", "ggrUsdBn": 43.5, "sharePct": 36, "yoyPct": 7, "regulatedSharePct": 82 },
+    { "region": "North America", "ggrUsdBn": 29.0, "sharePct": 24, "yoyPct": 21, "regulatedSharePct": 95 },
+    { "region": "Asia-Pacific", "ggrUsdBn": 28.5, "sharePct": 24, "yoyPct": 9, "regulatedSharePct": 41 },
+    { "region": "Latin America", "ggrUsdBn": 11.0, "sharePct": 9, "yoyPct": 30, "regulatedSharePct": 55 },
+    { "region": "Middle East & Other", "ggrUsdBn": 6.8, "sharePct": 6, "yoyPct": 5, "regulatedSharePct": 15 },
+    { "region": "Africa", "ggrUsdBn": 2.2, "sharePct": 2, "yoyPct": 24, "regulatedSharePct": 30 }
+  ],
+  "verticalMix2026E": [
+    { "vertical": "Online Casino", "sharePct": 52 },
+    { "vertical": "Sports Betting", "sharePct": 35 },
+    { "vertical": "Other (lottery, poker, bingo, etc.)", "sharePct": 13 }
+  ],
+  "pragmaticLobbyShare": {
+    "metric": "Provider content share in tier-1 casino lobbies (Blask)",
+    "europeHighlights": [
+      { "market": "UK", "pragmaticPct": 13.99, "priorPct": 15.53, "note": "Still #1; Playtech & Reel Kingdom rising" },
+      { "market": "Germany", "pragmaticPct": 14.4, "priorPct": 17.39, "note": "Strong hold; Hacksaw more than doubled" },
+      { "market": "Spain", "pragmaticPct": null, "note": "PP & Playtech up; Evolution 0.33%→5.58%" },
+      { "market": "Italy", "pragmaticPct": null, "note": "Near parity with Playtech; no clear monopoly" },
+      { "market": "France", "pragmaticPct": null, "note": "PP overtook Play'n GO; highly balanced field" },
+      { "market": "Netherlands", "pragmaticPct": null, "note": "PP leads; mid-tier gaining YoY" }
+    ],
+    "latamAfrica": [
+      { "market": "Brazil", "note": "PP leads; PG Soft ~half PP share; Evolution/Hacksaw/TaDa rising" },
+      { "market": "Mexico", "note": "PP ~13–15% vs Playtech ~7–9%" },
+      { "market": "Argentina", "note": "PP ~3× Evolution; top-5 now >2% each" },
+      { "market": "South Africa", "note": "PP leads; BGaming vs Hacksaw for #2" },
+      { "market": "Nigeria", "note": "PP dominates; mid-tier crowded" },
+      { "market": "Ghana", "note": "~15% monthly lobby share for PP" }
+    ],
+    "exceptions": [
+      { "market": "United States", "leader": "RTG", "leaderPct": 18.05, "note": "Competitors struggle above ~6%" },
+      { "market": "Australia", "leader": "3 Oaks Gaming", "note": "Narrow race with Playson" }
+    ],
+    "sources": [
+      "Blask — Provider Content Share (May/Jun 2026)",
+      "EE Gaming / Blask lobby analysis May 2026",
+      "OnlineCasinoRank summary of Blask Europe diversification"
+    ]
+  },
+  "popularPragmaticGames": [
+    { "title": "Gates of Olympus / 1000", "rtpPct": 96.5, "maxWinX": 5000, "volatility": "High", "mechanic": "Scatter-pay tumble + cumulative multipliers" },
+    { "title": "Sweet Bonanza / 1000", "rtpPct": 96.48, "maxWinX": 21100, "volatility": "High / Med-High", "mechanic": "Scatter-pay tumble + bomb multipliers; buy bonus" },
+    { "title": "Big Bass Bonanza franchise", "rtpPct": 96.71, "maxWinX": 5000, "volatility": "Medium–High", "mechanic": "Fish collect / Hold & Spin / Megaways hybrids" },
+    { "title": "Starlight Princess", "rtpPct": 96.5, "maxWinX": 5000, "volatility": "High", "mechanic": "Olympus-style multipliers, anime aesthetic" },
+    { "title": "Sugar Rush", "rtpPct": 96.5, "maxWinX": 5000, "volatility": "High", "mechanic": "Cluster / multiplier spots on grid" },
+    { "title": "The Dog House / Megaways", "rtpPct": 96.5, "maxWinX": 12305, "volatility": "High", "mechanic": "Sticky wild multipliers" },
+    { "title": "Wolf Gold", "rtpPct": 96.01, "maxWinX": 2500, "volatility": "Medium", "mechanic": "Money Respin jackpot style" },
+    { "title": "Spaceman (crash)", "rtpPct": 96.5, "maxWinX": 5000, "volatility": "Variable", "mechanic": "Crash + 50% partial cashout" }
+  ],
+  "popularFeatures": [
+    { "feature": "Tumble / cascade wins", "strength": "Core PP signature", "trend": "Industry standard" },
+    { "feature": "Scatter-pay grids (6×5)", "strength": "Olympus / Bonanza engine", "trend": "Still top engagement" },
+    { "feature": "Cumulative & bomb multipliers", "strength": "Differentiator", "trend": "1000-series escalation" },
+    { "feature": "Bonus Buy / Ante Bet", "strength": "Widely used where legal", "trend": "Restricted in some GEOs" },
+    { "feature": "Hold & Spin / Money Collect", "strength": "Big Bass & jackpot lines", "trend": "Hybrid with Megaways" },
+    { "feature": "Megaways (licensed)", "strength": "Strong but not exclusive", "trend": "Hybrid dual-bonus paths" },
+    { "feature": "Franchise sequels (1000 / Megaways)", "strength": "Catalog leverage", "trend": "High release cadence" },
+    { "feature": "Network promos (Drops & Wins)", "strength": "€25M+ annual pools", "trend": "Operator stickiness" }
+  ],
+  "blindSpots": [
+    { "area": "US land-based-adjacent online lobbies", "detail": "RTG dominates US lobby share (~18%); PP stronger in Ontario/international than US state iGaming depth." },
+    { "area": "Australia supplier map", "detail": "3 Oaks / Playson lead; PP not the default #1 unlike Europe/LatAm/Africa." },
+    { "area": "Crash / casual specialty depth", "detail": "Only a thin crash shelf (Spaceman, Big Bass Crash, High Flyer) vs Spribe Aviator (~77M MAU benchmark) and BGaming depth." },
+    { "area": "Live casino crown", "detail": "#2 behind Evolution in live; Evolution growing fast in Spain/Italy/Denmark lobby mix." },
+    { "area": "Provably-fair / crypto-native narrative", "detail": "Relies on institutional RNG + licences; crypto/provably-fair studios own that trust story." },
+    { "area": "Extreme-volatility niche studios", "detail": "Nolimit City / Hacksaw / Push Gaming own edgier math & art for high-roller segments." },
+    { "area": "AAA IP / branded slots", "detail": "Fewer marquee Hollywood/sports IP partnerships vs NetEnt/Games Global/Playtech in some markets." },
+    { "area": "Share erosion in mature EU", "detail": "UK 15.53%→13.99%, DE 17.39%→14.40% — still #1 but lobby concentration falling." }
+  ],
+  "competitors": [
+    {
+      "name": "Evolution",
+      "focus": "Live casino + first-party slots (Red Tiger, NetEnt, etc.)",
+      "vsPragmatic": "Beats PP in live; growing lobby share via live demand; weaker pure-slot volume in many PP strongholds"
+    },
+    {
+      "name": "Playtech",
+      "focus": "Full-stack casino, live, platform",
+      "vsPragmatic": "Closest parity markets (Italy); stronger platform/operator lock-in, less viral consumer slot brands"
+    },
+    {
+      "name": "Hacksaw Gaming",
+      "focus": "High-volatility premium slots",
+      "vsPragmatic": "Fastest share gains in DE & mid-tier GEOs; threatens premium high-vol niche more than mass market"
+    },
+    {
+      "name": "PG Soft",
+      "focus": "Mobile-first Asian/LatAm slots",
+      "vsPragmatic": "#2 in Brazil content share; strong mobile UX competitor in LatAm"
+    },
+    {
+      "name": "Play'n GO",
+      "focus": "Book of / branded classic slots",
+      "vsPragmatic": "Lost France lead to PP; still sticky franchise IP (Book of Dead)"
+    },
+    {
+      "name": "Spribe",
+      "focus": "Crash (Aviator)",
+      "vsPragmatic": "Owns crash category MAU; PP Spaceman is regulated-market alternative, not category king"
+    },
+    {
+      "name": "RTG / 3 Oaks",
+      "focus": "US / Australia regional specialists",
+      "vsPragmatic": "Prove PP global #1 does not equal every GEO #1"
+    },
+    {
+      "name": "Nolimit City / Push Gaming",
+      "focus": "xWays / ultra-vol creative math",
+      "vsPragmatic": "Win mindshare with high-rollers; smaller distribution footprint"
+    }
+  ],
+  "pragmaticStrengths": [
+    "Broadest lobby visibility across Europe, LatAm, Africa",
+    "Viral consumer IPs: Olympus, Bonanza, Big Bass, Starlight",
+    "High release cadence + franchise extension (1000 series)",
+    "Multi-product: slots, live, virtuals, sportsbook (Brazil certified)",
+    "Drops & Wins network promotion economics",
+    "Single-API operator distribution at scale"
+  ]
+}
