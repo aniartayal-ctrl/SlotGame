@@ -1,622 +1,912 @@
 #!/usr/bin/env python3
-"""Generate iGaming & Pragmatic Play research visualizations."""
+"""Render every chart in the iGaming / Pragmatic Play report from data/dataset.json.
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-import pandas as pd
+Every figure drawn here traces back to a source URL recorded in the dataset. Nothing
+is hard-coded in this file except layout. Run:  python3 generate_charts.py
+"""
+
+import json
+import textwrap
 from pathlib import Path
 
-OUT = Path(__file__).parent / "charts"
-OUT.mkdir(exist_ok=True)
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import Patch
 
-# Light skeuomorphic palette
-PP_ORANGE = "#D4621A"
-PP_DARK = "#3D3429"
-ACCENT_BLUE = "#2B6CB0"
-ACCENT_GREEN = "#2F855A"
-ACCENT_PURPLE = "#6B46C1"
-ACCENT_RED = "#C53030"
-ACCENT_YELLOW = "#B7791F"
-GRAY = "#8B7E6A"
-COLORS = [PP_ORANGE, ACCENT_BLUE, ACCENT_GREEN, ACCENT_PURPLE, ACCENT_RED, ACCENT_YELLOW, "#B83280", "#2C7A7B"]
-CHART_BG = "#FAF7F2"
-PANEL_BG = "#FFFFFF"
-GRID = "#E2D9CC"
+ROOT = Path(__file__).parent
+OUT = ROOT / "charts"
+OUT.mkdir(exist_ok=True)
+DATA = json.loads((ROOT / "data" / "dataset.json").read_text())
+
+# ── palette ────────────────────────────────────────────────────────────────────
+INK = "#0d1117"
+PANEL = "#141a22"
+GRID = "#242c38"
+TEXT = "#e6edf3"
+MUTED = "#8b98a9"
+
+PP = "#ff7a1a"          # Pragmatic Play
+RIVAL = "#4c9aff"       # generic competitor
+GOOD = "#3fb950"
+BAD = "#f85149"
+WARN = "#e3b341"
+PURPLE = "#a371f7"
+TEAL = "#2dd4bf"
+PINK = "#f778ba"
+SERIES = [PP, RIVAL, TEAL, PURPLE, WARN, PINK, GOOD, BAD]
 
 plt.rcParams.update({
-    "figure.facecolor": CHART_BG,
-    "axes.facecolor": PANEL_BG,
-    "axes.edgecolor": "#C4B8A8",
-    "axes.labelcolor": PP_DARK,
-    "text.color": PP_DARK,
-    "xtick.color": "#5C5347",
-    "ytick.color": "#5C5347",
+    "figure.facecolor": INK,
+    "savefig.facecolor": INK,
+    "axes.facecolor": PANEL,
+    "axes.edgecolor": GRID,
+    "axes.labelcolor": MUTED,
+    "axes.titlecolor": TEXT,
+    "text.color": TEXT,
+    "xtick.color": MUTED,
+    "ytick.color": MUTED,
     "grid.color": GRID,
+    "grid.linewidth": 0.8,
     "font.family": "DejaVu Sans",
-    "font.size": 11,
+    "font.size": 10.5,
+    "legend.frameon": False,
+    "legend.labelcolor": TEXT,
 })
+
+CONF_COLOR = {"A": GOOD, "B": RIVAL, "C": WARN, "D": BAD, "A/B": GOOD}
+
+
+def frame(ax):
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    for side in ("left", "bottom"):
+        ax.spines[side].set_color(GRID)
+    ax.tick_params(length=0)
+
+
+def head(fig, block, extra=None):
+    """Draw the title / subtitle / confidence badge / source line."""
+    title = block.get("title", "")
+    subtitle = block.get("subtitle", "")
+    conf = block.get("conf", "")
+    src = block.get("source", {})
+    fig.text(0.012, 0.985, title, fontsize=16, fontweight="bold", va="top", color=TEXT)
+    if subtitle:
+        fig.text(0.012, 0.925, subtitle, fontsize=10.5, va="top", color=MUTED)
+    if conf:
+        fig.text(0.988, 0.985, f"TIER {conf}", fontsize=9, fontweight="bold", va="top",
+                 ha="right", color=CONF_COLOR.get(conf, MUTED))
+    line = extra or src.get("name", "")
+    if line:
+        fig.text(0.012, 0.012, "Source: " + textwrap.shorten(line, 165, placeholder="…"),
+                 fontsize=8.5, color=MUTED, va="bottom")
 
 
 def save(fig, name):
-    fig.savefig(OUT / name, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+    fig.savefig(OUT / name, dpi=150, bbox_inches="tight", pad_inches=0.35)
     plt.close(fig)
-    print(f"  ✓ {name}")
+    print(f"  {name}")
 
 
-def chart_global_market_by_region():
-    regions = ["Europe", "North America", "Asia-Pacific", "Latin America", "Middle East", "Africa"]
-    ggr = [43.5, 29.0, 28.5, 11.0, 6.8, 2.2]
-    growth = [7, 21, 9, 30, 5, 24]
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-    fig.suptitle("Global iGaming Market by Region (2026)", fontsize=16, fontweight="bold", y=1.02)
-
-    wedges, texts, autotexts = ax1.pie(
-        ggr, labels=regions, autopct="%1.1f%%", colors=COLORS,
-        pctdistance=0.75, startangle=90, textprops={"fontsize": 9}
-    )
-    for t in autotexts:
-        t.set_fontweight("bold")
-    ax1.set_title("GGR Share ($121B Total)", fontsize=12, pad=10)
-
-    bars = ax2.barh(regions, ggr, color=COLORS, height=0.6)
-    for bar, g in zip(bars, growth):
-        ax2.text(bar.get_width() + 0.5, bar.get_y() + bar.get_height()/2,
-                 f"${bar.get_width():.1f}B  (+{g}%)", va="center", fontsize=9, color=PP_DARK)
-    ax2.set_xlabel("Gross Gaming Revenue ($B)")
-    ax2.set_title("Regional GGR & YoY Growth", fontsize=12, pad=10)
-    ax2.set_xlim(0, 55)
-    ax2.grid(axis="x", alpha=0.3)
-
-    save(fig, "01_global_market_by_region.png")
+def newfig(w=12, h=6.6, top=0.86):
+    fig, ax = plt.subplots(figsize=(w, h))
+    fig.subplots_adjust(top=top, bottom=0.13, left=0.09, right=0.97)
+    frame(ax)
+    return fig, ax
 
 
-def chart_vertical_breakdown():
-    verticals = ["Online Casino", "Sportsbook", "Poker", "Bingo & Other"]
-    ggr = [63.0, 42.5, 7.5, 8.0]
-    growth = [11, 14, 4, 8]
+def barlabels(ax, bars, fmt="{:,.0f}", pad=0.01, color=None, size=9.5):
+    span = ax.get_xlim()[1] - ax.get_xlim()[0]
+    for b in bars:
+        w = b.get_width()
+        ax.text(w + span * pad, b.get_y() + b.get_height() / 2, fmt.format(w),
+                va="center", fontsize=size, color=color or TEXT)
 
-    fig, ax = plt.subplots(figsize=(10, 6))
-    x = np.arange(len(verticals))
-    bars = ax.bar(x, ggr, color=[PP_ORANGE, ACCENT_BLUE, ACCENT_GREEN, ACCENT_PURPLE], width=0.55, edgecolor="white", linewidth=0.5)
 
-    for bar, g, pct in zip(bars, growth, [52, 35, 6, 7]):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
-                f"${bar.get_height():.1f}B\n{pct}% share\n+{g}% YoY",
-                ha="center", va="bottom", fontsize=10, fontweight="bold")
-
+# ── 01 global trajectory ───────────────────────────────────────────────────────
+def c01():
+    d = DATA["global_trajectory"]
+    fig, ax = newfig()
+    x = np.arange(len(d["years"]))
+    land = [t - o for t, o in zip(d["total_ggr"], d["online_ggr"])]
+    ax.bar(x, land, 0.55, label="Land-based GGR", color="#2b3442")
+    ax.bar(x, d["online_ggr"], 0.55, bottom=land, label="Online GGR", color=PP)
+    for i, (t, o, s) in enumerate(zip(d["total_ggr"], d["online_ggr"], d["online_share_pct"])):
+        ax.text(i, t + 22, f"${t:,}bn", ha="center", fontsize=10, fontweight="bold")
+        ax.text(i, land[i] + o / 2, f"{s}%\nonline", ha="center", va="center",
+                fontsize=10, fontweight="bold", color="#1b1105")
+    ax.axvline(1.5, color=MUTED, ls=":", lw=1)
+    ax.text(1.55, 1010, "forecast", fontsize=9, color=MUTED, style="italic")
     ax.set_xticks(x)
-    ax.set_xticklabels(verticals, fontsize=11)
-    ax.set_ylabel("GGR ($ Billions)")
-    ax.set_title("Global iGaming Vertical Breakdown (2026)", fontsize=14, fontweight="bold", pad=15)
-    ax.set_ylim(0, 75)
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "02_vertical_breakdown.png")
+    ax.set_xticklabels(d["years"])
+    ax.set_ylabel("Gross gaming revenue, US$bn")
+    ax.set_ylim(0, 1180)
+    ax.grid(axis="y", alpha=0.5)
+    ax.set_axisbelow(True)
+    ax.legend(loc="upper left")
+    head(fig, d)
+    save(fig, "01_global_trajectory.png")
 
 
-def chart_casino_subsegment():
-    labels = ["RNG Slots", "Live Dealer", "Virtual Tables"]
-    sizes = [61, 28, 11]
-    growth = [11, 19, 8]
+# ── 02 region ─────────────────────────────────────────────────────────────────
+def c02():
+    d = DATA["region_ggr_2026"]
+    rows = d["rows"]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(13.5, 6.4), gridspec_kw={"width_ratios": [1.35, 1]})
+    fig.subplots_adjust(top=0.84, bottom=0.13, left=0.11, right=0.97, wspace=0.42)
+    for a in (a1, a2):
+        frame(a)
+    y = np.arange(len(rows))[::-1]
+    b = a1.barh(y, [r["ggr"] for r in rows], 0.6, color=[SERIES[i] for i in range(len(rows))])
+    a1.set_yticks(y)
+    a1.set_yticklabels([r["region"] for r in rows])
+    a1.set_xlim(0, 52)
+    a1.set_xlabel("Online GGR 2026E, US$bn")
+    a1.grid(axis="x", alpha=0.5)
+    a1.set_axisbelow(True)
+    barlabels(a1, b, "${:,.1f}bn")
+    a1.set_title("Market size", fontsize=11, color=MUTED, loc="left")
 
-    fig, ax = plt.subplots(figsize=(9, 6))
-    explode = (0.03, 0.08, 0)
-    wedges, texts, autotexts = ax.pie(
-        sizes, labels=labels, autopct=lambda p: f"{p:.0f}%\n(+{growth[int(p/40)]}%)",
-        colors=[PP_ORANGE, ACCENT_BLUE, ACCENT_GREEN], explode=explode,
-        startangle=140, textprops={"fontsize": 11}
-    )
-    ax.set_title("Online Casino Revenue Split ($63B)\nSlots Dominate, Live Dealer Fastest Growing",
-                 fontsize=13, fontweight="bold", pad=15)
-    save(fig, "03_casino_subsegment.png")
+    a2.scatter([r["growth"] for r in rows], [r["regulated"] for r in rows],
+               s=[r["ggr"] * 34 for r in rows], c=SERIES[:len(rows)],
+               alpha=0.85, edgecolors=INK, linewidth=1.6, zorder=3)
+    for r in rows:
+        a2.annotate(r["region"], (r["growth"], r["regulated"]), textcoords="offset points",
+                    xytext=(0, -26), ha="center", fontsize=9, color=TEXT)
+    a2.set_xlabel("YoY growth, %")
+    a2.set_ylabel("Regulated share of GGR, %")
+    a2.set_xlim(0, 36)
+    a2.set_ylim(0, 112)
+    a2.grid(alpha=0.4)
+    a2.set_axisbelow(True)
+    a2.set_title("Growth vs regulatory maturity  (bubble = GGR)", fontsize=11, color=MUTED, loc="left")
+    head(fig, d)
+    save(fig, "02_region_ggr.png")
 
 
-def chart_pragmatic_regional_share():
-    markets = ["UK", "Germany", "France", "Mexico", "Brazil", "South Africa", "Nigeria", "Argentina"]
-    pragmatic = [13.99, 14.40, 11.5, 14.0, 18.0, 19.6, 19.0, 16.0]
-    competitor = ["Blueprint", "Hacksaw", "Play'n GO", "Playtech", "PG Soft", "BGaming", "Hacksaw", "Playtech"]
-    comp_share = [7.0, 8.5, 10.5, 8.0, 9.0, 10.7, 10.0, 8.0]
-
-    fig, ax = plt.subplots(figsize=(12, 7))
-    y = np.arange(len(markets))
-    h = 0.35
-    ax.barh(y + h/2, pragmatic, h, label="Pragmatic Play", color=PP_ORANGE)
-    ax.barh(y - h/2, comp_share, h, label="Top Competitor", color=ACCENT_BLUE, alpha=0.8)
-
-    for i, (p, c, comp) in enumerate(zip(pragmatic, comp_share, competitor)):
-        ax.text(p + 0.3, i + h/2, f"{p}%", va="center", fontsize=9, color=PP_ORANGE, fontweight="bold")
-        ax.text(c + 0.3, i - h/2, f"{c}% ({comp})", va="center", fontsize=8, color=ACCENT_BLUE)
-
+# ── 03 slot intensity ─────────────────────────────────────────────────────────
+def c03():
+    d = DATA["slot_intensity"]
+    rows = d["rows"]
+    fig, ax = newfig(11.5, 5.8)
+    y = np.arange(len(rows))[::-1]
+    b = ax.barh(y, [r["pct"] for r in rows], 0.58, color=PP)
     ax.set_yticks(y)
-    ax.set_yticklabels(markets)
-    ax.set_xlabel("Lobby Content Share (%)")
-    ax.set_title("Pragmatic Play Content Share vs Top Competitor by Market (2026)",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend(loc="lower right")
-    ax.set_xlim(0, 25)
-    ax.grid(axis="x", alpha=0.3)
-    ax.invert_yaxis()
-    save(fig, "04_pragmatic_regional_share.png")
-
-
-def chart_pragmatic_weak_markets():
-    """Markets where Pragmatic is NOT dominant."""
-    markets = ["United States", "Australia", "Canada (Ontario)"]
-    leaders = ["RTG", "3 Oaks Gaming", "IGT"]
-    leader_share = [18.05, 12.5, 11.0]
-    pragmatic_share = [5.5, 4.2, 6.8]
-
-    fig, ax = plt.subplots(figsize=(10, 5))
-    x = np.arange(len(markets))
-    w = 0.35
-    ax.bar(x - w/2, leader_share, w, label="Regional Leader", color=ACCENT_RED)
-    ax.bar(x + w/2, pragmatic_share, w, label="Pragmatic Play", color=PP_ORANGE)
-
-    for i, (l, p, lead) in enumerate(zip(leader_share, pragmatic_share, leaders)):
-        ax.text(i - w/2, l + 0.3, f"{lead}\n{l}%", ha="center", fontsize=9)
-        ax.text(i + w/2, p + 0.3, f"{p}%", ha="center", fontsize=9, color=PP_ORANGE)
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(markets)
-    ax.set_ylabel("Lobby Content Share (%)")
-    ax.set_title("Pragmatic Play Blind Spots: Markets Where PP Is NOT #1",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend()
-    ax.set_ylim(0, 22)
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "05_pragmatic_blind_spots_markets.png")
-
-
-def chart_top_games_ranking():
-    games = [
-        "Gates of Olympus 1000", "Gates of Olympus", "Gates Super Scatter",
-        "Sweet Bonanza 1000", "Big Bass Splash", "Sugar Rush 1000",
-        "Sweet Bonanza", "Starlight Princess", "Book of Dead", "Aviator"
-    ]
-    providers = ["PP"] * 8 + ["PnG", "Spribe"]
-    ranks = list(range(1, 11))
-
-    fig, ax = plt.subplots(figsize=(11, 7))
-    colors_map = {"PP": PP_ORANGE, "PnG": ACCENT_BLUE, "Spribe": ACCENT_GREEN}
-    bar_colors = [colors_map[p] for p in providers]
-
-    bars = ax.barh(range(len(games)), [11 - r for r in ranks], color=bar_colors, height=0.65)
-    ax.set_yticks(range(len(games)))
-    ax.set_yticklabels([f"#{r}  {g}" for r, g in zip(ranks, games)])
-    ax.set_xlabel("Ranking Score (inverse rank)")
-    ax.set_title("EGR Global Slots Tracker — Top 10 Games (Apr 2026)\nPragmatic Holds 8 of Top 10",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.invert_yaxis()
-
-    legend_patches = [
-        mpatches.Patch(color=PP_ORANGE, label="Pragmatic Play (8 titles)"),
-        mpatches.Patch(color=ACCENT_BLUE, label="Play'n GO"),
-        mpatches.Patch(color=ACCENT_GREEN, label="Spribe"),
-    ]
-    ax.legend(handles=legend_patches, loc="lower right")
-    ax.set_xlim(0, 12)
-    save(fig, "06_top_games_ranking.png")
-
-
-def chart_provider_comparison():
-    providers = ["Pragmatic\nPlay", "Evolution", "Play'n GO", "Hacksaw", "Nolimit\nCity", "NetEnt", "Playtech"]
-    metrics = {
-        "Slot Catalog": [95, 40, 80, 35, 25, 45, 85],
-        "Max Win Ceiling": [55, 30, 65, 80, 100, 50, 25],
-        "Live Casino": [70, 100, 10, 0, 5, 30, 75],
-        "Promo Network": [100, 40, 20, 10, 15, 25, 60],
-        "Streaming Appeal": [75, 60, 50, 95, 90, 40, 20],
-        "Innovation": [45, 70, 65, 90, 95, 55, 40],
-    }
-
-    angles = np.linspace(0, 2 * np.pi, len(metrics), endpoint=False).tolist()
-    angles += angles[:1]
-
-    fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(polar=True))
-    compare = ["Pragmatic\nPlay", "Hacksaw", "Nolimit\nCity", "Evolution"]
-    compare_colors = [PP_ORANGE, ACCENT_PURPLE, ACCENT_RED, ACCENT_BLUE]
-
-    for prov, color in zip(compare, compare_colors):
-        idx = providers.index(prov)
-        values = [metrics[m][idx] for m in metrics]
-        values += values[:1]
-        ax.plot(angles, values, "o-", linewidth=2, label=prov.replace("\n", " "), color=color)
-        ax.fill(angles, values, alpha=0.1, color=color)
-
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(list(metrics.keys()), fontsize=10)
-    ax.set_ylim(0, 100)
-    ax.set_title("Provider Competitive Radar: Pragmatic vs Key Rivals",
-                 fontsize=14, fontweight="bold", pad=25, y=1.08)
-    ax.legend(loc="upper right", bbox_to_anchor=(1.3, 1.1))
-    save(fig, "07_provider_radar_comparison.png")
-
-
-def chart_competitor_max_win():
-    providers = ["Nolimit City", "Relax Gaming", "NetEnt", "Hacksaw", "Play'n GO", "Pragmatic Play", "Playtech"]
-    max_win = [150000, 150000, 200000, 50000, 60000, 21175, 5000]
-    avg_rtp = [96.0, 96.4, 96.7, 96.3, 96.0, 96.5, 95.5]
-
-    fig, ax1 = plt.subplots(figsize=(12, 6))
-    x = np.arange(len(providers))
-    bars = ax1.bar(x, max_win, color=[ACCENT_RED if p == "Pragmatic Play" else ACCENT_BLUE for p in providers],
-                   alpha=0.8, width=0.6)
-    ax1.set_ylabel("Max Win Potential (x stake)", color=ACCENT_BLUE)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(providers, rotation=25, ha="right")
-    ax1.set_yscale("log")
-    ax1.set_title("Max Win Ceiling Comparison — Pragmatic's Volatility Gap",
-                  fontsize=13, fontweight="bold", pad=15)
-
-    ax2 = ax1.twinx()
-    ax2.plot(x, avg_rtp, "o-", color=PP_ORANGE, linewidth=2.5, markersize=8, label="Avg RTP %")
-    ax2.set_ylabel("Average RTP (%)", color=PP_ORANGE)
-    ax2.set_ylim(94.5, 97.5)
-    ax2.legend(loc="upper left")
-
-    for bar, val in zip(bars, max_win):
-        label = f"{val:,}x" if val < 100000 else f"{val//1000}Kx"
-        ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height() * 1.1, label,
-                 ha="center", fontsize=8, rotation=0)
-
-    ax1.grid(axis="y", alpha=0.3)
-    save(fig, "08_competitor_max_win.png")
-
-
-def chart_feature_trends():
-    features = ["Tumble/Cascade", "Bonus Buy", "Megaways", "Cluster Pays",
-                "Hold & Spin", "Multipliers", "Simple (0-1 bonus)"]
-    adoption_2023 = [45, 30, 25, 20, 35, 50, 36]
-    adoption_2026 = [72, 42, 31, 38, 48, 65, 64]
-    pp_strength = [95, 85, 60, 80, 75, 90, 40]
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    x = np.arange(len(features))
-    w = 0.25
-    ax.bar(x - w, adoption_2023, w, label="Industry 2023", color=GRAY, alpha=0.7)
-    ax.bar(x, adoption_2026, w, label="Industry 2026", color=ACCENT_BLUE)
-    ax.bar(x + w, pp_strength, w, label="Pragmatic Strength", color=PP_ORANGE)
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(features, rotation=30, ha="right")
-    ax.set_ylabel("% of New Releases / Provider Strength")
-    ax.set_title("Slot Feature Trends 2023→2026 & Pragmatic Play Positioning",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend()
-    ax.set_ylim(0, 105)
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "09_feature_trends.png")
-
-
-def chart_live_casino_share():
-    providers = ["Evolution", "Pragmatic Play", "Playtech", " ICONIC21", "Others"]
-    share_2023 = [55, 15, 18, 3, 9]
-    share_2026 = [45, 25, 15, 5, 10]
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    x = np.arange(len(providers))
-    w = 0.35
-    ax.bar(x - w/2, share_2023, w, label="2023", color=GRAY, alpha=0.7)
-    ax.bar(x + w/2, share_2026, w, label="2026", color=ACCENT_BLUE)
-
-    for i, (s23, s26) in enumerate(zip(share_2023, share_2026)):
-        delta = s26 - s23
-        sign = "+" if delta > 0 else ""
-        ax.text(i, max(s23, s26) + 1, f"{sign}{delta}pp", ha="center", fontsize=9,
-                color=ACCENT_GREEN if delta > 0 else ACCENT_RED)
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(providers)
-    ax.set_ylabel("B2B Live Casino Market Share (%)")
-    ax.set_title("Live Casino Market Share — PP Growing but Evolution Still Dominant",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend()
-    ax.set_ylim(0, 55)
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "10_live_casino_share.png")
-
-
-def chart_growth_markets():
-    markets = ["Brazil", "Germany", "Ontario", "Colombia", "Nigeria", "Ohio (US)", "Kenya"]
-    ggr_2026 = [4.5, 3.8, 1.1, 0.9, 0.7, 0.6, 0.5]
-    growth = [215, 36, 38, 50, 40, 100, 25]
-    pp_dominance = [85, 90, 45, 80, 88, 30, 82]
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    scatter = ax.scatter(growth, ggr_2026, s=[d * 8 for d in pp_dominance],
-                         c=pp_dominance, cmap="YlOrRd", alpha=0.85, edgecolors="white", linewidth=1.5)
-
-    for i, m in enumerate(markets):
-        ax.annotate(m, (growth[i], ggr_2026[i]), textcoords="offset points",
-                    xytext=(8, 5), fontsize=9)
-
-    cbar = plt.colorbar(scatter, ax=ax)
-    cbar.set_label("Pragmatic Play Dominance (%)", color=PP_DARK)
-    cbar.ax.yaxis.set_tick_params(color=PP_DARK)
-
-    ax.set_xlabel("YoY Growth Rate (%)")
-    ax.set_ylabel("Market GGR 2026 ($B)")
-    ax.set_title("Fastest-Growing iGaming Markets\nBubble Size & Color = Pragmatic Play Strength",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.grid(alpha=0.3)
-    save(fig, "11_growth_markets.png")
-
-
-def chart_pragmatic_game_families():
-    families = ["Gates of Olympus", "Sweet Bonanza", "Big Bass", "Sugar Rush",
-                "Starlight Princess", "Dog House", "Wolf Gold", "Other (300+)"]
-    est_share = [22, 18, 14, 10, 8, 6, 4, 18]
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    wedges, texts, autotexts = ax.pie(
-        est_share, labels=families, autopct="%1.0f%%",
-        colors=COLORS + [GRAY], startangle=45,
-        textprops={"fontsize": 9}
-    )
-    ax.set_title("Estimated Pragmatic Play Spin Volume by Game Family (2026)",
-                 fontsize=13, fontweight="bold", pad=15)
-    save(fig, "12_pragmatic_game_families.png")
-
-
-def chart_regulated_vs_grey():
-    regions = ["Europe", "N. America", "Asia-Pac", "LatAm", "M.East", "Africa"]
-    regulated = [82, 95, 41, 55, 15, 30]
-    grey = [18, 5, 59, 45, 85, 70]
-
-    fig, ax = plt.subplots(figsize=(11, 6))
-    x = np.arange(len(regions))
-    ax.bar(x, regulated, label="Regulated", color=ACCENT_GREEN, width=0.6)
-    ax.bar(x, grey, bottom=regulated, label="Grey/Unlicensed", color=ACCENT_RED, alpha=0.7, width=0.6)
-
-    for i, (r, g) in enumerate(zip(regulated, grey)):
-        ax.text(i, r/2, f"{r}%", ha="center", va="center", fontweight="bold", fontsize=10)
-        if g > 15:
-            ax.text(i, r + g/2, f"{g}%", ha="center", va="center", fontsize=9)
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(regions)
-    ax.set_ylabel("Share of Regional GGR (%)")
-    ax.set_title("Regulated vs Grey Market Split by Region (2026)\nPP Strongest in Regulated Markets",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend(loc="upper right")
-    ax.set_ylim(0, 105)
-    save(fig, "13_regulated_vs_grey.png")
-
-
-def chart_market_growth_timeline():
-    years = [2020, 2021, 2022, 2023, 2024, 2025, 2026]
-    global_ggr = [61, 72, 80, 89, 98, 108, 121]
-    regulated_pct = [59, 61, 63, 64, 66, 67, 68]
-
-    fig, ax1 = plt.subplots(figsize=(11, 6))
-    ax1.fill_between(years, global_ggr, alpha=0.3, color=PP_ORANGE)
-    ax1.plot(years, global_ggr, "o-", color=PP_ORANGE, linewidth=2.5, markersize=8, label="Global GGR ($B)")
-    ax1.set_xlabel("Year")
-    ax1.set_ylabel("Global Online GGR ($ Billions)", color=PP_ORANGE)
-    ax1.tick_params(axis="y", labelcolor=PP_ORANGE)
-
-    for y, g in zip(years, global_ggr):
-        ax1.annotate(f"${g}B", (y, g), textcoords="offset points", xytext=(0, 10),
-                     ha="center", fontsize=9, color=PP_ORANGE)
-
-    ax2 = ax1.twinx()
-    ax2.plot(years, regulated_pct, "s--", color=ACCENT_GREEN, linewidth=2, markersize=7, label="Regulated %")
-    ax2.set_ylabel("Regulated Market Share (%)", color=ACCENT_GREEN)
-    ax2.tick_params(axis="y", labelcolor=ACCENT_GREEN)
-    ax2.set_ylim(55, 75)
-
-    lines1, labels1 = ax1.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left")
-
-    ax1.set_title("Global iGaming Growth Trajectory 2020–2026", fontsize=14, fontweight="bold", pad=15)
-    ax1.grid(alpha=0.3)
-    save(fig, "14_market_growth_timeline.png")
-
-
-def chart_blind_spots_summary():
-    categories = ["Extreme\nVolatility", "Narrative\nDepth", "US Market", "Live Casino\nLeadership",
-                  "Mechanical\nInnovation", "Catalog\nQuality", "Bonus Buy\nFlexibility"]
-    pragmatic = [35, 45, 30, 35, 40, 55, 60]
-    best_competitor = [95, 85, 90, 100, 92, 80, 90]
-    comp_names = ["Nolimit City", "Play'n GO", "RTG/IGT", "Evolution", "Hacksaw", "Hacksaw", "Hacksaw/NLC"]
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    x = np.arange(len(categories))
-    w = 0.35
-    ax.bar(x - w/2, pragmatic, w, label="Pragmatic Play", color=PP_ORANGE)
-    ax.bar(x + w/2, best_competitor, w, label="Best Competitor", color=ACCENT_BLUE, alpha=0.8)
-
-    for i, name in enumerate(comp_names):
-        ax.text(i + w/2, best_competitor[i] + 2, name, ha="center", fontsize=7, color=ACCENT_BLUE, rotation=15)
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(categories)
-    ax.set_ylabel("Competitive Score (0-100)")
-    ax.set_title("Pragmatic Play Blind Spots — Where Competitors Outperform",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend()
-    ax.set_ylim(0, 115)
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "15_blind_spots_summary.png")
-
-
-def chart_top_operators_pragmatic():
-    """Top operators carrying Pragmatic Play content by estimated GGR."""
-    operators = [
-        "Flutter Ent.", "Bet365", "Entain", "DraftKings",
-        "BetMGM", "Caesars", "Kindred", "888/Evoke", "Betsson", "Rush Street"
-    ]
-    ggr = [12.8, 7.2, 6.4, 4.9, 4.3, 3.8, 2.6, 2.2, 1.4, 1.1]
-    pp_depth = [100, 95, 98, 75, 90, 80, 92, 88, 90, 70]  # integration depth score
-
-    fig, ax = plt.subplots(figsize=(12, 7))
-    y = np.arange(len(operators))
-    bars = ax.barh(y, ggr, color=PP_ORANGE, height=0.55, alpha=0.85)
-
-    for i, (bar, depth, g) in enumerate(zip(bars, pp_depth, ggr)):
-        depth_label = "Exclusive Live" if depth == 100 else ("Deep" if depth >= 90 else "Standard")
-        ax.text(bar.get_width() + 0.15, bar.get_y() + bar.get_height()/2,
-                f"${g}B  |  PP: {depth_label}", va="center", fontsize=9, color=PP_DARK)
-
-    ax.set_yticks(y)
-    ax.set_yticklabels(operators)
-    ax.set_xlabel("Estimated GGR 2025 ($ Billions)")
-    ax.set_title("Top 10 Operators Carrying Pragmatic Play Content\nGGR + Integration Depth",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.set_xlim(0, 16)
-    ax.grid(axis="x", alpha=0.3)
-    ax.invert_yaxis()
-    save(fig, "16_top_operators_pragmatic.png")
-
-
-def chart_aggregator_landscape():
-    """Compare major iGaming aggregators."""
-    aggregators = ["EveryMatrix\nSlotMatrix", "SOFTSWISS", "Slotegrator\nAPIgrator",
-                   "Hub88", "SoftGamings", "Relax Gaming", "Pariplay\nFusion"]
-    games = [45000, 35000, 30000, 12000, 10000, 8000, 6000]
-    providers = [355, 300, 180, 120, 250, 80, 60]
-    has_pp = [1, 1, 1, 1, 1, 1, 1]
-
-    fig, ax = plt.subplots(figsize=(12, 7))
-    x = np.arange(len(aggregators))
-    w = 0.35
+    ax.set_yticklabels([r["market"] for r in rows])
+    ax.set_xlim(0, 118)
+    ax.set_xlabel("Slots as % of online casino GGR")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        ax.text(bar.get_width() + 1.6, bar.get_y() + bar.get_height() / 2,
+                f"{r['pct']}%", va="center", fontweight="bold", fontsize=10)
+        if r["note"]:
+            ax.text(bar.get_width() + 9, bar.get_y() + bar.get_height() / 2,
+                    textwrap.shorten(r["note"], 62, placeholder="…"), va="center",
+                    fontsize=8.5, color=MUTED)
+    head(fig, d)
+    save(fig, "03_slot_intensity.png")
+
+
+# ── 04 US states ──────────────────────────────────────────────────────────────
+def c04():
+    d = DATA["us_states_2025"]
+    rows = d["rows"]
+    fig, ax = newfig(12, 6.2)
+    x = np.arange(len(rows))
+    b = ax.bar(x, [r["rev"] for r in rows], 0.55, color=RIVAL)
     ax2 = ax.twinx()
-
-    bars1 = ax.bar(x - w/2, [g/1000 for g in games], w, label="Games (thousands)", color=ACCENT_BLUE, alpha=0.85)
-    bars2 = ax2.bar(x + w/2, providers, w, label="Providers", color=ACCENT_GREEN, alpha=0.85)
-
-    for i, (g, p) in enumerate(zip(games, providers)):
-        ax.text(i - w/2, g/1000 + 0.5, f"{g:,}", ha="center", fontsize=8, color=ACCENT_BLUE)
-        ax2.text(i + w/2, p + 5, f"{p}+", ha="center", fontsize=8, color=ACCENT_GREEN)
-        ax.text(i, -2.5, "✓ PP", ha="center", fontsize=9, color=PP_ORANGE, fontweight="bold")
-
+    frame(ax2)
+    ax2.plot(x, [r["growth"] for r in rows], "o--", color=PP, lw=2, ms=8, label="YoY growth")
+    ax2.set_ylabel("YoY growth, %", color=PP)
+    ax2.tick_params(axis="y", colors=PP)
+    ax2.set_ylim(0, 100)
+    for bar, r in zip(b, rows):
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 70,
+                f"${r['rev']:,.0f}m", ha="center", fontsize=9.5, fontweight="bold")
     ax.set_xticks(x)
-    ax.set_xticklabels(aggregators, fontsize=9)
-    ax.set_ylabel("Game Titles (thousands)", color=ACCENT_BLUE)
-    ax2.set_ylabel("Studio Partners", color=ACCENT_GREEN)
-    ax.set_title("iGaming Aggregator Landscape 2026 — All Distribute Pragmatic Play",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.set_ylim(0, 55)
-    ax2.set_ylim(0, 420)
-
-    lines1, labels1 = ax.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax.legend(lines1 + lines2, labels1 + labels2, loc="upper right")
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "17_aggregator_landscape.png")
+    ax.set_xticklabels([r["state"] for r in rows], fontsize=10)
+    ax.set_ylabel("2025 iGaming revenue, US$m")
+    ax.set_ylim(0, 4100)
+    ax.grid(axis="y", alpha=0.5)
+    ax.set_axisbelow(True)
+    ax2.legend(loc="upper right")
+    head(fig, d, d["source"]["name"] + " — " + textwrap.shorten(d["note"], 110, placeholder="…"))
+    save(fig, "04_us_states.png")
 
 
-def chart_platform_providers():
-    """B2B platform providers that integrate Pragmatic Play."""
-    platforms = ["Playtech", "EveryMatrix", "SOFTSWISS", "OpenBet",
-                 "BetConstruct", "SoftGamings", "Pragmatic\nSolutions", "IGT"]
-    market_share = [28, 18, 15, 12, 10, 8, 5, 4]
-    pp_integration = [100, 100, 100, 85, 95, 100, 100, 70]
+# ── 05 tax ────────────────────────────────────────────────────────────────────
+def c05():
+    d = DATA["tax_rates"]
+    rows = sorted(d["rows"], key=lambda r: r["rate"])
+    fig, ax = newfig(12.5, 8)
+    y = np.arange(len(rows))
+    cols = [BAD if r["flag"] == "turnover" else (WARN if r["flag"] == "hike" else
+            (TEAL if r["flag"] == "new" else RIVAL)) for r in rows]
+    b = ax.barh(y, [r["rate"] for r in rows], 0.62, color=cols)
+    ax.set_yticks(y)
+    ax.set_yticklabels([r["market"] for r in rows])
+    ax.set_xlim(0, 62)
+    ax.set_xlabel("Headline tax rate, %")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        tag = "  ⚠ on TURNOVER" if r["base"] == "Turnover" else ""
+        ax.text(bar.get_width() + 0.9, bar.get_y() + bar.get_height() / 2,
+                f"{r['rate']}%{tag}", va="center", fontsize=9.5,
+                fontweight="bold" if tag else "normal",
+                color=BAD if tag else TEXT)
+    ax.legend(handles=[Patch(color=BAD, label="Levied on turnover, not GGR"),
+                       Patch(color=WARN, label="Raised in 2025–26"),
+                       Patch(color=TEAL, label="New / opening market"),
+                       Patch(color=RIVAL, label="Stable")],
+              loc="lower right", ncol=2)
+    head(fig, d)
+    save(fig, "05_tax_rates.png")
 
-    fig, ax = plt.subplots(figsize=(11, 6))
-    x = np.arange(len(platforms))
-    scatter = ax.scatter(market_share, pp_integration, s=[m*25 for m in market_share],
-                         c=pp_integration, cmap="YlOrRd", alpha=0.85,
-                         edgecolors="white", linewidth=1.5, vmin=60, vmax=100)
 
-    for i, p in enumerate(platforms):
-        ax.annotate(p.replace("\n", " "), (market_share[i], pp_integration[i]),
-                    textcoords="offset points", xytext=(8, 5), fontsize=9)
+# ── 06 channelisation ─────────────────────────────────────────────────────────
+def c06():
+    d = DATA["channelisation"]
+    rows = [r for r in d["rows"] if r["tax"] is not None]
+    fig, ax = newfig(11.5, 6.4)
+    ax.scatter([r["tax"] for r in rows], [r["pct"] for r in rows], s=260,
+               c=[BAD if r["pct"] < 60 else (WARN if r["pct"] < 80 else GOOD) for r in rows],
+               edgecolors=INK, linewidth=1.8, zorder=3)
+    for r in rows:
+        ax.annotate(f"{r['market']}\n{r['pct']}%", (r["tax"], r["pct"]),
+                    textcoords="offset points", xytext=(0, 18), ha="center",
+                    fontsize=9.5, color=TEXT)
+    ax.axhline(80, color=MUTED, ls=":", lw=1)
+    ax.text(1, 81, "80% — widely used policy target", fontsize=9, color=MUTED)
+    ax.set_xlabel("Headline tax on online casino, % (Germany's 5.3% is on turnover ≈ 40–55% effective on GGR)")
+    ax.set_ylabel("Channelisation — % of online GGR captured by licensed operators")
+    ax.set_xlim(0, 46)
+    ax.set_ylim(40, 105)
+    ax.grid(alpha=0.4)
+    ax.set_axisbelow(True)
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "06_channelisation.png")
 
-    ax.set_xlabel("Estimated B2B Platform Market Share (%)")
-    ax.set_ylabel("Pragmatic Play Integration Depth (%)")
-    ax.set_title("B2B Platform Providers & Pragmatic Play Integration\nBubble Size = Platform Market Share",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.set_xlim(0, 35)
-    ax.set_ylim(60, 105)
-    ax.grid(alpha=0.3)
-    save(fig, "18_platform_providers.png")
+
+# ── 07 market growth ──────────────────────────────────────────────────────────
+def c07():
+    d = DATA["market_growth"]
+    rows = sorted(d["rows"], key=lambda r: r["growth"])
+    fig, ax = newfig(12, 8.4)
+    y = np.arange(len(rows))
+    g = [r["growth"] for r in rows]
+    b = ax.barh(y, g, 0.62, color=[BAD if v < 0 else GOOD for v in g])
+    ax.set_yticks(y)
+    ax.set_yticklabels([r["market"] for r in rows])
+    ax.axvline(0, color=MUTED, lw=1)
+    ax.set_xlim(-95, 100)
+    ax.set_xlabel("YoY change in online casino / iGaming revenue, %")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        w = bar.get_width()
+        ax.text(w + (3 if w >= 0 else -3), bar.get_y() + bar.get_height() / 2,
+                f"{w:+.1f}%", va="center", ha="left" if w >= 0 else "right",
+                fontsize=9.5, fontweight="bold")
+    head(fig, d)
+    save(fig, "07_market_growth.png")
 
 
-def chart_distribution_flow():
-    """Distribution ecosystem: Studio -> Aggregator/Platform -> Operator."""
-    categories = ["Direct API\n(300+ ops)", "Via Aggregators\n(500+ ops)", "Via Platforms\n(200+ ops)",
-                  "White Label\n(150+ ops)", "Retail/Omni\n(50+ ops)"]
-    operator_reach = [300, 500, 200, 150, 50]
-    pp_penetration = [100, 98, 95, 90, 85]
-
-    fig, ax = plt.subplots(figsize=(11, 6))
-    x = np.arange(len(categories))
-    w = 0.35
-    ax.bar(x - w/2, operator_reach, w, label="Operator Reach", color=ACCENT_BLUE, alpha=0.85)
-    ax.bar(x + w/2, pp_penetration, w, label="PP Content Available (%)", color=PP_ORANGE, alpha=0.85)
-
-    for i, (reach, pen) in enumerate(zip(operator_reach, pp_penetration)):
-        ax.text(i - w/2, reach + 8, f"{reach}+", ha="center", fontsize=9, color=ACCENT_BLUE)
-        ax.text(i + w/2, pen + 2, f"{pen}%", ha="center", fontsize=9, color=PP_ORANGE)
-
+# ── 08 UK slots quarterly ─────────────────────────────────────────────────────
+def c08():
+    d = DATA["uk_slots_quarterly"]
+    fig, ax = newfig(12, 6.4)
+    x = np.arange(len(d["quarters"]))
+    b = ax.bar(x, d["ggy_gbp_m"], 0.5, color=PP, label="Slots GGY (£m)")
+    for bar, v in zip(b, d["ggy_gbp_m"]):
+        ax.text(bar.get_x() + bar.get_width() / 2, v + 8, f"£{v}m", ha="center",
+                fontsize=10, fontweight="bold")
+    ax.set_ylim(600, 860)
+    ax.set_ylabel("Slots GGY, £m", color=PP)
+    ax.tick_params(axis="y", colors=PP)
     ax.set_xticks(x)
-    ax.set_xticklabels(categories)
-    ax.set_ylabel("Count / Penetration %")
-    ax.set_title("Pragmatic Play Distribution Channels to Market",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend()
-    ax.set_ylim(0, 580)
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "19_distribution_channels.png")
+    ax.set_xticklabels(d["quarters"])
+    ax.grid(axis="y", alpha=0.4)
+    ax.set_axisbelow(True)
+
+    ax2 = ax.twinx()
+    frame(ax2)
+    ax2.plot(x, d["spins_per_session"], "o-", color=RIVAL, lw=2.2, ms=7, label="Spins per session")
+    ax2.plot(x, [v * 30 for v in d["ggy_per_session"]], "s--", color=TEAL, lw=2.2, ms=7,
+             label="GGY per session (£, right axis ×30)")
+    ax2.plot(x, [v * 7 for v in d["avg_session_min"]], "^:", color=PURPLE, lw=2.2, ms=8,
+             label="Avg session length (min, ×7)")
+    ax2.set_ylim(95, 135)
+    ax2.set_ylabel("Engagement indices")
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax.legend(h1 + h2, l1 + l2, loc="lower left", ncol=2, fontsize=9)
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "08_uk_slots_quarterly.png")
 
 
-def chart_operator_brands_map():
-    """Major operator brand portfolios with PP presence."""
-    groups = ["Flutter", "Entain", "Bet365", "888/Evoke", "Kindred", "Betsson", "MGM/Caesars"]
-    brand_count = [12, 10, 1, 6, 8, 12, 4]
-    pp_products = [4, 4, 3, 3, 3, 3, 2]  # slots, live, bingo, virtual sports
-
-    fig, ax = plt.subplots(figsize=(11, 6))
-    x = np.arange(len(groups))
-    ax.bar(x, brand_count, color=ACCENT_BLUE, alpha=0.6, label="Brands in Group", width=0.5)
-    ax.bar(x, pp_products, color=PP_ORANGE, alpha=0.9, label="PP Verticals Supplied", width=0.3)
-
-    brands_detail = [
-        "FanDuel, Paddy Power,\nBetfair, Sky Vegas...",
-        "Ladbrokes, Coral,\nbwin, BetMGM JV...",
-        "bet365 Casino",
-        "William Hill,\n888 Casino, Mr Green",
-        "Unibet, 32Red,\nMaria Casino",
-        "Betsson, Betsafe,\nNordicBet",
-        "BetMGM, Caesars\nPalace Online"
-    ]
-    for i, detail in enumerate(brands_detail):
-        ax.text(i, brand_count[i] + 0.3, detail, ha="center", fontsize=7, color="#5C5347")
-
+# ── 09 Europe supplier share ──────────────────────────────────────────────────
+def c09():
+    d = DATA["europe_supplier_share"]
+    sup = d["suppliers"]
+    fig, ax = newfig(12, 6.2)
+    x = np.arange(len(sup))
+    w = 0.36
+    a = ax.bar(x - w / 2, [v or 0 for v in d["oct_2025"]], w, color="#2b3442", label="Oct 2025")
+    b = ax.bar(x + w / 2, [v or 0 for v in d["jun_2026"]], w,
+               color=[PP if s == "Pragmatic Play" else RIVAL for s in sup], label="Jun 2026")
+    for bars, vals in ((a, d["oct_2025"]), (b, d["jun_2026"])):
+        for bar, v in zip(bars, vals):
+            if v:
+                ax.text(bar.get_x() + bar.get_width() / 2, v + 0.25, f"{v}%",
+                        ha="center", fontsize=9.5, fontweight="bold")
     ax.set_xticks(x)
-    ax.set_xticklabels(groups, rotation=15, ha="right")
+    ax.set_xticklabels(sup)
+    ax.set_ylabel("Share of European online casino GGR, %")
+    ax.set_ylim(0, 21)
+    ax.grid(axis="y", alpha=0.5)
+    ax.set_axisbelow(True)
+    ax.legend(loc="upper right")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "09_europe_supplier_share.png")
+
+
+# ── 10 North America supplier share ───────────────────────────────────────────
+def c10():
+    d = DATA["na_supplier_share"]
+    rows = d["rows"]
+    fig, ax = newfig(11.5, 5.8)
+    y = np.arange(len(rows))[::-1]
+    cols = [PP if r["supplier"] == "Pragmatic Play" else RIVAL for r in rows]
+    b = ax.barh(y, [r["pct"] for r in rows], 0.58, color=cols)
+    ax.set_yticks(y)
+    ax.set_yticklabels([r["supplier"] for r in rows])
+    ax.set_xlim(0, 22)
+    ax.set_xlabel("Share of North American online casino GGR, %")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        if r["pct"] == 0:
+            ax.text(0.4, bar.get_y() + bar.get_height() / 2,
+                    "0%  — not licensed in the US regulated market", va="center",
+                    fontsize=10.5, fontweight="bold", color=PP)
+        else:
+            ax.text(bar.get_width() + 0.35, bar.get_y() + bar.get_height() / 2,
+                    f"{r['pct']}%", va="center", fontsize=10, fontweight="bold")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "10_na_supplier_share.png")
+
+
+# ── 11 lobby footprint ────────────────────────────────────────────────────────
+def c11():
+    d = DATA["lobby_footprint"]
+    rows = d["rows"]
+    fig, ax = newfig(12.5, 6.4)
+    x = np.arange(len(rows))
+    w = 0.26
+    cols = [PP if r["provider"] == "Pragmatic Play" else RIVAL for r in rows]
+    ax.bar(x - w, [r["games"] for r in rows], w, color=cols, label="Games in lobbies")
+    ax.bar(x, [r["sites"] * 2.4 for r in rows], w, color=TEAL, label="Operator sites (×2.4)")
+    ax.bar(x + w, [r["pages"] / 3 for r in rows], w, color=PURPLE, label="Lobby pages (÷3)")
+    for i, r in enumerate(rows):
+        ax.text(i - w, r["games"] + 22, f"{r['games']:,}", ha="center", fontsize=9, fontweight="bold")
+        ax.text(i, r["sites"] * 2.4 + 22, f"{r['sites']}", ha="center", fontsize=9, color=TEAL)
+        ax.text(i + w, r["pages"] / 3 + 22, f"{r['pages']:,}", ha="center", fontsize=9, color=PURPLE)
+        ax.text(i, -105, f"{r['countries']} countries", ha="center", fontsize=9, color=MUTED)
+    ax.set_xticks(x)
+    ax.set_xticklabels([r["provider"] for r in rows])
+    ax.set_ylabel("Count (scaled to fit one axis)")
+    ax.set_ylim(0, 1450)
+    ax.grid(axis="y", alpha=0.5)
+    ax.set_axisbelow(True)
+    ax.legend(loc="upper right", ncol=3)
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "11_lobby_footprint.png")
+
+
+# ── 12 release quality vs volume ──────────────────────────────────────────────
+def c12():
+    d = DATA["release_quality"]
+    rows = d["rows"]
+    # hand-placed label offsets so the tight top-left cluster stays readable
+    off = {
+        "ELK Studios": (34, 14), "Peter & Sons": (-14, 22), "Nolimit City": (46, -6),
+        "Big Time Gaming": (44, 12), "Hacksaw Gaming": (0, 26), "Play'n GO": (0, 26),
+        "Playtech": (0, -40), "Pragmatic Play": (-6, 30), "OctoPlay": (0, -40),
+    }
+    fig, ax = newfig(12.5, 7.4)
+    for r in rows:
+        pp = r["provider"] == "Pragmatic Play"
+        ax.scatter(r["releases"], r["avg"], s=140 + r["gold"] * 130,
+                   c=PP if pp else (GOOD if r["gold"] else RIVAL),
+                   edgecolors=INK, linewidth=1.8, zorder=3)
+        dx, dy = off.get(r["provider"], (0, 26))
+        ax.annotate(f"{r['provider']}\n{r['avg']:.1f} avg · {r['gold']} gold",
+                    (r["releases"], r["avg"]), textcoords="offset points",
+                    xytext=(dx, dy), ha="left" if dx > 20 else "center", fontsize=9.5,
+                    color=PP if pp else TEXT, fontweight="bold" if pp else "normal")
+    mean = np.mean([r["avg"] for r in rows])
+    ax.axhline(mean, color=MUTED, ls=":", lw=1)
+    ax.text(33.5, mean + 5, "field average", fontsize=9, color=MUTED, ha="right")
+    ax.set_xlabel("New releases, 2026 year to date")
+    ax.set_ylabel("Average quality score per release")
+    ax.set_xlim(0, 36)
+    ax.set_ylim(-30, 265)
+    ax.grid(alpha=0.4)
+    ax.set_axisbelow(True)
+    ax.text(0.8, 250, "few releases, high craft", fontsize=9.5, color=GOOD, style="italic")
+    ax.text(35.2, -22, "high output, low craft", fontsize=9.5, color=PP, style="italic", ha="right")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "12_release_quality.png")
+
+
+# ── 13 demo demand ────────────────────────────────────────────────────────────
+def c13():
+    d = DATA["demo_demand"]
+    rows = d["rows"]
+    fig, ax = newfig(11.5, 6.2)
+    y = np.arange(len(rows))[::-1]
+    cols = [PP if r["provider"] == "Pragmatic Play" else RIVAL for r in rows]
+    b = ax.barh(y, [r["plays"] for r in rows], 0.6, color=cols)
+    ax.set_yticks(y)
+    ax.set_yticklabels([r["provider"] for r in rows])
+    ax.set_xlim(0, 62000)
+    ax.set_xlabel("Demo plays")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    barlabels(ax, b, "{:,.0f}")
+    head(fig, d)
+    save(fig, "13_demo_demand.png")
+
+
+# ── 14 supplier financials ────────────────────────────────────────────────────
+def c14():
+    d = DATA["supplier_financials"]
+    rows = d["rows"]
+    fig, ax = newfig(12.5, 6.6)
+    x = np.arange(len(rows))
+    vals = [r["revenue_eur_m"] or 0 for r in rows]
+    cols = [PP if r["company"] == "Pragmatic Play" else RIVAL for r in rows]
+    b = ax.bar(x, vals, 0.52, color=cols)
+    for bar, r in zip(b, rows):
+        if r["revenue_eur_m"] is None:
+            ax.text(bar.get_x() + bar.get_width() / 2, 90, "NOT\nDISCLOSED", ha="center",
+                    fontsize=11, fontweight="bold", color=PP)
+            ax.text(bar.get_x() + bar.get_width() / 2, 420,
+                    "#1 in Europe\nby GGR share", ha="center", fontsize=9.5, color=MUTED)
+        else:
+            ax.text(bar.get_x() + bar.get_width() / 2, r["revenue_eur_m"] + 45,
+                    f"€{r['revenue_eur_m']:,.0f}m\n{r['margin']}% {r['margin_type']}",
+                    ha="center", fontsize=9.5, fontweight="bold")
+    ax.set_xticks(x)
+    ax.set_xticklabels([textwrap.fill(r["company"], 18) for r in rows], fontsize=9.5)
+    ax.set_ylabel("FY2025 revenue, €m")
+    ax.set_ylim(0, 2500)
+    ax.grid(axis="y", alpha=0.5)
+    ax.set_axisbelow(True)
+    head(fig, d, "Company reports. Games Global figure is FY to Mar 2023 — the last disclosure before its IPO was withdrawn.")
+    save(fig, "14_supplier_financials.png")
+
+
+# ── 15 Evolution live vs RNG ──────────────────────────────────────────────────
+def c15():
+    d = DATA["evolution_quarterly"]
+    fig, ax = newfig(12, 6.4)
+    x = np.arange(len(d["quarters"]))
+    ax.plot(x, d["live"], "o-", color=RIVAL, lw=2.6, ms=8, label="Live casino")
+    ax.set_ylabel("Live casino revenue, €m", color=RIVAL)
+    ax.tick_params(axis="y", colors=RIVAL)
+    ax.set_ylim(415, 470)
+    ax.set_xticks(x)
+    ax.set_xticklabels(d["quarters"])
+    ax.grid(alpha=0.4)
+    ax.set_axisbelow(True)
+    ax2 = ax.twinx()
+    frame(ax2)
+    ax2.plot(x, d["rng"], "s-", color=PP, lw=2.6, ms=8, label="RNG (slots)")
+    ax2.set_ylabel("RNG revenue, €m", color=PP)
+    ax2.tick_params(axis="y", colors=PP)
+    ax2.set_ylim(66, 86)
+    for i, v in enumerate(d["rng"]):
+        ax2.annotate(f"{v:.1f}", (i, v), textcoords="offset points", xytext=(0, 10),
+                     ha="center", fontsize=9, color=PP)
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax.legend(h1 + h2, l1 + l2, loc="lower left")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "15_evolution_live_vs_rng.png")
+
+
+# ── 16 Hacksaw growth ─────────────────────────────────────────────────────────
+def c16():
+    d = DATA["hacksaw_quarterly"]
+    fig, ax = newfig(11.5, 6)
+    x = np.arange(len(d["quarters"]))
+    v = [r / 1000 for r in d["revenue_eur_k"]]
+    b = ax.bar(x, v, 0.55, color=TEAL)
+    for bar, val in zip(b, v):
+        ax.text(bar.get_x() + bar.get_width() / 2, val + 0.9, f"€{val:.1f}m",
+                ha="center", fontsize=9.5, fontweight="bold")
+    ax.set_xticks(x)
+    ax.set_xticklabels(d["quarters"])
+    ax.set_ylabel("Revenue, €m")
+    ax.set_ylim(0, 70)
+    ax.grid(axis="y", alpha=0.5)
+    ax.set_axisbelow(True)
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "16_hacksaw_growth.png")
+
+
+# ── 17 margins ────────────────────────────────────────────────────────────────
+def c17():
+    d = DATA["margins"]
+    rows = d["rows"]
+    fig, ax = newfig(11.5, 6)
+    y = np.arange(len(rows))[::-1]
+    b = ax.barh(y, [r["margin"] for r in rows], 0.6,
+                color=[GOOD if r["margin"] > 60 else (WARN if r["margin"] > 35 else BAD) for r in rows])
+    ax.set_yticks(y)
+    ax.set_yticklabels([r["company"] for r in rows])
+    ax.set_xlim(0, 96)
+    ax.set_xlabel("FY2025 margin, %")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        ax.text(bar.get_width() + 1.2, bar.get_y() + bar.get_height() / 2,
+                f"{r['margin']}%  ({r['metric']})", va="center", fontsize=9.5)
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "17_margins.png")
+
+
+# ── 18 title reach ────────────────────────────────────────────────────────────
+def c18():
+    d = DATA["top_titles_reach"]
+    rows = d["rows"]
+    fig, ax = newfig(12, 6.2)
+    y = np.arange(len(rows))[::-1]
+    b = ax.barh(y, [r["sites"] for r in rows], 0.6, color=[PP if r["pp"] else RIVAL for r in rows])
+    ax.set_yticks(y)
+    ax.set_yticklabels([f"{r['title']}\n{r['provider']}" for r in rows], fontsize=9.5)
+    ax.set_xlim(0, 590)
+    ax.set_xlabel("Operator sites carrying the title")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        lab = f"{r['sites']} sites" + (f" · {r['countries']} countries" if r["countries"] else "")
+        ax.text(bar.get_width() + 8, bar.get_y() + bar.get_height() / 2, lab,
+                va="center", fontsize=9.5, fontweight="bold")
+    ax.legend(handles=[Patch(color=PP, label="Pragmatic Play / Reel Kingdom"),
+                       Patch(color=RIVAL, label="Other suppliers")], loc="lower right")
+    head(fig, d)
+    save(fig, "18_title_reach.png")
+
+
+# ── 19 Gates depth ────────────────────────────────────────────────────────────
+def c19():
+    d = DATA["gates_depth"]
+    rows = d["rows"]
+    fig, ax = newfig(12, 6.2)
+    x = np.arange(len(rows))
+    w = 0.4
+    ax.bar(x - w / 2, [r["brands"] for r in rows], w, color=PP, label="Operator brands carrying")
+    ax.bar(x + w / 2, [r["lobbies"] for r in rows], w, color="#8a4512", label="Front-lobby placements")
+    for i, r in enumerate(rows):
+        ax.text(i - w / 2, r["brands"] + 3, r["brands"], ha="center", fontsize=9, fontweight="bold")
+        ax.text(i + w / 2, r["lobbies"] + 3, r["lobbies"], ha="center", fontsize=9, color=MUTED)
+    ax.set_xticks(x)
+    ax.set_xticklabels([r["market"] for r in rows], rotation=20, ha="right")
     ax.set_ylabel("Count")
-    ax.set_title("Operator Groups × Pragmatic Play — Brand Portfolios & Vertical Coverage",
-                 fontsize=13, fontweight="bold", pad=15)
-    ax.legend()
-    ax.set_ylim(0, 16)
-    ax.grid(axis="y", alpha=0.3)
-    save(fig, "20_operator_brand_map.png")
+    ax.set_ylim(0, 195)
+    ax.grid(axis="y", alpha=0.5)
+    ax.set_axisbelow(True)
+    ax.legend(loc="upper right")
+    head(fig, d)
+    save(fig, "19_gates_depth.png")
+
+
+# ── 20 no global #1 ───────────────────────────────────────────────────────────
+def c20():
+    d = DATA["no1_by_market"]
+    rows = d["rows"]
+    fig, ax = plt.subplots(figsize=(12.5, 6.8))
+    fig.subplots_adjust(top=0.84, bottom=0.1, left=0.02, right=0.98)
+    ax.axis("off")
+    for i, r in enumerate(rows):
+        yy = 1 - (i + 0.5) / len(rows)
+        col = PP if r["pp"] else "#1c2430"
+        ax.add_patch(plt.Rectangle((0.02, yy - 0.036), 0.96, 0.072,
+                                   transform=ax.transAxes, facecolor="#171e28",
+                                   edgecolor=GRID, lw=0.8, zorder=1))
+        ax.add_patch(plt.Rectangle((0.02, yy - 0.036), 0.006, 0.072,
+                                   transform=ax.transAxes, facecolor=col, zorder=2))
+        ax.text(0.045, yy, r["market"], transform=ax.transAxes, va="center",
+                fontsize=11, color=MUTED)
+        ax.text(0.30, yy, r["title"], transform=ax.transAxes, va="center",
+                fontsize=12.5, fontweight="bold", color=PP if r["pp"] else TEXT)
+        ax.text(0.74, yy, r["provider"], transform=ax.transAxes, va="center",
+                fontsize=10.5, color=MUTED)
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "20_no_global_number_one.png")
+
+
+# ── 21 shelf share US vs Germany ──────────────────────────────────────────────
+def c21():
+    d = DATA["shelf_share"]
+    us, de = d["us"], d["germany"]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(13.5, 6.8))
+    fig.subplots_adjust(top=0.83, bottom=0.11, left=0.13, right=0.97, wspace=0.42)
+    for a, rows, title in ((a1, us, "United States  (76 licensed sites, 7 states)"),
+                           (a2, de, "Germany  (all licensed .de lobbies)")):
+        frame(a)
+        y = np.arange(len(rows))[::-1]
+        cols = [PP if r["studio"] in ("Pragmatic Play", "Reel Kingdom") else RIVAL for r in rows]
+        b = a.barh(y, [r["n"] for r in rows], 0.6, color=cols)
+        a.set_yticks(y)
+        a.set_yticklabels([r["studio"] for r in rows], fontsize=9.5)
+        a.set_xlim(0, 34)
+        a.grid(axis="x", alpha=0.5)
+        a.set_axisbelow(True)
+        a.set_title(title, fontsize=11, color=MUTED, loc="left")
+        a.set_xlabel("Titles in the market's top 100")
+        for bar, r in zip(b, rows):
+            if r["n"] == 0:
+                a.text(0.5, bar.get_y() + bar.get_height() / 2, "0 — absent from the market",
+                       va="center", fontsize=10, fontweight="bold", color=PP)
+            else:
+                a.text(bar.get_width() + 0.6, bar.get_y() + bar.get_height() / 2, r["n"],
+                       va="center", fontsize=9.5, fontweight="bold")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "21_shelf_share.png")
+
+
+# ── 22 max win ────────────────────────────────────────────────────────────────
+def c22():
+    d = DATA["max_win"]
+    rows = d["rows"]
+    fig, ax = newfig(12.5, 7.4)
+    y = np.arange(len(rows))[::-1]
+    b = ax.barh(y, [r["max"] for r in rows], 0.6, color=[PP if r["pp"] else RIVAL for r in rows])
+    ax.set_yticks(y)
+    ax.set_yticklabels([f"{r['title']}  ·  {r['provider']}" for r in rows], fontsize=9.5)
+    ax.set_xscale("log")
+    ax.set_xlim(3000, 1_400_000)
+    ax.set_xlabel("Maximum win multiplier (log scale)")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        ax.text(bar.get_width() * 1.13, bar.get_y() + bar.get_height() / 2,
+                f"{r['max']:,}x" + (f"  ·  RTP {r['rtp']}%" if r["rtp"] else ""),
+                va="center", fontsize=9.5)
+    ax.axvline(50000, color=WARN, ls="--", lw=1.4)
+    ax.text(52000, len(rows) - 0.6, "industry ceiling\nplateaued ~50,000x", fontsize=9, color=WARN)
+    ax.legend(handles=[Patch(color=PP, label="Pragmatic Play / Reel Kingdom"),
+                       Patch(color=RIVAL, label="Competitors")], loc="lower right")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "22_max_win.png")
+
+
+# ── 23 money train paradox ────────────────────────────────────────────────────
+def c23():
+    d = DATA["money_train_paradox"]
+    rows = d["rows"]
+    fig, ax = newfig(11.5, 6)
+    x = np.arange(len(rows))
+    b = ax.bar(x, [r["multiplier"] for r in rows], 0.5, color=RIVAL, label="Headline max win multiplier")
+    for bar, r in zip(b, rows):
+        ax.text(bar.get_x() + bar.get_width() / 2, r["multiplier"] + 3500,
+                f"{r['multiplier']:,}x", ha="center", fontsize=10, fontweight="bold")
+    ax.set_ylabel("Max win multiplier", color=RIVAL)
+    ax.tick_params(axis="y", colors=RIVAL)
+    ax.set_ylim(0, 185000)
+    ax.set_xticks(x)
+    ax.set_xticklabels([r["game"] for r in rows])
+    ax.grid(axis="y", alpha=0.4)
+    ax.set_axisbelow(True)
+    ax2 = ax.twinx()
+    frame(ax2)
+    ax2.plot(x, [r["ceiling"] for r in rows], "o-", color=BAD, lw=2.6, ms=9,
+             label="Actual maximum payout ($, max bet × multiplier)")
+    for i, r in enumerate(rows):
+        ax2.annotate(f"${r['ceiling']:,}\nmax bet ${r['max_bet']}", (i, r["ceiling"]),
+                     textcoords="offset points", xytext=(0, -34), ha="center",
+                     fontsize=9, color=BAD)
+    ax2.set_ylim(700000, 1150000)
+    ax2.set_ylabel("Actual payout ceiling, US$", color=BAD)
+    ax2.tick_params(axis="y", colors=BAD)
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax.legend(h1 + h2, l1 + l2, loc="upper left", fontsize=9)
+    head(fig, d, "The headline multiplier grew 7.5× across the series while the amount a player can actually win fell.")
+    save(fig, "23_money_train_paradox.png")
+
+
+# ── 24 RTP compression ────────────────────────────────────────────────────────
+def c24():
+    d = DATA["rtp_compression"]
+    rows = d["rows"]
+    fig, ax = newfig(12, 6.6)
+    y = np.arange(len(rows))[::-1]
+    for yy, r in zip(y, rows):
+        ax.plot([r["deployed"], r["max"]], [yy, yy], color=GRID, lw=3, zorder=1)
+        ax.scatter(r["max"], yy, s=110, color=RIVAL, zorder=3, edgecolors=INK, lw=1.4)
+        ax.scatter(r["deployed"], yy, s=110, color=BAD, zorder=3, edgecolors=INK, lw=1.4)
+        ax.text(r["deployed"] - 0.13, yy, f"{r['deployed']:.2f}%", va="center", ha="right",
+                fontsize=9.5, color=BAD, fontweight="bold")
+        ax.text(r["max"] + 0.13, yy, f"{r['max']:.2f}%", va="center", fontsize=9.5, color=RIVAL)
+        ax.text(97.35, yy, f"−{r['max'] - r['deployed']:.2f}pp", va="center",
+                fontsize=9.5, color=WARN, fontweight="bold")
+    ax.set_yticks(y)
+    ax.set_yticklabels([f"{r['title']}\n{r['provider']}" for r in rows], fontsize=9)
+    ax.set_xlim(91, 98)
+    ax.set_xlabel("Return to player, %")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    ax.legend(handles=[Patch(color=RIVAL, label="Provider maximum RTP"),
+                       Patch(color=BAD, label="RTP actually deployed on UK sites")],
+              loc="lower left")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "24_rtp_compression.png")
+
+
+# ── 25 mechanic prevalence ────────────────────────────────────────────────────
+def c25():
+    d = DATA["mechanics"]
+    rows = d["prevalence"]
+    fig, ax = newfig(12, 6.4)
+    y = np.arange(len(rows))[::-1]
+    b = ax.barh(y, [r["count"] for r in rows], 0.6, color=PURPLE)
+    ax.set_yticks(y)
+    ax.set_yticklabels([r["tag"] for r in rows], fontsize=9.5)
+    ax.set_xlim(0, 12600)
+    ax.set_xlabel("Titles tagged with the mechanic (supply, not revenue)")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    barlabels(ax, b, "{:,.0f}")
+    head(fig, {**d, "title": "Mechanic prevalence across the global catalogue",
+               "subtitle": "SlotCatalog title tags across ~45,000–51,000 indexed slots"},
+         "SlotCatalog feature index, July 2026. Incomplete — the index is Cloudflare-protected past the first render.")
+    save(fig, "25_mechanic_prevalence.png")
+
+
+# ── 26 bonus buy ──────────────────────────────────────────────────────────────
+def c26():
+    d = DATA["bonus_buy"]
+    rows = d["rows"]
+    order = {"Banned": 0, "Constrained": 1, "Patchy": 2, "Contested": 3, "Permitted": 4}
+    col = {"Banned": BAD, "Constrained": WARN, "Patchy": WARN, "Contested": MUTED, "Permitted": GOOD}
+    rows = sorted(rows, key=lambda r: order[r["status"]])
+    fig, ax = plt.subplots(figsize=(13, 7))
+    fig.subplots_adjust(top=0.83, bottom=0.1, left=0.02, right=0.98)
+    ax.axis("off")
+    for i, r in enumerate(rows):
+        yy = 1 - (i + 0.5) / len(rows)
+        ax.add_patch(plt.Rectangle((0.02, yy - 0.038), 0.96, 0.076, transform=ax.transAxes,
+                                   facecolor="#171e28", edgecolor=GRID, lw=0.8))
+        ax.add_patch(plt.Rectangle((0.02, yy - 0.038), 0.006, 0.076, transform=ax.transAxes,
+                                   facecolor=col[r["status"]]))
+        ax.text(0.045, yy, r["market"], transform=ax.transAxes, va="center", fontsize=11,
+                fontweight="bold", color=TEXT)
+        ax.text(0.27, yy, r["status"].upper(), transform=ax.transAxes, va="center",
+                fontsize=10, fontweight="bold", color=col[r["status"]])
+        ax.text(0.40, yy, textwrap.shorten(r["detail"], 95, placeholder="…"),
+                transform=ax.transAxes, va="center", fontsize=9, color=MUTED)
+    head(fig, d, "No credible public figure exists for bonus buy's share of slot GGR. 55% of Swedish slot players think it should be banned (Play'n GO / Opinium).")
+    save(fig, "26_bonus_buy.png")
+
+
+# ── 27 streaming ──────────────────────────────────────────────────────────────
+def c27():
+    d = DATA["streaming"]
+    rows = d["metrics"]
+    fig, ax = newfig(11.5, 6)
+    y = np.arange(len(rows))[::-1]
+    b = ax.barh(y, [r["change"] for r in rows], 0.6,
+                color=[GOOD if r["change"] > 0 else BAD for r in rows])
+    ax.set_yticks(y)
+    ax.set_yticklabels([f"{r['metric']}  ({r['value']})" for r in rows], fontsize=10)
+    ax.axvline(0, color=MUTED, lw=1)
+    ax.set_xlim(-30, 72)
+    ax.set_xlabel("YoY change, %")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        w = bar.get_width()
+        ax.text(w + (1.6 if w >= 0 else -1.6), bar.get_y() + bar.get_height() / 2,
+                f"{w:+.1f}%", va="center", ha="left" if w >= 0 else "right",
+                fontsize=10, fontweight="bold")
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "27_streaming.png")
+
+
+# ── 28 radar ──────────────────────────────────────────────────────────────────
+def c28():
+    d = DATA["pragmatic_scorecard"]
+    axes = [a["axis"] for a in d["axes"]]
+    ang = np.linspace(0, 2 * np.pi, len(axes), endpoint=False).tolist()
+    ang += ang[:1]
+    fig = plt.figure(figsize=(12.5, 10.5))
+    fig.subplots_adjust(top=0.80, bottom=0.08, left=0.17, right=0.83)
+    ax = fig.add_subplot(111, polar=True)
+    ax.set_facecolor(PANEL)
+    show = ["Pragmatic Play", "Evolution Group", "Hacksaw Gaming", "Nolimit City", "Light & Wonder"]
+    cols = [PP, RIVAL, TEAL, PURPLE, WARN]
+    for name, c in zip(show, cols):
+        v = d["providers"][name] + d["providers"][name][:1]
+        ax.plot(ang, v, "o-", lw=2.4 if name == "Pragmatic Play" else 1.6, ms=6,
+                color=c, label=name, zorder=3 if name == "Pragmatic Play" else 2)
+        if name == "Pragmatic Play":
+            ax.fill(ang, v, color=c, alpha=0.16)
+    ax.set_xticks(ang[:-1])
+    ax.set_xticklabels([textwrap.fill(a, 13) for a in axes], fontsize=10)
+    ax.tick_params(axis="x", pad=26)
+    ax.set_ylim(0, 100)
+    ax.set_yticks([20, 40, 60, 80, 100])
+    ax.set_yticklabels(["20", "40", "60", "80", "100"], fontsize=8, color=MUTED)
+    ax.grid(color=GRID)
+    ax.spines["polar"].set_color(GRID)
+    ax.legend(loc="upper right", bbox_to_anchor=(1.22, 1.10), fontsize=10)
+    head(fig, d, "Analyst scoring. Each axis is anchored to a cited measurement listed in dataset.json — but the 0-100 conversion is judgement.")
+    save(fig, "28_scorecard_radar.png")
+
+
+# ── 29 blind spots ────────────────────────────────────────────────────────────
+def c29():
+    d = DATA["blind_spots"]
+    rows = sorted(d["rows"], key=lambda r: r["severity"])
+    fig, ax = newfig(13, 7)
+    y = np.arange(len(rows))
+    b = ax.barh(y, [r["severity"] for r in rows], 0.62,
+                color=[BAD if r["severity"] >= 75 else (WARN if r["severity"] >= 55 else RIVAL) for r in rows])
+    ax.set_yticks(y)
+    ax.set_yticklabels([f"{r['rank']}. {r['gap']}" for r in rows], fontsize=10.5)
+    ax.set_xlim(0, 100)
+    ax.set_xlabel("Severity of the gap (analyst score)")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        ax.text(2, bar.get_y() + bar.get_height() / 2,
+                "Beneficiary: " + textwrap.shorten(r["beneficiary"], 58, placeholder="…"),
+                va="center", fontsize=9, color="#0d1117", fontweight="bold")
+        ax.text(bar.get_width() + 1.4, bar.get_y() + bar.get_height() / 2,
+                f"{r['severity']}", va="center", fontsize=10, fontweight="bold")
+    head(fig, d, "Severity is an analyst score. The underlying evidence for each row is cited in full in dataset.json and the written report.")
+    save(fig, "29_blind_spots.png")
+
+
+# ── 30 regional rank ──────────────────────────────────────────────────────────
+def c30():
+    d = DATA["pragmatic_regional_rank"]
+    rows = d["rows"]
+    fig, ax = newfig(12, 6.2)
+    y = np.arange(len(rows))[::-1]
+    b = ax.barh(y, [r["pp"] for r in rows], 0.58,
+                color=[PP if r["rank"] == 1 else (WARN if r["rank"] else BAD) for r in rows])
+    ax.set_yticks(y)
+    ax.set_yticklabels([r["region"] for r in rows])
+    ax.set_xlim(0, 26)
+    ax.set_xlabel("Pragmatic Play supplier share, %")
+    ax.grid(axis="x", alpha=0.5)
+    ax.set_axisbelow(True)
+    for bar, r in zip(b, rows):
+        if r["pp"] == 0:
+            ax.text(0.4, bar.get_y() + bar.get_height() / 2,
+                    "not licensed  ·  leader: " + r["next"], va="center",
+                    fontsize=10, fontweight="bold", color=PP)
+        else:
+            ax.text(bar.get_width() + 0.4, bar.get_y() + bar.get_height() / 2,
+                    f"{r['pp']}%  ·  #{r['rank']}  ·  next: {r['next']}  [tier {r['conf']}]",
+                    va="center", fontsize=9.5)
+    head(fig, d, textwrap.shorten(d["note"], 168, placeholder="…"))
+    save(fig, "30_pragmatic_regional_rank.png")
 
 
 if __name__ == "__main__":
-    print("Generating iGaming research charts...")
-    chart_global_market_by_region()
-    chart_vertical_breakdown()
-    chart_casino_subsegment()
-    chart_pragmatic_regional_share()
-    chart_pragmatic_weak_markets()
-    chart_top_games_ranking()
-    chart_provider_comparison()
-    chart_competitor_max_win()
-    chart_feature_trends()
-    chart_live_casino_share()
-    chart_growth_markets()
-    chart_pragmatic_game_families()
-    chart_regulated_vs_grey()
-    chart_market_growth_timeline()
-    chart_blind_spots_summary()
-    chart_top_operators_pragmatic()
-    chart_aggregator_landscape()
-    chart_platform_providers()
-    chart_distribution_flow()
-    chart_operator_brands_map()
-    print(f"\nAll charts saved to {OUT}/")
+    print("Rendering charts from data/dataset.json …")
+    for fn in [c01, c02, c03, c04, c05, c06, c07, c08, c09, c10,
+               c11, c12, c13, c14, c15, c16, c17, c18, c19, c20,
+               c21, c22, c23, c24, c25, c26, c27, c28, c29, c30]:
+        fn()
+    print(f"\nDone — {len(list(OUT.glob('*.png')))} charts in {OUT}/")

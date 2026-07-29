@@ -1,0 +1,659 @@
+{
+  "meta": {
+    "title": "Global iGaming & Pragmatic Play Competitive Intelligence",
+    "compiled": "2026-07-29",
+    "confidence_scale": {
+      "A": "Regulator-published, audited, or statutory primary source",
+      "B": "Named commercial dataset with a stated methodology (Eilers & Krejcik, Blask, SlotsRank, bet365, SlotCatalog, iGamingCompass)",
+      "C": "Company-reported or single-source trade press, unaudited",
+      "D": "Analyst judgement by this report — a scored opinion, not a measurement"
+    },
+    "hard_gaps": [
+      "Pragmatic Play files no audited accounts anywhere. Revenue, EBITDA and valuation are unknown. Every figure circulating online traces to unattributed or AI-generated sources.",
+      "No authoritative global slot-studio GGR-share table exists. Section 'Supplier share' assembles four independent proxies that disagree because they measure different things.",
+      "Catalogue counts vary by roughly plus or minus 40% between sources depending on whether RTP variants, re-skins and partner content are counted.",
+      "No credible public figure exists for bonus buy's share of slot GGR. The widely circulated '15-25%' has no named source.",
+      "Play'n GO, PG Soft, Relax, Push, Jili, TaDa, Thunderkick and Greentube disclose no standalone revenue."
+    ]
+  },
+
+  "kpis": [
+    { "value": "$293bn", "label": "Global online gambling GGR, 2024", "sub": "41% of all gambling; passes 50% in 2029", "conf": "A", "src": "H2 Gambling Capital" },
+    { "value": "17.8%", "label": "Pragmatic Play share of European online casino GGR", "sub": "#1 supplier, 5.3pts clear of Evolution", "conf": "B", "src": "Eilers-Fantini, Jun 2026" },
+    { "value": "0", "label": "Pragmatic titles in the US top-100 supplier table", "sub": "Absent from the PA manufacturer eligibility list", "conf": "A", "src": "PGCB / iGamingCompass" },
+    { "value": "25.1", "label": "Pragmatic average quality score per new release", "sub": "ELK scores 206.4; Nolimit City 179.0", "conf": "B", "src": "Slots Launch Leaderboard 2026 YTD" },
+    { "value": "1.35%", "label": "European slot GGR held by the world's #1 slot", "sub": "Gates of Olympus 1000 — there is no title monopoly", "conf": "B", "src": "Eilers-Fantini OGPD 1Q25" },
+    { "value": "40%", "label": "UK Remote Gaming Duty from 1 Apr 2026", "sub": "Was 21%. Deployed RTP moving 96% to 94%, 92% requested", "conf": "A", "src": "HMRC" }
+  ],
+
+  "global_trajectory": {
+    "title": "Online overtakes land-based gambling in 2029",
+    "subtitle": "Global GGR, all channels, US$bn",
+    "conf": "A",
+    "source": { "name": "H2 Gambling Capital, April 2026 update", "url": "https://h2gc.com/news/general/global-gambling-market-to-exceed-1-trillion-ggr-by-2030-driven-by-online-channel-growth" },
+    "years": [2015, 2024, 2029, 2030, 2031],
+    "total_ggr": [438, 712, 979, 1031, 1088],
+    "online_ggr": [89, 293, 493, 530, 568],
+    "online_share_pct": [20, 41, 50.3, 51, 52],
+    "note": "2029 online figure is derived from H2's stated 50.3% share of a $979bn total."
+  },
+
+  "region_ggr_2026": {
+    "title": "Where the money is: online GGR by region",
+    "subtitle": "2026 estimate, US$bn, with YoY growth and regulated share",
+    "conf": "B",
+    "source": { "name": "Track360 analysis of EGBA, AGA and national regulator data, 2026", "url": "https://track360.io/blog/online-gambling-statistics-2026-global-market-data" },
+    "rows": [
+      { "region": "Europe", "ggr": 43.5, "growth": 7, "regulated": 82 },
+      { "region": "North America", "ggr": 29.0, "growth": 21, "regulated": 95 },
+      { "region": "Asia-Pacific", "ggr": 28.5, "growth": 9, "regulated": 41 },
+      { "region": "Latin America", "ggr": 11.0, "growth": 30, "regulated": 55 },
+      { "region": "Middle East & other", "ggr": 6.8, "growth": 5, "regulated": 15 },
+      { "region": "Africa", "ggr": 2.2, "growth": 24, "regulated": 30 }
+    ],
+    "note": "Global total $121bn. Independent estimates for 2026 span $97bn to $143bn depending on whether iLottery and grey-market pools are counted."
+  },
+
+  "slot_intensity": {
+    "title": "Slots are the online casino market",
+    "subtitle": "Online slots as a share of online casino GGR, latest published year",
+    "conf": "A",
+    "source": { "name": "UKGC FY2024/25; Spillemyndigheden 2025; SRIJ Q4 2025; PGCB monthly; MGCB 2025; GGL 2025", "url": "https://www.gamblingcommission.gov.uk/statistics-and-research/publication/industry-statistics-annual-report-financial-year-april-2024-to-march-2025" },
+    "rows": [
+      { "market": "Germany", "pct": 100, "note": "Live casino is not federally licensed — the licensed online casino market is slots only" },
+      { "market": "United Kingdom", "pct": 84, "note": "£4.2bn slots of £5.0bn online casino GGY" },
+      { "market": "Denmark", "pct": 82, "note": "DKK 3.54bn of DKK 4.31bn" },
+      { "market": "Pennsylvania", "pct": 81.6, "note": "July 2025" },
+      { "market": "Portugal", "pct": 80.4, "note": "Share of online casino wagering, Q4 2025" },
+      { "market": "Michigan", "pct": 73, "note": "Estimated" }
+    ]
+  },
+
+  "us_states_2025": {
+    "title": "US iGaming: record revenue, frozen footprint",
+    "subtitle": "2025 iGaming revenue by state, US$m, and YoY growth",
+    "conf": "A",
+    "source": { "name": "American Gaming Association Commercial Gaming Revenue Tracker; NJ DGE; MGCB; PGCB", "url": "https://www.americangaming.org/resources/state-of-the-states-2026/" },
+    "rows": [
+      { "state": "Pennsylvania", "rev": 3460, "growth": 28 },
+      { "state": "Michigan", "rev": 3100, "growth": 26.5 },
+      { "state": "New Jersey", "rev": 2910, "growth": 22.0 },
+      { "state": "Connecticut", "rev": 707.5, "growth": null },
+      { "state": "West Virginia", "rev": 373.3, "growth": 52.6 },
+      { "state": "Delaware", "rev": 132.5, "growth": 81.8 }
+    ],
+    "note": "US total $10.74bn, +27.6%. Seven live states plus Maine legalised but not launched. In NJ, PA and MI, iGaming revenue now exceeds commercial land-based casino revenue for the first time."
+  },
+
+  "tax_rates": {
+    "title": "Tax is now the biggest variable in market attractiveness",
+    "subtitle": "Headline tax on online casino, latest enacted rate",
+    "conf": "A",
+    "source": { "name": "HMRC; Kansspelautoriteit; ONJN; NRA Bulgaria; Spelinspektionen; Coljuegos; SPA Brazil; GGL; SEGOB", "url": "https://www.gov.uk/government/publications/changes-to-gambling-duties/gambling-duty-changes" },
+    "rows": [
+      { "market": "Mexico", "rate": 50, "base": "Turnover", "flag": "turnover", "note": "IEPS raised 30% to 50% on 1 Jan 2026, levied on wagers not GGR — economically impossible at 96% RTP" },
+      { "market": "United Kingdom", "rate": 40, "base": "GGR", "flag": "hike", "note": "Remote Gaming Duty 21% to 40% on 1 Apr 2026" },
+      { "market": "Netherlands", "rate": 39.75, "base": "GGR", "flag": "hike", "note": "37.8% plus a 1.95% levy; was 30.5% in 2024" },
+      { "market": "Czechia", "rate": 35, "base": "GGR", "flag": "", "note": "Technical games including online slots" },
+      { "market": "Colombia", "rate": 34, "base": "GGR", "flag": "fix", "note": "19% VAT moved off deposits onto GGR from 2026, plus 15% concession" },
+      { "market": "Romania", "rate": 30, "base": "GGR", "flag": "hike", "note": "From 21%, minimum EUR 480k, effective 1 Aug 2025" },
+      { "market": "Denmark", "rate": 28, "base": "GGR", "flag": "", "note": "" },
+      { "market": "Bulgaria", "rate": 25, "base": "GGR", "flag": "hike", "note": "From 20% on 1 Jan 2026" },
+      { "market": "Sweden", "rate": 22, "base": "GGR", "flag": "", "note": "" },
+      { "market": "Finland", "rate": 22, "base": "GGR", "flag": "new", "note": "Market opens 1 Jul 2027; B2B software licence required from 2028" },
+      { "market": "Spain", "rate": 20, "base": "GGR", "flag": "", "note": "" },
+      { "market": "Brazil", "rate": 12, "base": "GGR", "flag": "new", "note": "Escalator to 13% (2026), 14% (2027), 15% (2028)" },
+      { "market": "Belgium", "rate": 11, "base": "GGR", "flag": "", "note": "Lowest in Western Europe, but bonuses banned outright and advertising near-prohibited" },
+      { "market": "Germany", "rate": 5.3, "base": "Turnover", "flag": "turnover", "note": "5.3% of stakes — roughly 40-55% effective on GGR, which is why 84m Germans produce only EUR 543m of slot GGR" }
+    ]
+  },
+
+  "channelisation": {
+    "title": "Tax elasticity: the Netherlands is the cautionary tale",
+    "subtitle": "Share of online GGR captured by licensed operators",
+    "conf": "A",
+    "source": { "name": "Kansspelautoriteit; Spelinspektionen; GGL / Blockchain Research Lab; EY via Warsaw Enterprise Institute", "url": "https://kansspelautoriteit.nl/monitoringsrapportage-voorjaar-2026-marktontwikkeling-blijft-gelijk" },
+    "rows": [
+      { "market": "United Kingdom", "pct": 92, "tax": 40 },
+      { "market": "Italy", "pct": 90, "tax": null },
+      { "market": "Sweden", "pct": 84, "tax": 22 },
+      { "market": "Czechia", "pct": 82, "tax": 35 },
+      { "market": "Germany", "pct": 77, "tax": 5.3 },
+      { "market": "Poland", "pct": 60, "tax": null },
+      { "market": "Netherlands", "pct": 53, "tax": 39.75 }
+    ],
+    "note": "Dutch gambling tax went 30.5% to 34.2% to 37.8% in two years. Legal GGR fell 18%, channelisation dropped to 53% — more money is now wagered offshore than onshore — and 2025 tax receipts came in BELOW 2024. Poland's figure is the online casino segment specifically."
+  },
+
+  "market_growth": {
+    "title": "Growth and contraction, latest full year",
+    "subtitle": "YoY change in online casino / iGaming revenue",
+    "conf": "A",
+    "source": { "name": "AGA; iGaming Ontario; DGOJ; Spillemyndigheden; UKGC; EEEP; GGL; ADM; SRIJ; Ksa; PAGCOR; ICICI Securities", "url": "https://www.americangaming.org/resources/state-of-the-states-2026/" },
+    "rows": [
+      { "market": "India (real-money gaming)", "growth": -80, "note": "Online Gaming Act 2025 took effect 1 May 2026 — outright ban, no licensing pathway. Market shrank from ~$6bn to ~$1bn." },
+      { "market": "Philippines e-games (Q1'26)", "growth": -22.4, "note": "Central bank ordered banks and e-wallets to de-link gambling platforms" },
+      { "market": "Netherlands", "growth": -18, "note": "Tax-driven" },
+      { "market": "Germany (online total)", "growth": 2, "note": "" },
+      { "market": "Portugal", "growth": 8.5, "note": "" },
+      { "market": "Italy (online turnover)", "growth": 9.5, "note": "" },
+      { "market": "Germany (virtual slots)", "growth": 11, "note": "" },
+      { "market": "Greece", "growth": 11.7, "note": "" },
+      { "market": "UK online slots", "growth": 12, "note": "Q4 FY25/26, despite £5/£2 stake caps" },
+      { "market": "Denmark online casino", "growth": 12.1, "note": "" },
+      { "market": "Spain", "growth": 17, "note": "Slot machines specifically +30.8%" },
+      { "market": "New Jersey", "growth": 22, "note": "" },
+      { "market": "Michigan", "growth": 26.5, "note": "" },
+      { "market": "US iGaming", "growth": 27.6, "note": "First $1bn month in Dec 2025" },
+      { "market": "Ontario", "growth": 34, "note": "CAD 4.0bn GGR, 77% online casino" },
+      { "market": "West Virginia", "growth": 52.6, "note": "" },
+      { "market": "Delaware", "growth": 81.8, "note": "" }
+    ]
+  },
+
+  "uk_slots_quarterly": {
+    "title": "Monetising harder per spin, not winning more spins",
+    "subtitle": "UK online slots, largest operators (~70% of market)",
+    "conf": "A",
+    "source": { "name": "UK Gambling Commission operator data to March 2026", "url": "https://www.gamblingcommission.gov.uk/statistics-and-research/publication/market-overview-operator-data-to-march-2026-published-may-2026" },
+    "quarters": ["Apr-Jun 25", "Jul-Sep 25", "Oct-Dec 25", "Jan-Mar 26"],
+    "ggy_gbp_m": [745, 747, 788, 773],
+    "spins_bn": [24.4, 24.4, 25.7, 25.1],
+    "actives_m": [4.4, 4.4, 4.6, 4.8],
+    "spins_per_session": [129, 130, 128, 124],
+    "ggy_per_session": [3.95, 3.96, 3.91, 3.82],
+    "avg_session_min": [16, 16, 16, 15],
+    "note": "Slot GGY grew 12% YoY while spins per session, GGY per session and session length all fell. Growth came from a 6% larger active base, not from deeper engagement. This is the final edition of this dataset — the Commission discontinued it in May 2026."
+  },
+
+  "europe_supplier_share": {
+    "title": "Pragmatic Play is #1 in Europe by actual GGR",
+    "subtitle": "Supplier share of European online casino GGR — participating casinos submit real GGR data",
+    "conf": "B",
+    "source": { "name": "Eilers & Krejcik / Eilers-Fantini Europe Online Game Performance Report", "url": "https://ekgamingllc.com/downloads/eilers-fantini-europe-online-game-performance-report-may-26/" },
+    "suppliers": ["Pragmatic Play", "Evolution", "Playtech", "Games Global", "Amusnet"],
+    "oct_2025": [17.3, 12.5, 7.3, 8.1, 5.2],
+    "jun_2026": [17.8, 12.5, 9.0, 9.0, null],
+    "note": "Panel of 69-89 casinos across 15-18 countries, 100+ suppliers, 22-23k themes indexed. This is the closest thing to real market share that exists publicly."
+  },
+
+  "na_supplier_share": {
+    "title": "…and not in the top four in North America",
+    "subtitle": "Supplier share of North American online casino GGR",
+    "conf": "B",
+    "source": { "name": "Eilers-Fantini via CasinoBeats / SlotBeats", "url": "https://slotbeats.com/featured/eilers-fantini-igt-cash-eruption/" },
+    "rows": [
+      { "supplier": "Evolution", "pct": 17.9 },
+      { "supplier": "IGT", "pct": 16.2 },
+      { "supplier": "Light & Wonder", "pct": 13.4 },
+      { "supplier": "Games Global", "pct": 8.4 },
+      { "supplier": "Inspired", "pct": 2.4 },
+      { "supplier": "Pragmatic Play", "pct": 0 }
+    ],
+    "note": "Pragmatic Play scores zero because it is not licensed in the US regulated market at all — it does not appear on Pennsylvania's iGaming Manufacturers Eligibility List dated 28 July 2026, nor in iGamingCompass's June 2026 US top-100 supplier table. These Eilers US datapoints are older than the European series; treat the ordering as indicative."
+  },
+
+  "lobby_footprint": {
+    "title": "Distribution scale: nobody is close",
+    "subtitle": "Q1 2026 lobby scan — 3,844 games and ~13,000 pages analysed",
+    "conf": "B",
+    "source": { "name": "SlotsRank Q1 2026 Provider Footprint Review", "url": "https://slotsrank.ie/news/q1-2026-provider-footprint-review/" },
+    "rows": [
+      { "provider": "Pragmatic Play", "games": 1219, "sites": 514, "pages": 3291, "countries": 45 },
+      { "provider": "Playtech", "games": 985, "sites": 503, "pages": 2993, "countries": 45 },
+      { "provider": "Light & Wonder", "games": 687, "sites": 408, "pages": 2172, "countries": 45 },
+      { "provider": "Games Global", "games": 486, "sites": 483, "pages": 2354, "countries": 44 },
+      { "provider": "Evolution", "games": 467, "sites": 428, "pages": 2189, "countries": 43 }
+    ],
+    "note": "A separate SlotsRank dataset using different counting rules gives Games Global 1,730 games and Evolution 1,450. Treat every catalogue count as plus or minus 40%."
+  },
+
+  "release_quality": {
+    "title": "The single most revealing chart in this report",
+    "subtitle": "Slots Launch new-release quality score, 2026 year to date",
+    "conf": "B",
+    "source": { "name": "Slots Launch Leaderboard via Business of iGaming", "url": "https://slotslaunch.com/leaderboard" },
+    "rows": [
+      { "provider": "ELK Studios", "total": 1445, "avg": 206.43, "gold": 5, "silver": 2, "bronze": 0, "releases": 7 },
+      { "provider": "Peter & Sons", "total": 585, "avg": 195.00, "gold": 2, "silver": 1, "bronze": 0, "releases": 3 },
+      { "provider": "Nolimit City", "total": 895, "avg": 179.00, "gold": 3, "silver": 2, "bronze": 0, "releases": 5 },
+      { "provider": "Big Time Gaming", "total": 586, "avg": 146.50, "gold": 2, "silver": 1, "bronze": 1, "releases": 4 },
+      { "provider": "Hacksaw Gaming", "total": 1175, "avg": 90.38, "gold": 3, "silver": 10, "bronze": 0, "releases": 13 },
+      { "provider": "Play'n GO", "total": 701, "avg": 33.38, "gold": 0, "silver": 20, "bronze": 1, "releases": 21 },
+      { "provider": "Playtech", "total": 493, "avg": 29.00, "gold": 0, "silver": 14, "bronze": 3, "releases": 17 },
+      { "provider": "Pragmatic Play", "total": 779, "avg": 25.13, "gold": 0, "silver": 22, "bronze": 9, "releases": 31 },
+      { "provider": "OctoPlay", "total": 568, "avg": 23.67, "gold": 0, "silver": 16, "bronze": 8, "releases": 24 }
+    ],
+    "note": "Pragmatic Play ships more new slots than anyone and has zero gold-rated releases in 2026. ELK scores 8x higher per game. Full-year 2025 totals: Pragmatic 4,694, Hacksaw 4,380, ELK 3,511 (12 golds)."
+  },
+
+  "demo_demand": {
+    "title": "Player discovery demand",
+    "subtitle": "Demo plays across 29,643 games and 9,562+ sites, 2.16m monthly plays",
+    "conf": "B",
+    "source": { "name": "Slots Launch game rankings via Business of iGaming", "url": "https://www.businessofigaming.com/slots-launch-game-rankings-global-data/" },
+    "rows": [
+      { "provider": "Pragmatic Play", "plays": 54592 },
+      { "provider": "Light & Wonder", "plays": 34808 },
+      { "provider": "Blueprint Gaming", "plays": 26431 },
+      { "provider": "Hacksaw Gaming", "plays": 19358 },
+      { "provider": "IGT", "plays": 15480 },
+      { "provider": "TaDa Gaming", "plays": 14595 },
+      { "provider": "PG Soft", "plays": 14478 },
+      { "provider": "Nolimit City", "plays": 13685 },
+      { "provider": "NetEnt", "plays": 12041 },
+      { "provider": "Play'n GO", "plays": 11206 }
+    ]
+  },
+
+  "supplier_financials": {
+    "title": "FY2025 results — the plottable numbers",
+    "subtitle": "Audited and filed figures only. Pragmatic Play publishes nothing.",
+    "conf": "A",
+    "source": { "name": "Evolution Year-end Report 2025; Hacksaw Year-end Report 2025; Light & Wonder 8-K; Playtech LSE RNS; Novomatic Company Report 2025", "url": "https://www.hacksawgroup.com/en/wp-content/uploads/sites/2/2026/02/year-end-report-2025.pdf" },
+    "rows": [
+      { "company": "Evolution AB", "revenue_eur_m": 2066.5, "growth": 0.2, "margin": 66.1, "margin_type": "Adj. EBITDA", "listed": true },
+      { "company": "Light & Wonder (iGaming segment)", "revenue_eur_m": 311, "growth": 13, "margin": 37, "margin_type": "AEBITDA", "listed": true, "note": "$337m converted at 0.92" },
+      { "company": "Playtech (B2B)", "revenue_eur_m": 688.3, "growth": -9, "margin": 20.5, "margin_type": "Adj. EBITDA", "listed": true },
+      { "company": "Hacksaw Gaming", "revenue_eur_m": 197.5, "growth": 44, "margin": 82, "margin_type": "Adj. EBIT", "listed": true },
+      { "company": "Games Global", "revenue_eur_m": 306.9, "growth": 82.3, "margin": 47, "margin_type": "Adj. EBITDA", "listed": false, "note": "FY to 31 Mar 2023 — last disclosure before the IPO was withdrawn. STALE." },
+      { "company": "Pragmatic Play", "revenue_eur_m": null, "growth": null, "margin": null, "margin_type": "Not disclosed", "listed": false, "note": "No audited accounts filed in any public registry." }
+    ]
+  },
+
+  "evolution_quarterly": {
+    "title": "Live casino has stopped growing; RNG has restarted",
+    "subtitle": "Evolution AB net revenue by quarter, EUR m",
+    "conf": "A",
+    "source": { "name": "Evolution AB quarterly reports", "url": "https://www.evolution.com/investors/financial-publications/press-releases/evolution-interim-report-january-june-2026" },
+    "quarters": ["Q4 24", "Q1 25", "Q2 25", "Q3 25", "Q4 25", "Q1 26", "Q2 26"],
+    "live": [459.4, 448.7, 453.7, 431.7, 438.6, 434.9, 437.3],
+    "rng": [74.4, 72.3, 70.6, 75.5, 75.7, 78.2, 80.5],
+    "note": "RNG grew 14.0% in Q2 2026, its first double-digit quarter in roughly three years, while Live fell 3.6% YoY. Q3 2025 was the first year-on-year revenue decline in Evolution's listed history. Light & Wonder exited live dealer entirely in 2025."
+  },
+
+  "hacksaw_quarterly": {
+    "title": "The growth story: Hacksaw Gaming",
+    "subtitle": "Total revenue by quarter, EUR k, at an 82% adjusted EBIT margin",
+    "conf": "A",
+    "source": { "name": "Hacksaw Gaming Q2 2026 interim report", "url": "https://storage.mfn.se/e9275d67-4763-4df5-86c5-9157cbaf59ea/interim-report-q2-2026.pdf" },
+    "quarters": ["Q3 24", "Q4 24", "Q1 25", "Q2 25", "Q3 25", "Q4 25", "Q1 26", "Q2 26"],
+    "revenue_eur_k": [37333, 43729, 44958, 45415, 52011, 55096, 57610, 59294],
+    "note": "FY2023 ~EUR 67m to FY2024 EUR 137.1m (+104%) to FY2025 EUR 197.5m (+44%) to LTM EUR 224.0m. Revenue comes from both its own games and from licensing its OpenRGS platform to third-party studios."
+  },
+
+  "margins": {
+    "title": "Margin structure separates content from platform",
+    "subtitle": "FY2025 profitability. The spread is about where distribution cost sits, not operational quality.",
+    "conf": "A",
+    "source": { "name": "Company annual and interim reports; allabolag.se registry filings", "url": "https://www.evolution.com/wp-content/uploads/2026/04/Annual_Report_English_2026_04_01.pdf" },
+    "rows": [
+      { "company": "Hacksaw Gaming", "margin": 82, "metric": "Adj. EBIT" },
+      { "company": "Nolimit City (2022 acq.)", "margin": 77, "metric": "EBITDA" },
+      { "company": "Evolution", "margin": 66.1, "metric": "Adj. EBITDA" },
+      { "company": "EveryMatrix", "margin": 54, "metric": "EBITDA" },
+      { "company": "ELKAB Studios AB", "margin": 47, "metric": "Pre-tax" },
+      { "company": "Light & Wonder iGaming", "margin": 37, "metric": "AEBITDA" },
+      { "company": "Playtech B2B", "margin": 20.5, "metric": "Adj. EBITDA" }
+    ],
+    "note": "Hacksaw and Nolimit build a game once and push it through existing integrations at zero marginal cost. When benchmarking Pragmatic Play, note that it runs live studios in five countries expanding to nine — structurally a Playtech/Evolution-shaped cost base, not a Hacksaw-shaped one."
+  },
+
+  "top_titles_reach": {
+    "title": "The three most widely distributed slots on earth are all Pragmatic",
+    "subtitle": "Operator sites carrying each title, and countries reached",
+    "conf": "B",
+    "source": { "name": "SlotsRank Q1 2026 Provider Footprint Review", "url": "https://slotsrank.ie/news/q1-2026-provider-footprint-review/" },
+    "rows": [
+      { "title": "Big Bass Splash", "provider": "Reel Kingdom / Pragmatic", "sites": 463, "countries": 58, "pp": true },
+      { "title": "Gates of Olympus", "provider": "Pragmatic Play", "sites": 462, "countries": 62, "pp": true },
+      { "title": "Big Bass Bonanza", "provider": "Reel Kingdom / Pragmatic", "sites": 453, "countries": 56, "pp": true },
+      { "title": "Immortal Romance", "provider": "Games Global", "sites": 283, "countries": 45, "pp": false },
+      { "title": "Crazy Time Live", "provider": "Evolution", "sites": 292, "countries": 59, "pp": false },
+      { "title": "Lightning Roulette", "provider": "Evolution", "sites": 246, "countries": 55, "pp": false },
+      { "title": "Buffalo Blitz", "provider": "Playtech", "sites": 200, "countries": null, "pp": false }
+    ]
+  },
+
+  "gates_depth": {
+    "title": "Gates of Olympus: distribution depth by market",
+    "subtitle": "Operator brands carrying the title, and lobby front-page placements",
+    "conf": "B",
+    "source": { "name": "Blask Global Games dashboard", "url": "https://igamingnewstoday.com/casino-games/gates-of-olympus-leads-global-igaming-placement-rankings/" },
+    "rows": [
+      { "market": "Brazil", "brands": 172, "lobbies": 96 },
+      { "market": "Germany", "brands": 110, "lobbies": 69 },
+      { "market": "Nigeria", "brands": 79, "lobbies": 44 },
+      { "market": "United Kingdom", "brands": 67, "lobbies": 34 },
+      { "market": "Chile", "brands": 59, "lobbies": 39 },
+      { "market": "Ecuador", "brands": 59, "lobbies": 36 },
+      { "market": "India", "brands": 59, "lobbies": 34 },
+      { "market": "Ireland", "brands": 57, "lobbies": 30 },
+      { "market": "Denmark", "brands": 54, "lobbies": 23 },
+      { "market": "Sweden", "brands": 53, "lobbies": 22 }
+    ]
+  },
+
+  "no1_by_market": {
+    "title": "There is no global #1 slot",
+    "subtitle": "The top-performing slot differed in all ten published markets in June 2026",
+    "conf": "B",
+    "source": { "name": "bet365 Gaming Insights and Performance, June 2026, via SlotBeats and PlayNJ", "url": "https://slotbeats.com/slot-news/bet365-june-slot-charts/" },
+    "rows": [
+      { "market": "United Kingdom", "title": "Gold Cash Freespins", "provider": "Inspired Entertainment", "pp": false },
+      { "market": "Germany", "title": "Legacy of Dead", "provider": "Play'n GO", "pp": false },
+      { "market": "Spain", "title": "Eye of Horus", "provider": "Reel Time Gaming / Merkur", "pp": false },
+      { "market": "Greece", "title": "Stacked Fire 7's", "provider": "—", "pp": false },
+      { "market": "Brazil", "title": "Gates of Olympus", "provider": "Pragmatic Play", "pp": true },
+      { "market": "Canada", "title": "Area Link Phoenix Firestorm", "provider": "Games Global", "pp": false },
+      { "market": "Ontario", "title": "Area Link Phoenix Firestorm", "provider": "Games Global", "pp": false },
+      { "market": "Michigan", "title": "Hypernova Megaways", "provider": "ReelPlay", "pp": false },
+      { "market": "New Jersey", "title": "Triple Diamond", "provider": "IGT", "pp": false },
+      { "market": "Pennsylvania", "title": "Mad Mad Monkey", "provider": "Games Global", "pp": false }
+    ],
+    "note": "bet365 publishes monthly rankings across 7,500+ games in 20 markets, scored on revenue, stakes, sessions and engagement. Blask's distribution-weighted 2025 awards tell a different story — Gates of Olympus 1000 wins in Brazil, Italy, Germany and Argentina, Book of Dead in the Netherlands, Aviator in South Africa and Ghana. Distribution breadth and revenue performance are not the same measurement."
+  },
+
+  "shelf_share": {
+    "title": "Two markets, two completely different shelves",
+    "subtitle": "Number of titles in each market's top 100, by studio, June 2026",
+    "conf": "B",
+    "source": { "name": "iGamingCompass full-lobby scans — 76 US licensed sites across 7 states; all licensed German .de lobbies", "url": "https://igamingcompass.com/blogs/usa-top-100-slot-games-rankings/" },
+    "us": [
+      { "studio": "IGT", "n": 15 }, { "studio": "Light & Wonder", "n": 12 }, { "studio": "Inspired Gaming", "n": 8 },
+      { "studio": "Playtech", "n": 6 }, { "studio": "Blueprint Gaming", "n": 6 }, { "studio": "AGS", "n": 5 },
+      { "studio": "NetEnt", "n": 5 }, { "studio": "Red Tiger", "n": 5 }, { "studio": "ReelPlay", "n": 4 },
+      { "studio": "Hacksaw Gaming", "n": 4 }, { "studio": "Design Works", "n": 3 }, { "studio": "Play'n GO", "n": 2 },
+      { "studio": "Pragmatic Play", "n": 0 }
+    ],
+    "germany": [
+      { "studio": "Pragmatic Play", "n": 24 }, { "studio": "Play'n GO", "n": 17 }, { "studio": "Greentube", "n": 12 },
+      { "studio": "Merkur", "n": 7 }, { "studio": "Edict", "n": 6 }, { "studio": "Gamomat", "n": 6 },
+      { "studio": "Reel Kingdom", "n": 5 }, { "studio": "Reel Time Gaming", "n": 5 }, { "studio": "Peter & Sons", "n": 4 },
+      { "studio": "Push Gaming", "n": 2 }, { "studio": "Playson", "n": 2 }, { "studio": "Novomatic", "n": 2 }
+    ],
+    "note": "Pragmatic Play plus Reel Kingdom hold 29 of Germany's top 100 and zero of America's."
+  },
+
+  "max_win": {
+    "title": "The max-win arms race peaked and plateaued",
+    "subtitle": "Published maximum win multiplier by title",
+    "conf": "C",
+    "source": { "name": "Provider game pages and VegasSlotsOnline max-win analysis, April 2026", "url": "https://www.vegasslotsonline.com/news/2026/04/09/an-unsustainable-arms-race-the-slot-max-win-multipliers-that-keep-climbing/" },
+    "rows": [
+      { "title": "Tombstone Slaughter", "provider": "Nolimit City", "max": 500000, "rtp": null, "pp": false },
+      { "title": "Tombstone RIP", "provider": "Nolimit City", "max": 300000, "rtp": 96.07, "pp": false },
+      { "title": "San Quentin xWays", "provider": "Nolimit City", "max": 150000, "rtp": 96.03, "pp": false },
+      { "title": "Money Train 4", "provider": "Relax Gaming", "max": 150000, "rtp": 96.10, "pp": false },
+      { "title": "Mental 2", "provider": "Nolimit City", "max": 99999, "rtp": 96.06, "pp": false },
+      { "title": "Money Train 3", "provider": "Relax Gaming", "max": 100000, "rtp": 96.22, "pp": false },
+      { "title": "Mental", "provider": "Nolimit City", "max": 50000, "rtp": 96.08, "pp": false },
+      { "title": "Sweet Bonanza 1000", "provider": "Pragmatic Play", "max": 25000, "rtp": 96.53, "pp": true },
+      { "title": "Sugar Rush 1000", "provider": "Pragmatic Play", "max": 25000, "rtp": 96.53, "pp": true },
+      { "title": "Big Bass Bonanza 1000", "provider": "Reel Kingdom", "max": 20000, "rtp": 96.51, "pp": true },
+      { "title": "Gates of Olympus 1000", "provider": "Pragmatic Play", "max": 15000, "rtp": 96.50, "pp": true },
+      { "title": "Pirots 5", "provider": "ELK Studios", "max": 10000, "rtp": 96.00, "pp": false },
+      { "title": "Gates of Olympus", "provider": "Pragmatic Play", "max": 5000, "rtp": 96.50, "pp": true },
+      { "title": "Book of Dead", "provider": "Play'n GO", "max": 5000, "rtp": 96.21, "pp": false }
+    ],
+    "note": "Pragmatic's ceiling sits an order of magnitude below Nolimit City's and Relax's. That is a deliberate mass-market choice, not an oversight — but it cedes the entire high-volatility streamer segment. Affiliate sources conflict badly on Nolimit max wins; verify against the provider info panel before quoting."
+  },
+
+  "money_train_paradox": {
+    "title": "The max-win illusion",
+    "subtitle": "Money Train series: the headline multiplier grew 7.5x while the actual payout ceiling fell",
+    "conf": "B",
+    "source": { "name": "ClearCasinos game data", "url": "https://clearcasinos.com/games/money-train-4" },
+    "rows": [
+      { "game": "Money Train 1", "multiplier": 20000, "max_bet": 50, "ceiling": 1000000 },
+      { "game": "Money Train 2", "multiplier": 50000, "max_bet": 20, "ceiling": 1000000 },
+      { "game": "Money Train 3", "multiplier": 100000, "max_bet": 10, "ceiling": 1000000 },
+      { "game": "Money Train 4", "multiplier": 150000, "max_bet": 6, "ceiling": 900000 }
+    ]
+  },
+
+  "rtp_compression": {
+    "title": "The UK tax rise is being paid for out of player return",
+    "subtitle": "Provider maximum RTP versus RTP actually deployed on UK-facing sites",
+    "conf": "B",
+    "source": { "name": "SlotCatalog UK deployment data and RTPTrack", "url": "https://rtptrack.com/blog/why-uk-casinos-lowering-rtp-2026" },
+    "rows": [
+      { "title": "Big Bass Reel Repeat", "provider": "Reel Kingdom", "max": 96.51, "deployed": 92.01 },
+      { "title": "Big Bass Splash 1000", "provider": "Reel Kingdom", "max": 96.52, "deployed": 92.02 },
+      { "title": "Big Bass Christmas Frozen", "provider": "Reel Kingdom", "max": 96.07, "deployed": 92.07 },
+      { "title": "Big Bass Bonanza 1000", "provider": "Reel Kingdom", "max": 96.51, "deployed": 94.51 },
+      { "title": "Bigger Bass Splash", "provider": "Reel Kingdom", "max": 96.50, "deployed": 94.50 },
+      { "title": "Book of Dead", "provider": "Play'n GO", "max": 96.21, "deployed": 94.25 },
+      { "title": "Big Bass Splash", "provider": "Reel Kingdom", "max": 96.71, "deployed": 95.67 },
+      { "title": "Money Train 4", "provider": "Relax Gaming", "max": 96.40, "deployed": 96.10 }
+    ],
+    "note": "Moving a game from 96% to 94% raises the operator's take from £4 to £6 per £100 wagered — a 50% increase in gross margin per spin. Six of the eight most-compressed titles are Pragmatic/Reel Kingdom, because configurable RTP tiers are a core part of the Pragmatic commercial offer."
+  },
+
+  "mechanics": {
+    "title": "What actually drives performance",
+    "subtitle": "Eilers & Krejcik attribute analysis of 80+ attributes against top-performing US releases",
+    "conf": "B",
+    "source": { "name": "Eilers-Fantini OGPD Data Insights Q4-2025", "url": "https://ekgamingllc.com/downloads/eilers-fantini-ogpd-data-insights-q4-2025-new-u-s-online-slots-attributes/" },
+    "drivers": [
+      { "mechanic": "Cash on Reels / money collect", "status": "Dominant", "trend": "up" },
+      { "mechanic": "Hold & Spin", "status": "Dominant", "trend": "up" },
+      { "mechanic": "Multipliers", "status": "Dominant", "trend": "flat" },
+      { "mechanic": "Perceived persistence", "status": "Dominant", "trend": "up" },
+      { "mechanic": "$ Jackpots", "status": "Dominant", "trend": "flat" },
+      { "mechanic": "Nested Hold & Spin", "status": "Fastest rising", "trend": "up" },
+      { "mechanic": "Multi-Trigger Jackpots", "status": "Fastest rising", "trend": "up" },
+      { "mechanic": "Nested Wheels / Prize Areas", "status": "Emerging", "trend": "up" },
+      { "mechanic": "Megaways", "status": "Mature infrastructure", "trend": "flat" }
+    ],
+    "prevalence": [
+      { "tag": "Additional Free Spins", "count": 10838 },
+      { "tag": "Substitution Symbols", "count": 3813 },
+      { "tag": "Bonus Game: Pick Objects", "count": 2968 },
+      { "tag": "Cluster Pays", "count": 1302 },
+      { "tag": "Crash / Bustabit-like", "count": 843 },
+      { "tag": "Random reward", "count": 810 },
+      { "tag": "\"Book of…\" mechanic", "count": 741 },
+      { "tag": "Expanding wild with re-spin", "count": 555 },
+      { "tag": "Big Bass / Fishin' Frenzy mechanic", "count": 181 },
+      { "tag": "9 Pots of Gold mechanic", "count": 142 }
+    ],
+    "note": "Prevalence counts are SlotCatalog title tags across ~45,000-51,000 titles — they measure supply, not revenue, and the index is incomplete because the page is Cloudflare-protected past the first render. Megaways is roughly 2% of titles: mature infrastructure, not a growth story. Light & Wonder paid Aristocrat $127.5m in January 2026 to settle trade-secret litigation over hold-and-spin math — a court-tested price tag on one mechanic."
+  },
+
+  "bonus_buy": {
+    "title": "Bonus buy: banned in three of Europe's five biggest slot markets",
+    "subtitle": "Regulatory status, verified July 2026",
+    "conf": "A",
+    "source": { "name": "UKGC games warning Jan 2020; Ksa autoplay classification; GGL Interstate Treaty; DGOJ 2022; CT Interactive Slovak launches", "url": "https://casinogrounds.com/blog/bonus-buy-slots-regulations-in-uk/" },
+    "rows": [
+      { "market": "United Kingdom", "status": "Banned", "detail": "UKGC games warning, January 2020; underpinned by RTS 14" },
+      { "market": "Germany", "status": "Banned", "detail": "Interstate Treaty — also no autoplay, no jackpots, 5-second minimum spin" },
+      { "market": "Netherlands", "status": "Banned", "detail": "Classified under the autoplay prohibition in the Wet Kansspelen op afstand" },
+      { "market": "Belgium", "status": "Banned", "detail": "All bonuses banned since 2020, plus a EUR 200/week deposit cap" },
+      { "market": "Spain", "status": "Constrained", "detail": "DGOJ bet limits and disclosure rules — most studios ship no-buy builds rather than maintain two configurations" },
+      { "market": "Italy", "status": "Patchy", "detail": "No ADM prohibition located. Availability varies by operator and title; wagering contribution usually 10-20% or excluded" },
+      { "market": "Sweden", "status": "Contested", "detail": "Swedish sources directly contradict each other and no primary Spelinspektionen instrument exists either way" },
+      { "market": "Romania", "status": "Permitted", "detail": "CT Interactive launched its Buy Bonus series there in 2025" },
+      { "market": "Slovakia", "status": "Permitted", "detail": "Five Buy Bonus titles live on Tipos.sk and Ifortuna.sk — the common claim that Slovakia bans it is wrong" },
+      { "market": "Ontario / New Jersey", "status": "Permitted", "detail": "Subject to technical certification" }
+    ],
+    "player_sentiment": { "ban_it": 55, "lose_more_than_win": 63, "source": "Play'n GO / Opinium survey of Swedish monthly slot players" },
+    "note": "No credible public figure exists for bonus buy's share of slot GGR. The circulating '15-25%' has no named source and should not be published. Play'n GO committed in 2021 never to build a bonus-buy game — 'a decision that has cost us hundreds of millions of Swedish kronor' — and Book of Dead is still the #1 slot in Germany and the Netherlands without one."
+  },
+
+  "streaming": {
+    "title": "Slot streaming is consolidating around fewer, bigger channels",
+    "subtitle": "Twitch 'Slots' category, trailing 365 days to 28 July 2026",
+    "conf": "B",
+    "source": { "name": "SullyGnome / TwitchTracker aggregate", "url": "https://sullygnome.com/" },
+    "metrics": [
+      { "metric": "Hours watched", "value": "121.5m", "change": 39.5 },
+      { "metric": "Hours streamed", "value": "649.3k", "change": -11.5 },
+      { "metric": "Average viewers", "value": "13.9k", "change": 39.5 },
+      { "metric": "Average channels", "value": "74", "change": -10.8 },
+      { "metric": "Viewer ratio", "value": "187.1", "change": 57.5 },
+      { "metric": "Peak viewers", "value": "93k", "change": 52.6 },
+      { "metric": "Unique streamers", "value": "23.9k", "change": -13.2 }
+    ],
+    "note": "Audience up 40% on 11.5% fewer streamed hours and 13% fewer streamers. The streamer audience selects hard for extreme volatility and big max wins — the exact segment where Pragmatic does not compete."
+  },
+
+  "pragmatic_scorecard": {
+    "title": "Pragmatic Play versus the field",
+    "subtitle": "Analyst scoring, 0-100. This is judgement, not measurement — the underlying evidence is cited per axis.",
+    "conf": "D",
+    "axes": [
+      { "axis": "Distribution reach", "basis": "514 sites, 45 countries, 3,291 lobby pages (SlotsRank Q1 2026)" },
+      { "axis": "GGR share (Europe)", "basis": "17.8% Eilers-Fantini, June 2026" },
+      { "axis": "Per-release quality", "basis": "Slots Launch average score per game, 2026 YTD" },
+      { "axis": "US regulated access", "basis": "Presence on state manufacturer eligibility lists" },
+      { "axis": "High-volatility appeal", "basis": "Published max-win ceilings and Twitch category presence" },
+      { "axis": "Mechanical originality", "basis": "Owned, licensable mechanics versus licensed-in or generic" },
+      { "axis": "Multi-vertical depth", "basis": "Slots, live, bingo, virtual sports, sportsbook, arcade" },
+      { "axis": "Promo / network tooling", "basis": "Drops & Wins, EUR 30m annual prize pool, 60+ slots per season" }
+    ],
+    "providers": {
+      "Pragmatic Play": [98, 95, 20, 5, 30, 35, 90, 100],
+      "Evolution Group": [80, 70, 70, 85, 85, 90, 95, 45],
+      "Hacksaw Gaming": [55, 30, 75, 60, 95, 80, 20, 30],
+      "Nolimit City": [40, 20, 90, 55, 100, 95, 10, 15],
+      "Play'n GO": [70, 45, 35, 45, 45, 55, 25, 25],
+      "Light & Wonder": [80, 50, 40, 95, 40, 50, 45, 55]
+    }
+  },
+
+  "blind_spots": {
+    "title": "Pragmatic Play's blind spots",
+    "subtitle": "Ranked by the size of the addressable gap",
+    "conf": "A/B",
+    "rows": [
+      {
+        "rank": 1,
+        "gap": "The United States",
+        "severity": 95,
+        "evidence": "Absent from Pennsylvania's iGaming Manufacturers Eligibility List dated 28 July 2026, and from iGamingCompass's June 2026 US top-100 supplier table. NEXT.io: 'Pragmatic, unlike the other businesses named in the suit, is not currently active in the licensed US iGaming market.'",
+        "size": "$10.74bn market growing 27.6%; the fastest-growing regulated iCasino pool on earth. Games Global self-reports ~10% US GGR share; Evolution, IGT and L&W split roughly 48%.",
+        "beneficiary": "IGT, Light & Wonder, Games Global, Evolution, Inspired"
+      },
+      {
+        "rank": 2,
+        "gap": "Per-release quality",
+        "severity": 80,
+        "evidence": "Slots Launch 2026 YTD: 779 points across ~31 releases = 25.1 per game, with zero gold ratings. ELK 206.4, Peter & Sons 195.0, Nolimit City 179.0, Hacksaw 90.4.",
+        "size": "Volume strategies decay when operators start curating lobbies instead of filling them — and UK/Dutch/German lobby caps and tax pressure are pushing exactly that way.",
+        "beneficiary": "ELK Studios, Nolimit City, Hacksaw, Peter & Sons"
+      },
+      {
+        "rank": 3,
+        "gap": "High volatility and the streamer economy",
+        "severity": 70,
+        "evidence": "Pragmatic's flagship ceiling is 25,000x against Nolimit City's 500,000x and Relax's 150,000x. Twitch Slots watch hours grew 39.5% YoY to 121.5m.",
+        "size": "The highest-intent discovery channel in the category, and the segment that converts to crypto and high-roller play.",
+        "beneficiary": "Nolimit City, Hacksaw Gaming, Relax Gaming, Massive Studios"
+      },
+      {
+        "rank": 4,
+        "gap": "Asia and mobile-first design",
+        "severity": 65,
+        "evidence": "PG Soft leads the Philippines at 5.68% against Pragmatic's 5.34%, and ranks #2 globally on composite discovery traffic. Philippine e-games GGR grew 30% in 2025 to overtake land-based casinos.",
+        "size": "Asia-Pacific is $28.5bn of online GGR. Pragmatic has no equivalent portrait-first, low-bandwidth architecture.",
+        "beneficiary": "PG Soft, Jili, TaDa Gaming, Fa Chai"
+      },
+      {
+        "rank": 5,
+        "gap": "Crash and instant-win",
+        "severity": 55,
+        "evidence": "Spribe's Aviator won Blask's Crash Game of the Year and is the #1 game outright in South Africa and Ghana, plus ~18% of Colombian online casino bets.",
+        "size": "The mobile-first, short-session, sub-35 audience that slots convert poorly. Pragmatic's answer (Chicken+, arcade vertical) launched in 2025-26 and is unproven.",
+        "beneficiary": "Spribe, BGaming, TaDa Gaming"
+      },
+      {
+        "rank": 6,
+        "gap": "Live casino cost structure",
+        "severity": 50,
+        "evidence": "Expanding from 5 studios to 9 and 500 tables to 1,500+, into a vertical where Evolution's live revenue fell 3.6% YoY in Q2 2026 and Light & Wonder exited entirely in 2025.",
+        "size": "Structurally a Playtech/Evolution-shaped cost base being built as the live land-grab ends.",
+        "beneficiary": "Evolution (incumbency), Hacksaw (asset-light comparison)"
+      },
+      {
+        "rank": 7,
+        "gap": "Franchise and studio concentration",
+        "severity": 45,
+        "evidence": "Big Bass Splash, Gates of Olympus and Big Bass Bonanza are the three most widely distributed slots on earth. Two of the three are Reel Kingdom content — a separate studio, however tightly bound.",
+        "size": "Distribution footprint rests on a narrow IP base whose top title commands just 1.35% of European slot GGR.",
+        "beneficiary": "Any studio with an emergent franchise — ELK's Pirots, Games Global's Area Link"
+      },
+      {
+        "rank": 8,
+        "gap": "Supply-chain regulatory exposure without disclosure",
+        "severity": 75,
+        "evidence": "AGCO fined Arrise Solutions CAD $40,000 on 7 May 2026 for games on unregulated sites reachable from Ontario. Named in the Los Angeles City Attorney's action against Stake.us. First major supplier to quit US sweepstakes (2 Sep 2025). Geo-blocked Dutch IPs on unlicensed casinos in 2026, removing ~29% of the top offshore slot inventory overnight.",
+        "size": "The UKGC took £4.75m from Evolution in July 2026 for exactly this conduct and stated it considered suspending the licence. Pragmatic's content is far more widely distributed on offshore sites than Evolution's, and as a private company it discloses nothing about its compliance posture.",
+        "beneficiary": "Studios with a US-regulated-first distribution model"
+      }
+    ]
+  },
+
+  "pragmatic_regional_rank": {
+    "title": "#1 in three regions, absent in the fourth",
+    "subtitle": "Pragmatic Play's supplier position by region",
+    "conf": "B",
+    "source": { "name": "Eilers-Fantini (Europe, verified); CasinoRank regional supplier analysis (South America, Africa, North America)", "url": "https://news.cision.com/casinorank/r/casinorank-reveals-2025-s-top-igaming-suppliers-driving-regional-growth,c4104690" },
+    "rows": [
+      { "region": "Europe", "pp": 17.8, "rank": 1, "next": "Evolution 12.5%", "conf": "B" },
+      { "region": "Africa", "pp": 19.6, "rank": 1, "next": "Gaming Corps 10.7%", "conf": "C" },
+      { "region": "South America", "pp": 19.3, "rank": 1, "next": "Playtech 14.2%", "conf": "C" },
+      { "region": "Canada", "pp": 11.9, "rank": 3, "next": "IGT 18.3%", "conf": "B" },
+      { "region": "Philippines", "pp": 5.34, "rank": 2, "next": "PG Soft 5.68%", "conf": "B" },
+      { "region": "United States", "pp": 0, "rank": null, "next": "Evolution 17.9%", "conf": "A" }
+    ],
+    "note": "The Europe and US figures are the reliable ones. The African and South American shares come from a single commercial press release and use a lobby-presence rather than GGR methodology."
+  },
+
+  "pragmatic_profile": {
+    "founded": 2015,
+    "hq": "Gibraltar (operations also Malta)",
+    "ownership": "Private investor group led by Veridian (Gibraltar) Limited; serviced by ARRISE",
+    "ceo": "Julian Jarvis",
+    "headcount": "~1,200 direct plus ~4,000 via ARRISE",
+    "slots": "~800 slots; 1,219 titles across all verticals in lobby scans",
+    "cadence": "8 new slots per month; 100+ network games across all verticals in 2025",
+    "verticals": ["Slots", "Live casino (500+ tables, 5 studios to 9 planned)", "Bingo", "Virtual sports", "Sportsbook", "Arcade (new 2025)"],
+    "revenue": null,
+    "revenue_note": "No audited accounts filed in any public registry. No IPO plans and no credible reported sale process. The widely quoted '$1bn+ net revenue' traces to an AI-generated aggregator page with no methodology and should not be used.",
+    "awards_2025": 39,
+    "drops_and_wins_pool_eur_m": 30,
+    "conf": "C"
+  },
+
+  "regulatory_actions": {
+    "title": "Supply-chain enforcement is now a first-order risk",
+    "subtitle": "Regulators have started fining studios, not just operators",
+    "conf": "A",
+    "rows": [
+      { "date": "2026-07-23", "target": "Evolution Malta Holding", "regulator": "UK Gambling Commission", "amount": "£4.75m", "detail": "18-month licence review found 'serious weaknesses' in AML risk assessment and supply-chain oversight; five Evolution games were on six unlicensed sites serving GB consumers. The Commission stated it considered suspending the licence, and imposed a new condition requiring an independent audit within 12 months." },
+      { "date": "2026-05-07", "target": "Arrise Solutions (Pragmatic Play) and Relax Gaming", "regulator": "AGCO (Ontario)", "amount": "CAD $40,000 each", "detail": "Games found available on unregulated sites accessible to Ontario players. Both cooperated and restricted access. This is the only confirmed monetary penalty against Pragmatic Play found in this research." },
+      { "date": "2025-10-11", "target": "Gaming content suppliers", "regulator": "California AB 831", "amount": "Criminal", "detail": "Criminalises the full sweepstakes supply chain including content suppliers who knowingly support an online sweepstakes game." },
+      { "date": "2025-09-02", "target": "Pragmatic Play (voluntary)", "regulator": "—", "amount": "Exit", "detail": "First major supplier to withdraw from US sweepstakes, days after the Los Angeles City Attorney named it alongside Evolution, Hacksaw, Nolimit City, Red Tiger, BTG and NetEnt in an action against Stake.us. Games were locked rather than removed." },
+      { "date": "2026", "target": "Pragmatic Play (voluntary)", "regulator": "—", "amount": "Geo-block", "detail": "Began blocking Dutch IPs on unlicensed casinos. Blask measured the impact at 25 of the top 86 slots and 28 of the top 100 games on Dutch offshore lobbies — roughly 29% of top offshore slot inventory removed in one move. Neither Pragmatic nor the Ksa commented." },
+      { "date": "2025-08-01", "target": "B2B suppliers", "regulator": "Romania Law 141/2025", "amount": "Licence", "detail": "Software providers, platform providers and payment processors must block access from Romania via unlicensed operators. A EUR 20,000/year Class 2 B2B licence is now mandatory." },
+      { "date": "2028", "target": "Game software suppliers", "regulator": "Finland Gambling Act 10/2026", "amount": "Licence", "detail": "From 2028 Finnish-licensed operators may only use software from Finnish-licensed suppliers." }
+    ]
+  },
+
+  "crypto": {
+    "title": "The biggest unmeasured pool in the industry",
+    "subtitle": "Crypto casino GGR estimates — unaudited, and methodologically contested by a factor of four",
+    "conf": "C",
+    "source": { "name": "Yield Sec via Financial Times; SCCG Research 'The Border Toll', July 2026", "url": "https://sccgmanagement.com/wp-content/uploads/2026/07/2026-07-23_SCCG-Research_The-Border-Toll_FINAL_v2.pdf" },
+    "rows": [
+      { "entity": "Stake.com GGR 2024", "value": 4.7, "unit": "US$bn", "note": "Comparable to Entain group revenue. 25m users, ~4% of all Bitcoin transaction volume." },
+      { "entity": "Roobet GGR", "value": 0.5, "unit": "US$bn", "note": "Range $400-600m" },
+      { "entity": "BC.Game GGR", "value": 0.4, "unit": "US$bn", "note": "Range $300-500m" }
+    ],
+    "category_high": 81.4,
+    "category_low": 12,
+    "note": "The $81.4bn category estimate would make crypto casinos larger than the entire regulated global online casino market, which strains credulity. The conservative methodology gives $9-14bn for 2023. Do not chart the high figure next to regulator-verified GGR. What is not in doubt: Pragmatic Play, Evolution, Hacksaw, Nolimit City, Play'n GO, NetEnt, BTG, Push, Relax, Red Tiger and Thunderkick all supply Stake.com today — the same roster that supplies regulated Europe."
+  }
+}
