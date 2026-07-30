@@ -1,0 +1,48 @@
+# Example training values for AI Toolkit-style configs
+# -------------------------------------------------
+# This is a REFERENCE sheet, not a guarantee that every
+# trainer version accepts this exact YAML shape.
+# Copy the VALUES into your trainer UI / config fields.
+#
+# Train on:  FLUX.2-klein-base-4B
+# Generate with: FLUX.2-klein-4B + your LoRA
+
+job: slot_symbols_v1
+
+model:
+  name_or_path: black-forest-labs/FLUX.2-klein-base-4B
+  # Use the BASE model for training
+
+dataset:
+  folder: ./dataset/01-symbols
+  resolution: 1024
+  # Each image needs a matching .txt caption
+  # Every caption should start with your trigger word
+
+lora:
+  rank: 32
+  alpha: 16
+  # rank 16 if VRAM is tight
+
+train:
+  steps: 1800
+  learning_rate: 1.0e-4
+  batch_size: 1
+  precision: bf16
+  save_every: 250
+  sample_every: 250
+
+samples:
+  # Replace slotartstyle with YOUR trigger word
+  - prompt: "slotartstyle, golden wild symbol, jeweled W, centered reel icon"
+  - prompt: "slotartstyle, turquoise scarab scatter symbol, centered reel icon"
+  - prompt: "slotartstyle, red ruby gem symbol, gold rim, centered reel icon"
+
+output:
+  folder: ./outputs/slot-symbols-v1
+  name: slotartstyle_symbols_v1
+
+notes:
+  - After training, test checkpoints and pick the best (often mid-run).
+  - For daily generation, load FLUX.2-klein-4B (distilled) + winning LoRA.
+  - Keep LoRA strength around 0.7 to 1.0 and tune by eye.
