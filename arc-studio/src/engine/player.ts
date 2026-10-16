@@ -1,5 +1,5 @@
 import type { ArcDocument } from '../schema/types'
-import { renderFrame, type Camera, type RenderOptions } from './renderer'
+import { renderFrame, setAssetReadyListener, type Camera, type RenderOptions } from './renderer'
 import { solvePose } from './solver'
 
 export interface PlayerState {
@@ -41,6 +41,7 @@ export class ArcPlayer {
       time: 0,
       animTags: [],
     }
+    setAssetReadyListener(() => this.draw())
   }
 
   setDocument(doc: ArcDocument) {

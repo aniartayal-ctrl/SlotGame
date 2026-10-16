@@ -1,6 +1,7 @@
 import './style.css'
 import { compile } from './compiler/compile'
 import { downloadText, exportArcJson, exportRuntimeBundle, exportSpineCompatSketch } from './compiler/export'
+import { compileSampleCharacter, splitAndRig } from './ai/fromImage'
 import { ArcPlayer } from './engine/player'
 import type { ArcDocument } from './schema/types'
 import { validateDocument } from './schema/validate'
@@ -78,9 +79,20 @@ app.innerHTML = `
     </section>
 
     <aside class="panel" id="panel-right">
-      <h2>AI Director</h2>
+      <h2>From one image</h2>
       <p class="muted" style="margin:0 0 0.6rem;line-height:1.45">
-        AI writes the schema. The engine owns geometry, IK, and pixels.
+        Same loop as God Mode: split the art into layers, cut the joints, auto-rig once, then retarget a clip library. The original pixels move — frames are not redrawn.
+      </p>
+      <div class="row">
+        <button type="button" id="btn-sample" class="gold">Sample character</button>
+        <button type="button" id="btn-upload" class="primary">Upload PNG</button>
+        <input id="file-art" type="file" accept="image/png,image/webp,image/jpeg" hidden />
+      </div>
+      <div class="log" id="pipeline-log">Rig once. Then pick idle, walk, attack, win, or celebrate.</div>
+
+      <h2 style="margin-top:1.2rem">AI Director</h2>
+      <p class="muted" style="margin:0 0 0.6rem;line-height:1.45">
+        Or describe a rig. The engine still owns geometry and pixels.
       </p>
       <textarea class="prompt-box" id="prompt" placeholder="Describe a character or motion…"></textarea>
       <div class="pill-row" id="presets"></div>
@@ -138,12 +150,23 @@ for (const p of PRESETS) {
 const promptEl = document.querySelector<HTMLTextAreaElement>('#prompt')!
 promptEl.value = STARTER_INTENT
 
-const starter = bootStarter()
+const starter = (() => {
+  try {
+    const sample = compileSampleCharacter()
+    const walk = sample.doc.animations.find((a) => a.id === 'walk')
+    return { doc: sample.doc, idleId: walk?.id ?? sample.doc.animations[0]?.id ?? 'idle', log: sample.log }
+  } catch {
+    const fallback = bootStarter()
+    return { doc: fallback.doc, idleId: fallback.idleId, log: ['Procedural starter'] }
+  }
+})()
 let doc = starter.doc
 const canvas = document.querySelector<HTMLCanvasElement>('#viewport')!
 const player = new ArcPlayer(canvas, doc)
 player.setAnimation(starter.idleId)
+player.camera = { x: 0, y: 20, zoom: 1.6 }
 player.start()
+document.querySelector('#pipeline-log')!.textContent = starter.log.join('\n')
 
 // Pan / zoom
 let dragging = false
@@ -268,6 +291,44 @@ function runCompile(mode: 'rig' | 'animate' | 'both') {
       err instanceof Error ? err.message : String(err)
   }
 }
+
+function adopt(next: ArcDocument, log: string[], animId = 'idle') {
+  setDoc(next, next.animations.some((a) => a.id === animId) ? animId : next.animations[0]?.id)
+  document.querySelector('#pipeline-log')!.textContent = log.join('\n')
+  document.querySelector('#compile-log')!.textContent = log.join('\n')
+  player.camera = { x: 0, y: 20, zoom: 1.6 }
+  player.draw()
+}
+
+document.querySelector('#btn-sample')!.addEventListener('click', () => {
+  try {
+    const { doc: next, log } = compileSampleCharacter()
+    adopt(next, log, 'walk')
+  } catch (err) {
+    document.querySelector('#pipeline-log')!.textContent = err instanceof Error ? err.message : String(err)
+  }
+})
+
+document.querySelector('#btn-upload')!.addEventListener('click', () => {
+  document.querySelector<HTMLInputElement>('#file-art')!.click()
+})
+
+document.querySelector('#file-art')!.addEventListener('change', () => {
+  const file = document.querySelector<HTMLInputElement>('#file-art')!.files?.[0]
+  if (!file) return
+  const url = URL.createObjectURL(file)
+  const img = new Image()
+  img.onload = () => {
+    try {
+      const { doc: next, log } = splitAndRig(img, file.name.replace(/\.[^.]+$/, '') || 'Character')
+      adopt(next, log, 'idle')
+    } catch (err) {
+      document.querySelector('#pipeline-log')!.textContent = err instanceof Error ? err.message : String(err)
+    }
+    URL.revokeObjectURL(url)
+  }
+  img.src = url
+})
 
 document.querySelector('#btn-rig')!.addEventListener('click', () => runCompile('rig'))
 document.querySelector('#btn-animate')!.addEventListener('click', () => runCompile('animate'))

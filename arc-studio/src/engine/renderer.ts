@@ -1,8 +1,25 @@
 import type { ArcDocument, BoneDef, RegionAttachment } from '../schema/types'
 import { deformMesh } from './mesh'
 import { boneTipWorld, type SolvedPose } from './solver'
-import { getTranslation, transformPoint, type Mat3 } from './math'
+import { getTranslation, mul, transformPoint, type Mat3 } from './math'
 import { drawCharacterPart, drawMotionFx } from './characters'
+
+const imageCache = new Map<string, HTMLImageElement>()
+let onAssetReady: (() => void) | null = null
+
+export function setAssetReadyListener(fn: (() => void) | null) {
+  onAssetReady = fn
+}
+
+function cachedImage(src: string): HTMLImageElement | null {
+  const hit = imageCache.get(src)
+  if (hit) return hit.complete && hit.naturalWidth > 0 ? hit : null
+  const img = new Image()
+  img.onload = () => onAssetReady?.()
+  img.src = src
+  imageCache.set(src, img)
+  return null
+}
 
 export interface Camera {
   x: number
@@ -77,7 +94,10 @@ export function renderFrame(
     const tint = pose.slotColors.get(slot.id) ?? slot.color
 
     if (att.kind === 'region') {
-      if (o.stylized) {
+      const tex = att.path ? cachedImage(att.path) : null
+      if (tex) {
+        drawTexturedRegion(ctx, att, tex, bonePose.world, cam, w, h)
+      } else if (o.stylized) {
         drawCharacterPart(ctx, att, bonePose.world, cam, w, h, tint, o.time ?? 0)
       } else {
         drawRegionFlat(ctx, att, bonePose.world, cam, w, h, tint)
@@ -130,6 +150,41 @@ function drawGrid(ctx: CanvasRenderingContext2D, cam: Camera, w: number, h: numb
   ctx.moveTo(origin.x, 0)
   ctx.lineTo(origin.x, h)
   ctx.stroke()
+}
+
+function drawTexturedRegion(
+  ctx: CanvasRenderingContext2D,
+  att: RegionAttachment,
+  img: HTMLImageElement,
+  world: Mat3,
+  cam: Camera,
+  w: number,
+  h: number,
+) {
+  const r = (att.rotation * Math.PI) / 180
+  const cos = Math.cos(r)
+  const sin = Math.sin(r)
+  const local: Mat3 = {
+    a: cos * att.scaleX,
+    b: sin * att.scaleX,
+    c: -sin * att.scaleY,
+    d: cos * att.scaleY,
+    tx: att.x,
+    ty: att.y,
+  }
+  const placed = mul(world, local)
+  const z = cam.zoom
+  ctx.save()
+  ctx.setTransform(
+    placed.a * z,
+    placed.b * z,
+    placed.c * z,
+    placed.d * z,
+    (placed.tx - cam.x) * z + w / 2,
+    (placed.ty - cam.y) * z + h / 2,
+  )
+  ctx.drawImage(img, -att.width / 2, -att.height / 2, att.width, att.height)
+  ctx.restore()
 }
 
 function drawRegionFlat(
