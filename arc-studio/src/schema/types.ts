@@ -66,6 +66,8 @@ export interface MeshAttachment {
   vertices: MeshVertex[]
   triangles: number[]
   path?: string
+  /** Inverse bind matrix per bone so one illustration can bend with the skeleton. */
+  inverseBind?: Record<BoneId, { a: number; b: number; c: number; d: number; tx: number; ty: number }>
 }
 
 export type Attachment = RegionAttachment | MeshAttachment

@@ -231,14 +231,44 @@ function drawRegionFlat(
 
 function drawMesh(
   ctx: CanvasRenderingContext2D,
-  att: { triangles: number[]; fill?: string; stroke?: string },
-  verts: { x: number; y: number }[],
+  att: { triangles: number[]; fill?: string; stroke?: string; path?: string; vertices: { u: number; v: number }[] },
+  verts: { x: number; y: number; u: number; v: number }[],
   cam: Camera,
   w: number,
   h: number,
   tint: string,
 ) {
+  const tex = att.path ? cachedImage(att.path) : null
   const screen = verts.map((v) => worldToScreen(v.x, v.y, cam, w, h))
+  if (tex) {
+    const base = ctx.getTransform()
+    for (let i = 0; i < att.triangles.length; i += 3) {
+      const ia = att.triangles[i]
+      const ib = att.triangles[i + 1]
+      const ic = att.triangles[i + 2]
+      const da = screen[ia]
+      const db = screen[ib]
+      const dc = screen[ic]
+      const sa = { x: verts[ia].u * tex.naturalWidth, y: verts[ia].v * tex.naturalHeight }
+      const sb = { x: verts[ib].u * tex.naturalWidth, y: verts[ib].v * tex.naturalHeight }
+      const sc = { x: verts[ic].u * tex.naturalWidth, y: verts[ic].v * tex.naturalHeight }
+      if (!da || !db || !dc) continue
+      const aff = affine(sa, sb, sc, da, db, dc)
+      if (!aff) continue
+      ctx.save()
+      ctx.beginPath()
+      ctx.moveTo(da.x, da.y)
+      ctx.lineTo(db.x, db.y)
+      ctx.lineTo(dc.x, dc.y)
+      ctx.closePath()
+      ctx.clip()
+      ctx.setTransform(base.a * aff.a + base.c * aff.b, base.b * aff.a + base.d * aff.b, base.a * aff.c + base.c * aff.d, base.b * aff.c + base.d * aff.d, base.a * aff.e + base.c * aff.f + base.e, base.b * aff.e + base.d * aff.f + base.f)
+      ctx.drawImage(tex, 0, 0)
+      ctx.restore()
+    }
+    return
+  }
+
   ctx.globalAlpha = alphaFromTint(tint)
   ctx.fillStyle = att.fill ?? tint ?? '#7fd4b8'
   for (let i = 0; i < att.triangles.length; i += 3) {
@@ -254,6 +284,26 @@ function drawMesh(
     ctx.fill()
   }
   ctx.globalAlpha = 1
+}
+
+function affine(
+  s0: { x: number; y: number },
+  s1: { x: number; y: number },
+  s2: { x: number; y: number },
+  d0: { x: number; y: number },
+  d1: { x: number; y: number },
+  d2: { x: number; y: number },
+): { a: number; b: number; c: number; d: number; e: number; f: number } | null {
+  const det = s0.x * (s1.y - s2.y) + s1.x * (s2.y - s0.y) + s2.x * (s0.y - s1.y)
+  if (Math.abs(det) < 1e-4) return null
+  const inv = 1 / det
+  const a = (d0.x * (s1.y - s2.y) + d1.x * (s2.y - s0.y) + d2.x * (s0.y - s1.y)) * inv
+  const c = (d0.x * (s2.x - s1.x) + d1.x * (s0.x - s2.x) + d2.x * (s1.x - s0.x)) * inv
+  const e = (d0.x * (s1.x * s2.y - s2.x * s1.y) + d1.x * (s2.x * s0.y - s0.x * s2.y) + d2.x * (s0.x * s1.y - s1.x * s0.y)) * inv
+  const b = (d0.y * (s1.y - s2.y) + d1.y * (s2.y - s0.y) + d2.y * (s0.y - s1.y)) * inv
+  const d = (d0.y * (s2.x - s1.x) + d1.y * (s0.x - s2.x) + d2.y * (s1.x - s0.x)) * inv
+  const f = (d0.y * (s1.x * s2.y - s2.x * s1.y) + d1.y * (s2.x * s0.y - s0.x * s2.y) + d2.y * (s0.x * s1.y - s1.x * s0.y)) * inv
+  return { a, b, c, d, e, f }
 }
 
 function drawBone(

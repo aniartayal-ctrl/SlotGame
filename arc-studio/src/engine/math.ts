@@ -37,6 +37,20 @@ export function fromTRS(x: number, y: number, rotationDeg: number, sx: number, s
   }
 }
 
+export function invert(m: Mat3): Mat3 {
+  const det = m.a * m.d - m.b * m.c
+  if (Math.abs(det) < 1e-8) return identity()
+  const inv = 1 / det
+  return {
+    a: m.d * inv,
+    b: -m.b * inv,
+    c: -m.c * inv,
+    d: m.a * inv,
+    tx: (m.c * m.ty - m.d * m.tx) * inv,
+    ty: (m.b * m.tx - m.a * m.ty) * inv,
+  }
+}
+
 export function transformPoint(m: Mat3, p: Vec2): Vec2 {
   return { x: m.a * p.x + m.c * p.y + m.tx, y: m.b * p.x + m.d * p.y + m.ty }
 }

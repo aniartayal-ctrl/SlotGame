@@ -2,6 +2,7 @@ import './style.css'
 import { compile } from './compiler/compile'
 import { downloadText, exportArcJson, exportRuntimeBundle, exportSpineCompatSketch } from './compiler/export'
 import { compileSampleCharacter, splitAndRig } from './ai/fromImage'
+import { compilePortrait } from './ai/portrait'
 import { ArcPlayer } from './engine/player'
 import type { ArcDocument } from './schema/types'
 import { validateDocument } from './schema/validate'
@@ -163,10 +164,23 @@ const starter = (() => {
 let doc = starter.doc
 const canvas = document.querySelector<HTMLCanvasElement>('#viewport')!
 const player = new ArcPlayer(canvas, doc)
-player.setAnimation(starter.idleId)
-player.camera = { x: 0, y: 20, zoom: 1.6 }
+player.setAnimation('idle')
+player.camera = { x: 0, y: -70, zoom: 1.7 }
 player.start()
-document.querySelector('#pipeline-log')!.textContent = starter.log.join('\n')
+
+const dealer = new Image()
+dealer.onload = () => {
+  const next = compilePortrait(dealer, 'Dealer', dealer.src)
+  adopt(next, [
+    'Portrait mesh — arms overlap the jacket, so the painting is weighted onto joints',
+    'Bones: head, torso, both arms, both hands, thighs',
+    'Clips: idle breathe, deal, win nod',
+    'Pixels are the original illustration',
+  ], 'idle')
+  player.camera = { x: 0, y: -70, zoom: 1.65 }
+  player.draw()
+}
+dealer.src = '/dealer.png'
 
 // Pan / zoom
 let dragging = false

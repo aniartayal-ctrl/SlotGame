@@ -14,7 +14,9 @@ export function deformMesh(
     for (const [boneId, w] of Object.entries(v.weights)) {
       const pose = bones.get(boneId)
       if (!pose) continue
-      const p = transformPoint(pose.world, { x: v.x, y: v.y })
+      const inv = mesh.inverseBind?.[boneId]
+      const local = inv ? transformPoint(inv, { x: v.x, y: v.y }) : { x: v.x, y: v.y }
+      const p = transformPoint(pose.world, local)
       x += p.x * w
       y += p.y * w
       wSum += w
