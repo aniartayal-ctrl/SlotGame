@@ -8,23 +8,31 @@ import { validateDocument } from './schema/validate'
 const STARTER_INTENT =
   'Casino mascot named Lucky with a tail and crown, luxury gold style — idle breathe then big win celebration'
 
-function bootStarter(): ArcDocument {
-  const both = compile({
-    intent: STARTER_INTENT,
-    mode: 'both',
-  })
-  // Add a second clip for the win
-  const win = compile({
-    intent: 'epic big win jackpot celebration once',
-    mode: 'animate',
-    base: both.doc,
+function bootStarter(): { doc: ArcDocument; idleId: string } {
+  const rig = compile({
+    intent: 'Casino mascot named Lucky with a tail and crown, luxury gold style',
+    mode: 'rig',
   })
   const idle = compile({
-    intent: 'gentle idle breathe loop 2.4s',
+    intent: 'gentle idle breathe loop 2.4s named idle',
     mode: 'animate',
-    base: win.doc,
+    base: rig.doc,
   })
-  return idle.doc
+  const win = compile({
+    intent: 'epic big win jackpot celebration once named win',
+    mode: 'animate',
+    base: idle.doc,
+  })
+  // Prefer idle as first selectable / default playback
+  const idleAnim = win.doc.animations.find((a) => a.id === 'idle') ?? win.doc.animations[0]
+  const ordered = {
+    ...win.doc,
+    animations: [
+      idleAnim,
+      ...win.doc.animations.filter((a) => a.id !== idleAnim.id),
+    ],
+  }
+  return { doc: ordered, idleId: idleAnim.id }
 }
 
 const app = document.querySelector<HTMLDivElement>('#app')!
@@ -51,8 +59,8 @@ app.innerHTML = `
       <div class="muted" id="constraint-list"></div>
       <h3>Display</h3>
       <div class="row">
-        <button type="button" id="tog-bones" class="active">Bones</button>
-        <button type="button" id="tog-labels" class="active">Labels</button>
+        <button type="button" id="tog-bones">Bones</button>
+        <button type="button" id="tog-labels">Labels</button>
         <button type="button" id="tog-grid" class="active">Grid</button>
       </div>
     </aside>
@@ -130,9 +138,11 @@ for (const p of PRESETS) {
 const promptEl = document.querySelector<HTMLTextAreaElement>('#prompt')!
 promptEl.value = STARTER_INTENT
 
-let doc = bootStarter()
+const starter = bootStarter()
+let doc = starter.doc
 const canvas = document.querySelector<HTMLCanvasElement>('#viewport')!
 const player = new ArcPlayer(canvas, doc)
+player.setAnimation(starter.idleId)
 player.start()
 
 // Pan / zoom
@@ -316,7 +326,7 @@ document.querySelector('#zoom-out')!.addEventListener('click', () => {
   player.draw()
 })
 document.querySelector('#zoom-reset')!.addEventListener('click', () => {
-  player.camera = { x: 0, y: -40, zoom: 1 }
+  player.camera = { x: 0, y: -20, zoom: 1.35 }
   player.draw()
 })
 

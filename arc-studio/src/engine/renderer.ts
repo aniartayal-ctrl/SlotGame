@@ -1,7 +1,8 @@
 import type { ArcDocument, BoneDef, RegionAttachment } from '../schema/types'
 import { deformMesh } from './mesh'
 import { boneTipWorld, type SolvedPose } from './solver'
-import { getTranslation, transformPoint } from './math'
+import { getTranslation, transformPoint, type Mat3 } from './math'
+import { drawCharacterPart, drawMotionFx } from './characters'
 
 export interface Camera {
   x: number
@@ -15,14 +16,23 @@ export interface RenderOptions {
   showGrid: boolean
   selectedBone?: string | null
   background?: string
+  /** Animation time for FX / gem pulse */
+  time?: number
+  /** Tags from current animation (win, idle, …) */
+  animTags?: string[]
+  /** Use procedural character art instead of flat quads */
+  stylized?: boolean
 }
 
 const DEFAULT_OPTS: RenderOptions = {
-  showBones: true,
-  showLabels: true,
+  showBones: false,
+  showLabels: false,
   showGrid: true,
   selectedBone: null,
   background: '#0e1418',
+  time: 0,
+  animTags: [],
+  stylized: true,
 }
 
 function worldToScreen(
@@ -57,7 +67,8 @@ export function renderFrame(
 
   if (o.showGrid) drawGrid(ctx, cam, w, h)
 
-  // Attachments
+  drawMotionFx(ctx, cam, w, h, o.time ?? 0, o.animTags ?? [])
+
   for (const slot of pose.drawOrder) {
     const att = pose.slotAttachments.get(slot.id)
     if (!att) continue
@@ -66,7 +77,11 @@ export function renderFrame(
     const tint = pose.slotColors.get(slot.id) ?? slot.color
 
     if (att.kind === 'region') {
-      drawRegion(ctx, att, bonePose.world, cam, w, h, tint)
+      if (o.stylized) {
+        drawCharacterPart(ctx, att, bonePose.world, cam, w, h, tint, o.time ?? 0)
+      } else {
+        drawRegionFlat(ctx, att, bonePose.world, cam, w, h, tint)
+      }
     } else if (att.kind === 'mesh') {
       const verts = deformMesh(att, pose.bones)
       drawMesh(ctx, att, verts, cam, w, h, tint)
@@ -107,9 +122,8 @@ function drawGrid(ctx: CanvasRenderingContext2D, cam: Camera, w: number, h: numb
   }
   ctx.stroke()
 
-  // Axes
   const origin = worldToScreen(0, 0, cam, w, h)
-  ctx.strokeStyle = 'rgba(232, 196, 92, 0.35)'
+  ctx.strokeStyle = 'rgba(232, 196, 92, 0.28)'
   ctx.beginPath()
   ctx.moveTo(0, origin.y)
   ctx.lineTo(w, origin.y)
@@ -118,10 +132,10 @@ function drawGrid(ctx: CanvasRenderingContext2D, cam: Camera, w: number, h: numb
   ctx.stroke()
 }
 
-function drawRegion(
+function drawRegionFlat(
   ctx: CanvasRenderingContext2D,
   att: RegionAttachment,
-  world: ReturnType<typeof import('./math').fromTRS>,
+  world: Mat3,
   cam: Camera,
   w: number,
   h: number,
@@ -134,7 +148,6 @@ function drawRegion(
     { x: att.x - (att.width * att.scaleX) / 2, y: att.y + (att.height * att.scaleY) / 2 },
   ]
 
-  // Apply attachment rotation around attachment origin
   const r = (att.rotation * Math.PI) / 180
   const cos = Math.cos(r)
   const sin = Math.sin(r)
@@ -211,7 +224,6 @@ function drawBone(
   ctx.fillStyle = color
   ctx.lineWidth = selected ? 2.5 : 1.5
 
-  // Bone diamond
   const dx = t.x - o.x
   const dy = t.y - o.y
   const len = Math.hypot(dx, dy) || 1

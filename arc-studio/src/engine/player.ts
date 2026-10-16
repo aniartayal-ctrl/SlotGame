@@ -30,13 +30,16 @@ export class ArcPlayer {
       animationId: doc.animations[0]?.id ?? null,
       speed: 1,
     }
-    this.camera = { x: 0, y: -40, zoom: 1 }
+    this.camera = { x: 0, y: -20, zoom: 1.35 }
     this.options = {
-      showBones: true,
-      showLabels: true,
+      showBones: false,
+      showLabels: false,
       showGrid: true,
       selectedBone: null,
       background: '#0e1418',
+      stylized: true,
+      time: 0,
+      animTags: [],
     }
   }
 
@@ -130,10 +133,22 @@ export class ArcPlayer {
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     const pose = solvePose(this.doc, this.state.animationId, this.state.time)
-    renderFrame(ctx, this.doc, pose, this.camera, this.options, {
-      width: this.cssW,
-      height: this.cssH,
-    })
+    const anim = this.currentAnim()
+    renderFrame(
+      ctx,
+      this.doc,
+      pose,
+      this.camera,
+      {
+        ...this.options,
+        time: this.state.time,
+        animTags: anim?.tags ?? [],
+      },
+      {
+        width: this.cssW,
+        height: this.cssH,
+      },
+    )
   }
 
   start() {
