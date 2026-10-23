@@ -1,16 +1,19 @@
 # SlotGame
 
-iGaming research plus **ARC** — an AI-native rigging & animation compiler (Spine replacement).
+iGaming research plus **Kinetic Pro** — a six-state slot symbol studio on the ARC deterministic rigging & animation engine (Spine replacement).
 
-## ARC Studio (new)
-
-Deterministic 2D skeletal engine + AI procedural rigger/motion director.
+## Kinetic Pro (ARC Studio)
 
 ```bash
 cd arc-studio
 npm install
 npm run dev
 ```
+
+Open the Vite URL (usually `http://localhost:5173`).
+
+- **Load symbol kit** — idle / land / win-small / win-big / anticipation / dim with timed game events
+- **Reel stage** — scripted 5×3 spin that logs `land` → `win-start` → `win-peak` in order
 
 See [arc-studio/README.md](arc-studio/README.md).
 
