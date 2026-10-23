@@ -36,7 +36,8 @@ describe('compile', () => {
       mode: 'both',
     })
     expect(doc.bones.some((b) => b.id === 'core')).toBe(true)
-    expect(doc.animations[0]?.tags).toContain('win')
+    const tags = doc.animations[0]?.tags ?? []
+    expect(tags.some((t) => t === 'win' || t === 'win-big')).toBe(true)
     const pose0 = solvePose(doc, doc.animations[0].id, 0)
     const pose1 = solvePose(doc, doc.animations[0].id, doc.animations[0].duration * 0.4)
     expect(pose0.bones.size).toBe(doc.bones.length)

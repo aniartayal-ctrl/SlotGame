@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "ARC — AI-Native Rigging & Animation Compiler. Deterministic geometry engine + AI procedural rigger/motion director. Spine replacement.",
+  "description": "Kinetic Pro — six-state slot symbol studio on the ARC deterministic rigging & animation engine (Spine replacement).",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

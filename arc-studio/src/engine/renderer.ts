@@ -39,6 +39,8 @@ export interface RenderOptions {
   animTags?: string[]
   /** Use procedural character art instead of flat quads */
   stylized?: boolean
+  /** When false, leave existing pixels (for compositing into a reel cell). */
+  clear?: boolean
 }
 
 const DEFAULT_OPTS: RenderOptions = {
@@ -50,6 +52,7 @@ const DEFAULT_OPTS: RenderOptions = {
   time: 0,
   animTags: [],
   stylized: true,
+  clear: true,
 }
 
 function worldToScreen(
@@ -78,9 +81,13 @@ export function renderFrame(
   const h = viewSize?.height ?? ctx.canvas.height
 
   ctx.save()
-  ctx.clearRect(0, 0, w, h)
-  ctx.fillStyle = o.background!
-  ctx.fillRect(0, 0, w, h)
+  if (o.clear !== false) {
+    ctx.clearRect(0, 0, w, h)
+    if (o.background && o.background !== 'transparent') {
+      ctx.fillStyle = o.background
+      ctx.fillRect(0, 0, w, h)
+    }
+  }
 
   if (o.showGrid) drawGrid(ctx, cam, w, h)
 

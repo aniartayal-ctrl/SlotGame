@@ -70,13 +70,21 @@ body {
 .brand-mark {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-size: clamp(1.45rem, 2.6vw, 2.1rem);
   letter-spacing: -0.04em;
   line-height: 1;
   background: linear-gradient(120deg, var(--ink) 20%, var(--mint) 70%, var(--gold) 120%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.event-log {
+  max-height: 160px;
+  overflow: auto;
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: pre-wrap;
 }
 
 .brand-sub {

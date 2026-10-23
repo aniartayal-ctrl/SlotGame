@@ -2,13 +2,14 @@ import './style.css'
 import { compile } from './compiler/compile'
 import { downloadText, exportArcJson, exportRuntimeBundle, exportSpineCompatSketch } from './compiler/export'
 import { compileSampleCharacter, splitAndRig } from './ai/fromImage'
-import { compilePortrait } from './ai/portrait'
+import { compileSymbolKit } from './ai/symbolKit'
 import { ArcPlayer } from './engine/player'
+import { defaultSpinScript, drawReelFrame, ReelStage } from './engine/reelStage'
 import type { ArcDocument } from './schema/types'
 import { validateDocument } from './schema/validate'
 
 const STARTER_INTENT =
-  'Casino mascot named Lucky with a tail and crown, luxury gold style — idle breathe then big win celebration'
+  'Gold slot gem symbol — land then win-big once'
 
 function bootStarter(): { doc: ArcDocument; idleId: string } {
   const rig = compile({
@@ -41,10 +42,12 @@ const app = document.querySelector<HTMLDivElement>('#app')!
 app.innerHTML = `
   <header class="brand-bar">
     <div class="brand">
-      <div class="brand-mark">ARC</div>
-      <div class="brand-sub">AI-Native Rigging &amp; Animation Compiler · Spine replacement</div>
+      <div class="brand-mark">Kinetic Pro</div>
+      <div class="brand-sub">Six-state slot symbols · deterministic ARC engine · Spine replacement</div>
     </div>
     <div class="brand-actions">
+      <button type="button" id="btn-mode-rig" class="active">Rig view</button>
+      <button type="button" id="btn-mode-reel" class="gold">Reel stage</button>
       <button type="button" id="btn-export-arc" class="gold">Export .arc.json</button>
       <button type="button" id="btn-export-runtime">Runtime bundle</button>
       <button type="button" id="btn-export-spine" class="ghost">Spine-compat sketch</button>
@@ -65,6 +68,8 @@ app.innerHTML = `
         <button type="button" id="tog-labels">Labels</button>
         <button type="button" id="tog-grid" class="active">Grid</button>
       </div>
+      <h3>Game events</h3>
+      <div class="log event-log" id="event-log">Waiting for playback…</div>
     </aside>
 
     <section class="viewport-wrap">
@@ -80,20 +85,29 @@ app.innerHTML = `
     </section>
 
     <aside class="panel" id="panel-right">
-      <h2>From one image</h2>
+      <h2>Kinetic Pro symbol</h2>
       <p class="muted" style="margin:0 0 0.6rem;line-height:1.45">
-        Same loop as God Mode: split the art into layers, cut the joints, auto-rig once, then retarget a clip library. The original pixels move — frames are not redrawn.
+        Six states a reel can hear: idle, land, win-small, win-big, anticipation, dim — with timed land / win-start / win-peak / loop-end events.
+      </p>
+      <div class="row">
+        <button type="button" id="btn-symbol-kit" class="gold">Load symbol kit</button>
+        <button type="button" id="btn-reel-spin" class="primary">Play scripted spin</button>
+      </div>
+      <div class="log" id="pipeline-log">Load the kit, then open Reel stage and spin.</div>
+
+      <h2 style="margin-top:1.2rem">From one image</h2>
+      <p class="muted" style="margin:0 0 0.6rem;line-height:1.45">
+        God Mode loop: split art → cut joints → auto-rig once → retarget clips. Original pixels move.
       </p>
       <div class="row">
         <button type="button" id="btn-sample" class="gold">Sample character</button>
         <button type="button" id="btn-upload" class="primary">Upload PNG</button>
         <input id="file-art" type="file" accept="image/png,image/webp,image/jpeg" hidden />
       </div>
-      <div class="log" id="pipeline-log">Rig once. Then pick idle, walk, attack, win, or celebrate.</div>
 
       <h2 style="margin-top:1.2rem">AI Director</h2>
       <p class="muted" style="margin:0 0 0.6rem;line-height:1.45">
-        Or describe a rig. The engine still owns geometry and pixels.
+        Describe a rig or motion. The engine still owns geometry and pixels.
       </p>
       <textarea class="prompt-box" id="prompt" placeholder="Describe a character or motion…"></textarea>
       <div class="pill-row" id="presets"></div>
@@ -127,12 +141,12 @@ app.innerHTML = `
 `
 
 const PRESETS = [
-  'Humanoid warrior with cape — walk cycle',
-  'Cute mascot with tail — bounce hop loop',
+  'Gold slot gem symbol — land once',
+  'Gold slot gem symbol — win-big epic once',
+  'Gold slot gem symbol — anticipation loop',
   'Casino dragon with wings — fly flap then win',
-  'Gold slot gem symbol — spin hook once',
-  'Quadruped wolf — idle breathe',
-  'Sword prop — attack slash once',
+  'Cute mascot with tail — bounce hop loop',
+  'Humanoid warrior with cape — walk cycle',
 ]
 
 const presetsEl = document.querySelector('#presets')!
@@ -153,34 +167,108 @@ promptEl.value = STARTER_INTENT
 
 const starter = (() => {
   try {
-    const sample = compileSampleCharacter()
-    const walk = sample.doc.animations.find((a) => a.id === 'walk')
-    return { doc: sample.doc, idleId: walk?.id ?? sample.doc.animations[0]?.id ?? 'idle', log: sample.log }
+    const kit = compileSymbolKit('Gold Gem')
+    return { doc: kit.doc, idleId: 'idle', log: kit.log }
   } catch {
     const fallback = bootStarter()
     return { doc: fallback.doc, idleId: fallback.idleId, log: ['Procedural starter'] }
   }
 })()
 let doc = starter.doc
+type StudioMode = 'rig' | 'reel'
+let mode: StudioMode = 'rig'
+const eventLines: string[] = []
+
 const canvas = document.querySelector<HTMLCanvasElement>('#viewport')!
 const player = new ArcPlayer(canvas, doc)
 player.setAnimation('idle')
-player.camera = { x: 0, y: -70, zoom: 1.7 }
+player.camera = { x: 0, y: 10, zoom: 1.9 }
 player.start()
 
-const dealer = new Image()
-dealer.onload = () => {
-  const next = compilePortrait(dealer, 'Dealer', dealer.src)
-  adopt(next, [
-    'Portrait mesh — arms overlap the jacket, so the painting is weighted onto joints',
-    'Bones: head, torso, both arms, both hands, thighs',
-    'Clips: idle breathe, deal, win nod',
-    'Pixels are the original illustration',
-  ], 'idle')
-  player.camera = { x: 0, y: -70, zoom: 1.65 }
-  player.draw()
+const reel = new ReelStage(doc)
+let reelRaf = 0
+let reelLastTs = 0
+
+function pushEventLine(line: string) {
+  eventLines.unshift(line)
+  if (eventLines.length > 40) eventLines.length = 40
+  const el = document.querySelector('#event-log')
+  if (el) el.textContent = eventLines.join('\n')
 }
-dealer.src = '/dealer.png'
+
+player.onEvent((ev, meta) => {
+  pushEventLine(
+    `${meta.time.toFixed(2)}s · ${meta.animationId} · ${ev.name}${ev.int != null ? `:${ev.int}` : ''}`,
+  )
+})
+
+reel.onEvent((e) => {
+  pushEventLine(
+    `reel ${e.at.toFixed(2)}s · c${e.col}r${e.row} · ${e.animationId} · ${e.event.name}`,
+  )
+})
+
+function stopReelLoop() {
+  cancelAnimationFrame(reelRaf)
+  reelRaf = 0
+  reelLastTs = 0
+}
+
+function paintReel() {
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+  const dpr = window.devicePixelRatio || 1
+  const rect = canvas.getBoundingClientRect()
+  const cssW = Math.max(1, rect.width)
+  const cssH = Math.max(1, rect.height)
+  const bw = Math.floor(cssW * dpr)
+  const bh = Math.floor(cssH * dpr)
+  if (canvas.width !== bw || canvas.height !== bh) {
+    canvas.width = bw
+    canvas.height = bh
+  }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  drawReelFrame(ctx, reel, { width: cssW, height: cssH })
+}
+
+const reelLoop = (ts: number) => {
+  if (mode !== 'reel') return
+  if (reelLastTs) {
+    const dt = Math.min(0.05, (ts - reelLastTs) / 1000)
+    reel.tick(dt)
+  }
+  reelLastTs = ts
+  paintReel()
+  document.querySelector('#hud-status')!.textContent =
+    `Reel · ${reel.phaseName} · ${reel.eventLog.length} events`
+  document.querySelector('#time-readout')!.textContent = `${reel.clock.toFixed(2)}s · ${reel.phaseName}`
+  reelRaf = requestAnimationFrame(reelLoop)
+}
+
+function setMode(next: StudioMode) {
+  mode = next
+  document.querySelector('#btn-mode-rig')!.classList.toggle('active', mode === 'rig')
+  document.querySelector('#btn-mode-reel')!.classList.toggle('active', mode === 'reel')
+  if (mode === 'reel') {
+    player.pause()
+    document.querySelector('#btn-play')!.textContent = 'Play'
+    stopReelLoop()
+    reel.setDocument(doc)
+    if (!reel.playing && reel.phaseName === 'idle') {
+      reel.resetCells('idle')
+    }
+    reelLastTs = 0
+    reelRaf = requestAnimationFrame(reelLoop)
+  } else {
+    stopReelLoop()
+    player.draw()
+    if (!player.state.playing) player.play()
+    document.querySelector('#btn-play')!.textContent = 'Pause'
+  }
+  refreshUi()
+}
+
+document.querySelector('#pipeline-log')!.textContent = starter.log.join('\n')
 
 // Pan / zoom
 let dragging = false
@@ -314,10 +402,44 @@ function adopt(next: ArcDocument, log: string[], animId = 'idle') {
   player.draw()
 }
 
+document.querySelector('#btn-symbol-kit')!.addEventListener('click', () => {
+  try {
+    const { doc: next, log } = compileSymbolKit('Gold Gem')
+    eventLines.length = 0
+    adopt(next, log, 'idle')
+    player.camera = { x: 0, y: 10, zoom: 1.9 }
+    reel.setDocument(next)
+    setMode('rig')
+  } catch (err) {
+    document.querySelector('#pipeline-log')!.textContent = err instanceof Error ? err.message : String(err)
+  }
+})
+
+document.querySelector('#btn-reel-spin')!.addEventListener('click', () => {
+  if (!doc.animations.some((a) => a.id === 'land')) {
+    const { doc: next, log } = compileSymbolKit('Gold Gem')
+    adopt(next, log, 'idle')
+    reel.setDocument(next)
+  } else {
+    reel.setDocument(doc)
+  }
+  eventLines.length = 0
+  pushEventLine('— scripted spin —')
+  setMode('reel')
+  reel.playScript(defaultSpinScript())
+})
+
+document.querySelector('#btn-mode-rig')!.addEventListener('click', () => setMode('rig'))
+document.querySelector('#btn-mode-reel')!.addEventListener('click', () => {
+  reel.setDocument(doc)
+  setMode('reel')
+})
+
 document.querySelector('#btn-sample')!.addEventListener('click', () => {
   try {
     const { doc: next, log } = compileSampleCharacter()
     adopt(next, log, 'walk')
+    setMode('rig')
   } catch (err) {
     document.querySelector('#pipeline-log')!.textContent = err instanceof Error ? err.message : String(err)
   }
@@ -349,6 +471,20 @@ document.querySelector('#btn-animate')!.addEventListener('click', () => runCompi
 document.querySelector('#btn-both')!.addEventListener('click', () => runCompile('both'))
 
 document.querySelector('#btn-play')!.addEventListener('click', () => {
+  if (mode === 'reel') {
+    if (reel.playing) {
+      reel.playing = false
+      document.querySelector('#btn-play')!.textContent = 'Play'
+    } else {
+      if (reel.phaseName === 'done' || reel.phaseName === 'idle') {
+        reel.playScript(defaultSpinScript())
+      } else {
+        reel.playing = true
+      }
+      document.querySelector('#btn-play')!.textContent = 'Pause'
+    }
+    return
+  }
   player.toggle()
   document.querySelector('#btn-play')!.textContent = player.state.playing ? 'Pause' : 'Play'
 })

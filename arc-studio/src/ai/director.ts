@@ -4,6 +4,11 @@ export type MotionKind =
   | 'idle'
   | 'walk'
   | 'win'
+  | 'win-small'
+  | 'win-big'
+  | 'land'
+  | 'anticipation'
+  | 'dim'
   | 'spin-hook'
   | 'attack'
   | 'fly'
@@ -26,11 +31,27 @@ const k = (time: number, value: number, curve: Keyframe['curve'] = 'linear'): Ke
   curve,
 })
 
+const ONESHOT: MotionKind[] = [
+  'win',
+  'win-small',
+  'win-big',
+  'land',
+  'dim',
+  'attack',
+  'spin-hook',
+]
+
 /** Procedural motion director — writes animation timelines into schema (never matrices). */
 export function parseMotionIntent(text: string): MotionIntent {
   const t = text.toLowerCase()
   let kind: MotionKind = 'custom'
-  if (/\b(idle|breathe|rest)\b/.test(t)) kind = 'idle'
+  if (/\b(win[-_\s]?big|big[-_\s]?win|jackpot|epic)\b/.test(t) && /\b(win|jackpot|celebrat)\b/.test(t))
+    kind = 'win-big'
+  else if (/\b(win[-_\s]?small|small[-_\s]?win)\b/.test(t)) kind = 'win-small'
+  else if (/\b(land|settle|drop[-_\s]?in)\b/.test(t)) kind = 'land'
+  else if (/\b(anticipat|tease|near[-_\s]?miss)\b/.test(t)) kind = 'anticipation'
+  else if (/\b(dim|fade[-_\s]?out|darken)\b/.test(t)) kind = 'dim'
+  else if (/\b(idle|breathe|rest)\b/.test(t)) kind = 'idle'
   else if (/\b(walk|run|stride)\b/.test(t)) kind = 'walk'
   else if (/\b(win|jackpot|big.?win)\b/.test(t)) kind = 'win'
   else if (/\b(spin|reel|hook)\b/.test(t)) kind = 'spin-hook'
@@ -45,8 +66,11 @@ export function parseMotionIntent(text: string): MotionIntent {
   let intensity = 1
   if (/\b(subtle|soft|gentle)\b/.test(t)) intensity = 0.45
   if (/\b(big|intense|wild|crazy|epic)\b/.test(t)) intensity = 1.6
+  if (kind === 'win-big') intensity = Math.max(intensity, 1.6)
+  if (kind === 'win-small') intensity = Math.min(intensity, 0.9)
 
-  const loop = !/\b(once|oneshot|one-shot)\b/.test(t) && kind !== 'win' && kind !== 'attack' && kind !== 'spin-hook'
+  const loop =
+    !/\b(once|oneshot|one-shot)\b/.test(t) && !ONESHOT.includes(kind)
 
   const nameMatch = text.match(/(?:named|called|name[:\s]+)["']?([A-Za-z0-9 _-]+)/i)
   const name = nameMatch?.[1]?.trim() || kind
@@ -62,6 +86,16 @@ function defaultDuration(kind: MotionKind): number {
       return 0.9
     case 'win':
       return 2.2
+    case 'win-small':
+      return 1.1
+    case 'win-big':
+      return 1.8
+    case 'land':
+      return 0.45
+    case 'anticipation':
+      return 1.2
+    case 'dim':
+      return 0.35
     case 'spin-hook':
       return 1.4
     case 'attack':
@@ -94,7 +128,20 @@ export function directMotion(doc: ArcDocument, intent: MotionIntent): AnimationD
       break
     case 'win':
     case 'celebrate':
+    case 'win-big':
       bones = winClip(ids, D, I)
+      break
+    case 'win-small':
+      bones = winClip(ids, D, Math.min(I, 0.9))
+      break
+    case 'land':
+      bones = landClip(ids, D, I)
+      break
+    case 'anticipation':
+      bones = anticipationClip(ids, D, I)
+      break
+    case 'dim':
+      bones = dimClip(ids, D, I)
       break
     case 'spin-hook':
       bones = spinHook(ids, D, I)
@@ -366,6 +413,77 @@ function bounceClip(ids: Set<string>, D: number, I: number): BoneTimeline[] {
       scaleY: [k(0, 1), k(D * 0.45, 1.1), k(D * 0.7, 0.9), k(D, 1)],
     },
   ]
+}
+
+/** Symbol drops onto the reel and settles — readable in a few hundred ms. */
+function landClip(ids: Set<string>, D: number, I: number): BoneTimeline[] {
+  const bone = ids.has('core') ? 'core' : ids.has('root') ? 'root' : [...ids][0]
+  const out: BoneTimeline[] = [
+    {
+      bone,
+      translateY: [k(0, -48 * I), k(D * 0.55, 6 * I), k(D * 0.78, -2 * I), k(D, 0)],
+      scaleX: [k(0, 0.72), k(D * 0.55, 1.08), k(D * 0.78, 0.96), k(D, 1)],
+      scaleY: [k(0, 1.22), k(D * 0.55, 0.9), k(D * 0.78, 1.04), k(D, 1)],
+      rotate: [k(0, -12 * I), k(D * 0.55, 4 * I), k(D, 0)],
+    },
+  ]
+  if (ids.has('glow')) {
+    out.push({
+      bone: 'glow',
+      scaleX: [k(0, 0.6), k(D * 0.5, 1.15), k(D, 1)],
+      scaleY: [k(0, 0.6), k(D * 0.5, 1.15), k(D, 1)],
+    })
+  }
+  return out
+}
+
+/** Held reel pulse before the final stop. */
+function anticipationClip(ids: Set<string>, D: number, I: number): BoneTimeline[] {
+  const bone = ids.has('core') ? 'core' : ids.has('root') ? 'root' : [...ids][0]
+  const out: BoneTimeline[] = [
+    {
+      bone,
+      scaleX: [k(0, 1), k(D * 0.25, 1.06 * I), k(D * 0.5, 0.96), k(D * 0.75, 1.08 * I), k(D, 1)],
+      scaleY: [k(0, 1), k(D * 0.25, 0.94), k(D * 0.5, 1.05 * I), k(D * 0.75, 0.94), k(D, 1)],
+      rotate: [k(0, 0), k(D * 0.25, -6 * I), k(D * 0.5, 6 * I), k(D * 0.75, -4 * I), k(D, 0)],
+    },
+  ]
+  if (ids.has('spark_l')) {
+    out.push(
+      {
+        bone: 'spark_l',
+        rotate: [k(0, 0), k(D, 180)],
+        translateX: [k(0, 0), k(D * 0.5, -8 * I), k(D, 0)],
+      },
+      {
+        bone: 'spark_r',
+        rotate: [k(0, 0), k(D, -180)],
+        translateX: [k(0, 0), k(D * 0.5, 8 * I), k(D, 0)],
+      },
+    )
+  }
+  return out
+}
+
+/** Losing / inactive symbol settles down. */
+function dimClip(ids: Set<string>, D: number, I: number): BoneTimeline[] {
+  const bone = ids.has('core') ? 'core' : ids.has('root') ? 'root' : [...ids][0]
+  const out: BoneTimeline[] = [
+    {
+      bone,
+      scaleX: [k(0, 1), k(D, 0.88)],
+      scaleY: [k(0, 1), k(D, 0.88)],
+      translateY: [k(0, 0), k(D, 4 * I)],
+    },
+  ]
+  if (ids.has('glow')) {
+    out.push({
+      bone: 'glow',
+      scaleX: [k(0, 1), k(D, 0.5)],
+      scaleY: [k(0, 1), k(D, 0.5)],
+    })
+  }
+  return out
 }
 
 function customFromText(ids: Set<string>, intent: MotionIntent): BoneTimeline[] {

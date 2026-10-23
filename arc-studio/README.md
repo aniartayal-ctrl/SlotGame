@@ -1,6 +1,10 @@
-# ARC — AI-Native Rigging & Animation Compiler
+# Kinetic Pro (ARC engine)
 
-**Spine replacement for 2D skeletal animation.** A deterministic geometry/IK/render engine owns space and pixels. AI acts only as a procedural rigger and motion director that writes the ARC document schema.
+**Six-state slot symbol studio** on the ARC deterministic rigging & animation engine — a Spine replacement for 2D skeletal animation.
+
+Kinetic Pro’s contract: every symbol speaks `idle`, `land`, `win-small`, `win-big`, `anticipation`, and `dim`, and the player emits `land`, `win-start`, `win-peak`, and `loop-end` on time. Open **Reel stage** for a scripted 5×3 spin that logs those events.
+
+The geometry/IK/render engine owns space and pixels. AI acts only as a procedural rigger and motion director that writes the ARC document schema.
 
 ## Architecture
 
